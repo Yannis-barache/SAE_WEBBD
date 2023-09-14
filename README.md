@@ -5,7 +5,7 @@
 - Hajar EL KASMI
 - Yannis BARACHE
 - Khalil ABADA
-- Juliann Meritt
+- Juliann MERIT
 
 ## Description du projet
 
