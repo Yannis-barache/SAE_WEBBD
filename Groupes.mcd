@@ -1,0 +1,59 @@
+:
+STYLE : idStyle, nomStyle
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+
+EVENEMENT : idEvenement, nomEvenement, dateEvenement, heureEvenement
+AVOIR, 0N STYLE, 11 GROUPE
+MEMBRE : idMembre, nomMembre, prenomMembre, idGroupe, instrumentMembre
+:
+:
+:
+:
+:
+:
+:
+TYPES : idType, nomType
+:
+:
+CLIENT : idCLient, nomClient, prenomClient, emailClient
+
+PARTICIPE, 0N GROUPE, 0N EVENEMENT : dateArriveeGroupe, heureArriveeGroupe, tempsDeMontage, tempsDeDemontage
+GROUPE : idGroupe, nomGroupe, descriptionGroupe, photosGroupe, reseauxGroupe, liensVideoGroupe
+FAIT PARTIE DE, 1N GROUPE, 11 MEMBRE
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+
+:
+LOGER, 0N HEBERGEMENT, 0N GROUPE : dateDebutHebergement, dateFinHebergement
+HEBERGEMENT : idHebergement, nomHebergement, adresseHebergement, nbPlacesJour
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
+:
