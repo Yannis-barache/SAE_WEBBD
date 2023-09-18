@@ -37,6 +37,14 @@ pip install flask
 
 ```
 
+### Installer python-dotenv
+
+```bash
+
+pip install python-dotenv
+
+```
+
 ### Exécution
 
 ```bash
