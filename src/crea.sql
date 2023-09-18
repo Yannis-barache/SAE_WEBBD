@@ -31,7 +31,7 @@ CREATE TABLE GROUPE (
     idGroupe int NOT NULL AUTO_INCREMENT,
     nomGroupe VARCHAR(50) NOT NULL,
     descriptionGroupe VARCHAR(50) NOT NULL,
-    styleGroupe VARCHAR(50) NOT NULL,
+    idStyle int NOT NULL,
     photosGroupe VARCHAR(50) NOT NULL,
     reseauxGroupe VARCHAR(50) NOT NULL,
     liensVideoGroupe VARCHAR(50) NOT NULL,
@@ -80,7 +80,14 @@ CREATE TABLE EVENEMENT (
     nomEvenement VARCHAR(50) NOT NULL,
     dateEvenement DATE NOT NULL,
     heureEvenement TIME NOT NULL,
+    idType int NOT NULL,
     PRIMARY KEY (idEvenement)
+);
+
+CREATE TABLE STYLE(
+    idStyle int NOT NULL AUTO_INCREMENT,
+    nomStyle VARCHAR(50) NOT NULL,
+    PRIMARY KEY (idStyle)
 );
 
 
@@ -92,7 +99,8 @@ ALTER TABLE PARTICIPE ADD FOREIGN KEY (idEvenement) REFERENCES  EVENEMENT(idEven
 ALTER TABLE LOGER ADD FOREIGN KEY (idHebergement) REFERENCES  HEBERGEMENT(idHebergement);
 ALTER TABLE LOGER ADD FOREIGN KEY (idGroupe) REFERENCES  GROUPE(idGroupe);
 ALTER TABLE LOGER ADD FOREIGN KEY (idHebergement) REFERENCES  HEBERGEMENT(idHebergement);
-
+ALTER TABLE EVENEMENT ADD FOREIGN KEY (idType) REFERENCES  TYPES(idType);
+ALTER TABLE GROUPE ADD FOREIGN KEY (idStyle) REFERENCES  STYLE(idStyle);
 
 
 
