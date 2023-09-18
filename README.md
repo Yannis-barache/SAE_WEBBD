@@ -68,7 +68,8 @@ mysql -h servinfo-maria -u VotreNom -p
 - [x] Déterminer toutes les tables de la base de données
 - [ ] Déterminer toutes les fonctionnalités du site
 - [ ] Déterminer toutes les contraintes de la base de données
-- [ ] Créer les tables de la base de données
+- [x] Créer les tables de la base de données
+- [x] Créer les contraintes de la base de données
 - [ ] Coder les pages flask
     - [ ] Page d'accueil
     - [ ] Page de connexion
