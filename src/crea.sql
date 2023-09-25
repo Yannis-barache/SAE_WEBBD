@@ -81,7 +81,6 @@ CREATE TABLE EVENEMENT (
     nomEvenement VARCHAR(50) NOT NULL,
     dateEvenement DATE NOT NULL,
     heureEvenement TIME NOT NULL,
-    lieuEvenement VARCHAR(50) NOT NULL,
     idType int NOT NULL,
     PRIMARY KEY (idEvenement)
 );
@@ -92,6 +91,13 @@ CREATE TABLE STYLE(
     PRIMARY KEY (idStyle)
 );
 
+CREATE TABLE LIEU(
+    idLieu int NOT NULL AUTO_INCREMENT,
+    nomLieu VARCHAR(50) NOT NULL,
+    adresseLieu VARCHAR(50) NOT NULL,
+    capacitéLieu int NOT NULL,
+    PRIMARY KEY (idLieu)
+);
 
 
 -- FOREIGN KEYS à ajouter
