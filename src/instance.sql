@@ -54,15 +54,15 @@ INSERT INTO HEBERGEMENT (idHebergement, nomHebergement, adresseHebergement, nbPl
 (10, 'Hôtel de la ville', '10 rue de la ville', 500);
 
 
-INSERT INTO CLIENT (idClient, nomClient, prenomClient, emailClient) VALUES
-(1, 'Dupont', 'Jean', 'dupont.jean@mail.fr'),
-(2, 'Durand', 'Pierre', 'durand.pierre@mail.fr'),
-(3, 'Martin', 'Paul', 'martin.paul@mail.fr'),
-(4, 'Bernard', 'Jacques', 'bernard.jaques@mail.fr'),
-(5, 'Dubois', 'Michel', 'dubois.michel@mail.fr'),
-(6, 'Thomas', 'Robert', 'thomas.robert@mail.fr'),
-(7, 'Robert', 'Richard', 'robert.richard@mail.fr'),
-(8, 'Richard', 'Jean', 'richard.jean@mail.fr');
+INSERT INTO CLIENT (idClient, nomClient, prenomClient, mdpClient, emailClient) VALUES
+(1, 'Dupont', 'Jean','yolopass1234' ,'dupont.jean@mail.fr'),
+(2, 'Durand', 'Pierre','yolopass1234', 'durand.pierre@mail.fr'),
+(3, 'Martin', 'Paul','yolopass1234', 'martin.paul@mail.fr'),
+(4, 'Bernard', 'Jacques','yolopass1234', 'bernard.jaques@mail.fr'),
+(5, 'Dubois', 'Michel','yolopass1234', 'dubois.michel@mail.fr'),
+(6, 'Thomas', 'Robert','yolopass1234', 'thomas.robert@mail.fr'),
+(7, 'Robert', 'Richard','yolopass1234', 'robert.richard@mail.fr'),
+(8, 'Richard', 'Jean','yolopass1234', 'richard.jean@mail.fr');
 
 
 INSERT INTO MEMBRE (idMembre, nomMembre, prenomMembre, idGroupe, instrumentMembre) VALUES
