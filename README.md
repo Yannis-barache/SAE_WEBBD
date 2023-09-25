@@ -45,6 +45,14 @@ pip install python-dotenv
 
 ```
 
+### Installer Flask-MySQLdb
+
+```bash
+
+pip install flask-mysqldb
+
+```
+
 ### Exécution
 
 ```bash
@@ -65,7 +73,7 @@ http://localhost:5000/
 
 ```bash
 
-mysql -h servinfo-maria -u VotreNom -p
+mysql -h servinfo-maria -u barache -p
 
 ```
 
@@ -76,6 +84,7 @@ mysql -h servinfo-maria -u VotreNom -p
 - [x] Déterminer toutes les tables de la base de données
 - [ ] Déterminer toutes les fonctionnalités du site
 - [ ] Déterminer toutes les contraintes de la base de données
+- [x] Connecter l'application flask à la base de données
 - [x] Créer les tables de la base de données
 - [x] Créer les contraintes de la base de données
 - [ ] Coder les pages flask
