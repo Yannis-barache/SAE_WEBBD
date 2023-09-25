@@ -16,13 +16,16 @@ def home():
     CS=mysql.connection.cursor()
     CS.execute("SELECT * FROM GROUPE")
     result=CS.fetchall()
-    print(result)
+    affichage=[]
+    for i in result:
+        affichage.append(i["nomGroupe"])
+
 
     return render_template(
         
         "home.html",
         title="Bienvenue sur le site du Festiut'O",
-        names=result)
+        names=affichage)
 
 @app.route("/connexion")
 
