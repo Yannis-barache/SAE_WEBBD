@@ -2,6 +2,8 @@ from .app import app
 from flask import render_template
 from flask_mysqldb import MySQL
 
+
+# Configuration de la connection à la base de données
 mysql=MySQL()
 mysql.init_app(app)
 app.config['MYSQL_USER']='barache'
@@ -19,8 +21,6 @@ def home():
     affichage=[]
     for i in result:
         affichage.append(i["nomGroupe"])
-
-
     return render_template(
         
         "home.html",
