@@ -32,7 +32,7 @@ CREATE TABLE GROUPE (
     nomGroupe VARCHAR(50) NOT NULL,
     descriptionGroupe VARCHAR(50) NOT NULL,
     idStyle int NOT NULL,
-    photosGroupe VARCHAR(50) NOT NULL,
+    photosGroupe VARCHAR(50),
     reseauxGroupe VARCHAR(50) NOT NULL,
     liensVideoGroupe VARCHAR(50) NOT NULL,
     PRIMARY KEY (idGroupe)
