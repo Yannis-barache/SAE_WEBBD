@@ -80,6 +80,7 @@ CREATE TABLE EVENEMENT (
     nomEvenement VARCHAR(50) NOT NULL,
     dateEvenement DATE NOT NULL,
     heureEvenement TIME NOT NULL,
+    lieuEvenement VARCHAR(50) NOT NULL,
     idType int NOT NULL,
     PRIMARY KEY (idEvenement)
 );
