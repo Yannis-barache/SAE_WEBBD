@@ -1,14 +1,13 @@
 {% extends "base.html" %}
 {% block main %}
-    <div>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" />
-    </div>
-  
-    <div>
-        <label for="pass">Mot de passe (8 caractères minimum):</label>
-        <input type="password" id="pass" name="mdp" minlength="8" required />
-    </div>
-  
-    <input type="submit" value="S'inscrire" />
+    <body>
+       <form action = "" method = "post">
+          <input type = "text" name = "nom" placeholder="Rentrez votre nom" autocomplete="off" required />
+          <input type="text" name = "prenom" placeholder="Rentrez votre prénom" autocomplete="off" required>
+          <input type="email" name = "email" placeholder="Rentrez votre email"  autocomplete="off" required>
+          <input type="password" name = "mdp" placeholder="Rentrez votre mot de passe" autocomplete="off" required>
+          <input type="password" name = "mdp2" placeholder="Confirmez votre mot de passe" autocomplete="off" required>
+          <input type = "submit" value = "submit" />
+       </form>   
+    </body>
 {% endblock %}
