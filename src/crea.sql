@@ -12,6 +12,7 @@ CREATE TABLE CLIENT (
     idClient int NOT NULL AUTO_INCREMENT,
     nomClient VARCHAR(50) NOT NULL,
     prenomClient VARCHAR(50) NOT NULL,
+    mdpClient VARCHAR(50) NOT NULL,
     emailClient VARCHAR(50) NOT NULL,
     PRIMARY KEY (idClient)
 );
