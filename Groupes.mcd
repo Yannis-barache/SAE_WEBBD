@@ -5,55 +5,45 @@ STYLE : idStyle, nomStyle
 :
 :
 :
+
 :
-:
+AVOIR, 0N STYLE, 11 GROUPE
 :
 :
 :
 :
 :
 
-EVENEMENT : idEvenement, nomEvenement, dateEvenement, heureEvenement
-AVOIR, 0N STYLE, 11 GROUPE
+FAIT PARTIE DE, 1N GROUPE, 11 MEMBRE
+GROUPE : idGroupe, nomGroupe, descriptionGroupe, photosGroupe, reseauxGroupe, liensVideoGroupe
+PARTICIPE, 0N GROUPE, 0N EVENEMENT : dateArriveeGroupe, heureArriveeGroupe, tempsDeMontage, tempsDeDemontage
+:
+:
+:
+:
+
 MEMBRE : idMembre, nomMembre, prenomMembre, idGroupe, instrumentMembre
+LOGER, 0N HEBERGEMENT, 0N GROUPE : dateDebutHebergement, dateFinHebergement
+EVENEMENT : idEvenement, nomEvenement, dateEvenement, heureEvenement
+CIF, 0N TYPES, 11 EVENEMENT
 :
 :
 :
+
 :
-:
-:
-:
+HEBERGEMENT : idHebergement, nomHebergement, adresseHebergement, nbPlacesJour
+SE PASSE À, 0N LIEU, 11 EVENEMENT
 TYPES : idType, nomType
 :
 :
 CLIENT : idCLient, nomClient, prenomClient, emailClient
 
-PARTICIPE, 0N GROUPE, 0N EVENEMENT : dateArriveeGroupe, heureArriveeGroupe, tempsDeMontage, tempsDeDemontage
-GROUPE : idGroupe, nomGroupe, descriptionGroupe, photosGroupe, reseauxGroupe, liensVideoGroupe
-FAIT PARTIE DE, 1N GROUPE, 11 MEMBRE
+:
+:
+LIEU : idLieu, nomLieu, adresseLieu, capaciteLieu
 :
 :
 :
 :
-:
-:
-:
-:
-:
-:
-:
-
-:
-LOGER, 0N HEBERGEMENT, 0N GROUPE : dateDebutHebergement, dateFinHebergement
-HEBERGEMENT : idHebergement, nomHebergement, adresseHebergement, nbPlacesJour
-:
-:
-:
-:
-:
-:
-:
-:
-:
-:
-:
+BILLET : idBillet, nomBillet
+ACHETE, 03 CLIENT, 11 BILLET

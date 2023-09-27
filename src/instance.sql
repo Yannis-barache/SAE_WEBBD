@@ -113,3 +113,9 @@ INSERT INTO LOGER (idHergement, idGroupe, dateDebutHebergement, dateFinHebergeme
 (4, 4, '2020-10-25', '2020-10-26'),
 (5, 5, '2021-09-15', '2021-09-16'),
 (6, 6, '2021-09-10', '2021-09-11');
+
+insert into BILLET (idBillet, nomBillet, prixBillet, idclient) VALUES
+(1,"patrick", 2, 1),
+(2,"patrick1", 2, 1),
+(3,"patrick2", 2, 1),
+(4,"patrick3", 2, 1);
