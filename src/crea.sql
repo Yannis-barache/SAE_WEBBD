@@ -110,6 +110,12 @@ CREATE TABLE BILLET(
     PRIMARY KEY (idBillet)
 );
 
+CREATE TABLE SINSCRIT(
+    idClient int NOT NULL,
+    idEvenement int NOT NULL,
+    PRIMARY KEY (idClient, idEvenement)
+);
+
 
 -- FOREIGN KEYS à ajouter
 ALTER TABLE MEMBRE ADD FOREIGN KEY (idGroupe) REFERENCES  GROUPE(idGroupe);
