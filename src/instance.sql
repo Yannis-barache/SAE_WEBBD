@@ -119,3 +119,11 @@ insert into BILLET (idBillet, nomBillet, prixBillet, idclient) VALUES
 (2,"patrick1", 2, 1),
 (3,"patrick2", 2, 1),
 (4,"patrick3", 2, 1);
+
+insert into SINSCRIT(idEvenement, idClient) VALUES
+(1,1),
+(2,1),
+(3,1),
+(4,1),
+(5,1),
+(6,1);

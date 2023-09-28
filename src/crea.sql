@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS MEMBRE;
 DROP TABLE IF EXISTS LOGER; 
 DROP TABLE IF EXISTS PARTICIPE;
 DROP TABLE IF EXISTS HEBERGEMENT;
+DROP TABLE IF EXISTS SINSCRIT;
 DROP TABLE IF EXISTS EVENEMENT;
 DROP TABLE IF EXISTS GROUPE;
 DROP TABLE IF EXISTS TYPES;
@@ -85,6 +86,7 @@ CREATE TABLE EVENEMENT (
     dateEvenement DATE NOT NULL,
     heureEvenement TIME NOT NULL,
     idType int NOT NULL,
+    idLieu int NOT NULL,
     PRIMARY KEY (idEvenement)
 );
 
@@ -142,3 +144,18 @@ BEGIN
     END IF;
 END |
 delimiter ;
+
+-- trigger qui vérifie que le nombre d'inscrit dans un événement ne dépasse pas la capacité du lieu --
+delimiter |
+CREATE OR REPLACE TRIGGER verifCapacite BEFORE INSERT ON SINSCRIT
+FOR EACH ROW
+BEGIN
+    IF (SELECT COUNT(*) FROM SINSCRIT WHERE idEvenement = NEW.idEvenement) >= (SELECT capacitéLieu FROM LIEU WHERE idLieu = (SELECT idLieu FROM EVENEMENT WHERE idEvenement = NEW.idEvenement)) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La capacité du lieu est atteinte';
+    END IF;
+END |
+delimiter ;
+
+-- trigger qui vérifie que le nombre de logés dans un hébergement ne dépasse pas la capacité de l'hébergement --
+delimiter |
+CREATE OR REPLACE TRIGGER verifCapaciteHebergement BEFORE INSERT ON LOGER
