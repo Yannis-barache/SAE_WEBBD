@@ -159,3 +159,7 @@ delimiter ;
 -- trigger qui vérifie que le nombre de logés dans un hébergement ne dépasse pas la capacité de l'hébergement --
 delimiter |
 CREATE OR REPLACE TRIGGER verifCapaciteHebergement BEFORE INSERT ON LOGER
+
+-- A changer dans le MCD : association loger --> ajouter une table date qui contient les dates et les durees
+-- ajouter une association à la table style vers elle meme pour les styles identiques
+-- revoir le systeme de billets
