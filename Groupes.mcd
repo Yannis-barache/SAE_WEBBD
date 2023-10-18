@@ -1,49 +1,39 @@
 :
-STYLE : idStyle, nomStyle
 :
-:
-:
-:
-:
-
-:
-AVOIR, 0N STYLE, 11 GROUPE
-:
-:
-:
-:
-:
-
-FAIT PARTIE DE, 1N GROUPE, 11 MEMBRE
-GROUPE : idGroupe, nomGroupe, descriptionGroupe, photosGroupe, reseauxGroupe, liensVideoGroupe
-PARTICIPE, 0N GROUPE, 0N EVENEMENT : dateArriveeGroupe, heureArriveeGroupe, tempsDeMontage, tempsDeDemontage
-:
-:
-:
-:
-
 MEMBRE : idMembre, nomMembre, prenomMembre, idGroupe, instrumentMembre
-LOGER, 0N HEBERGEMENT, 0N GROUPE : dateDebutHebergement, dateFinHebergement
-EVENEMENT : idEvenement, nomEvenement, dateEvenement, heureEvenement
-CIF, 0N TYPES, 11 EVENEMENT
-:
-:
 :
 
 :
+:
+FAIT PARTIE DE, 1N GROUPE, 11 MEMBRE
 HEBERGEMENT : idHebergement, nomHebergement, adresseHebergement, nbPlacesJour
-SE PASSE À, 0N LIEU, 11 EVENEMENT
-TYPES : idType, nomType
-:
-:
-CLIENT : idCLient, nomClient, prenomClient, emailClient
 
-:
+STYLE : idStyle, nomStyle
+AVOIR, 0N STYLE, 11 GROUPE
+GROUPE : idGroupe, nomGroupe, descriptionGroupe, photosGroupe, reseauxGroupe, liensVideoGroupe
+LOGER, 0N HEBERGEMENT, 0N GROUPE : dateDebutHebergement, dateFinHebergement
+
 :
 LIEU : idLieu, nomLieu, adresseLieu, capaciteLieu
+PARTICIPE, 0N GROUPE, 0N EVENEMENT : dateArriveeGroupe, heureArriveeGroupe, tempsDeMontage, tempsDeDemontage
+TYPES : idType, nomType
+
+:
+SE PASSE À, 0N LIEU, 11 EVENEMENT
+EVENEMENT : idEvenement, nomEvenement, dateEvenement, heureEvenement
+CIF, 0N TYPES, 11 EVENEMENT
+
+:
+CLIENT : idCLient, nomClient, prenomClient, emailClient
+S'INSCRIT, 0N CLIENT, 0N EVENEMENT
+:
+
+:
+ACHETE, 03 CLIENT, 11 BILLET
 :
 :
-:
+
 :
 BILLET : idBillet, nomBillet
-ACHETE, 03 CLIENT, 11 BILLET
+:
+:
