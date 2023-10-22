@@ -112,7 +112,7 @@ CREATE TABLE AIME(
     idClient int NOT NULL,
     idGroupe int NOT NULL,
     PRIMARY KEY (idClient, idGroupe)
-)
+);
 
 
 -- FOREIGN KEYS à ajouter
