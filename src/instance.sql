@@ -12,32 +12,45 @@ INSERT INTO STYLE (idStyle,nomStyle) VALUES
 (11,'Country');
 
 
-INSERT INTO GROUPE (idGroupe,nomGroupe,descriptionGroupe,idStyle,reseauxGroupe,liensVideoGroupe,photosGroupe) VALUES
-(1,'The Beatles','Groupe de rock britannique',1,'Facebook, Twitter','https://www.youtube.com/watch?v=z9ypq6_5bsg', NULL),
-(2,'Daft Punk','Groupe de musique électronique français',6,'Facebook, Instagram','https://www.youtube.com/watch?v=FGBhQbmPwH8', NULL),
-(3,'Nirvana','Groupe de rock américain',1,'Facebook, Twitter','https://www.youtube.com/watch?v=hTWKbfoikeg', NULL),
-(4,'Queen','Groupe de rock britannique',1,'Facebook, Instagram','https://www.youtube.com/watch?v=fJ9rUzIMcZQ', NULL),
-(5,'The Rolling Stones','Groupe de rock britannique',1,'Facebook, Twitter','https://www.youtube.com/watch?v=6DUnOupJz7Q', NULL),
-(6,'Zouhair Bahaoui', 'Chanteur marocain', 3, 'Facebook, Instagram', 'https://www.youtube.com/watch?v=6DUnOupJz7Q', NULL),
-(7,'Eminem','Rappeur américain',3,'Facebook, Instagram','https://www.youtube.com/watch?v=uelHwf8o7_U', NULL),
-(8,'AC/DC','Groupe de rock australien',1,'Facebook, Twitter','https://www.youtube.com/watch?v=v2AC41dglnM', NULL),
-(9,'Metallica','Groupe de heavy metal américain',1,'Facebook, Instagram','https://www.youtube.com/watch?v=CD-E-LDc384', NULL),
-(10,'Pink Floyd','Groupe de rock britannique',4,'Facebook, Twitter','https://www.youtube.com/watch?v=JwYX52BP2Sk', NULL);
+INSERT INTO GROUPE (idGroupe,nomGroupe,descriptionGroupe,idStyle,photosGroupe,reseauxGroupe,liensVideoGroupe) VALUES
+(1,'The Beatles','Groupe de rock britannique',1,NULL,'Facebook, Twitter','https://www.youtube.com/watch?v=z9ypq6_5bsg'),
+(2,'Daft Punk','Groupe de musique électronique français',6,NULL,'Facebook, Instagram','https://www.youtube.com/watch?v=FGBhQbmPwH8'),
+(3,'Nirvana','Groupe de rock américain',1,NULL,'Facebook, Twitter','https://www.youtube.com/watch?v=hTWKbfoikeg'),
+(4,'Queen','Groupe de rock britannique',1,NULL,'Facebook, Instagram','https://www.youtube.com/watch?v=fJ9rUzIMcZQ'),
+(5,'The Rolling Stones','Groupe de rock britannique',1,NULL,'Facebook, Twitter','https://www.youtube.com/watch?v=6DUnOupJz7Q'),
+(6,'Zouhair Bahaoui', 'Chanteur marocain', 3,NULL, 'Facebook, Instagram', 'https://www.youtube.com/watch?v=6DUnOupJz7Q'),
+(7,'Eminem','Rappeur américain',3,NULL,'Facebook, Instagram','https://www.youtube.com/watch?v=uelHwf8o7_U'),
+(8,'AC/DC','Groupe de rock australien',1,NULL,'Facebook, Twitter','https://www.youtube.com/watch?v=v2AC41dglnM'),
+(9,'Metallica','Groupe de heavy metal américain',1,NULL,'Facebook, Instagram','https://www.youtube.com/watch?v=CD-E-LDc384'),
+(10,'Pink Floyd','Groupe de rock britannique',4,NULL,'Facebook, Twitter','https://www.youtube.com/watch?v=JwYX52BP2Sk');
 
 
-INSERT INTO TYPE (idType,nomType) VALUES
+INSERT INTO TYPES (idType,nomType) VALUES
 (1,'Concert'),
 (2,'Spectacle'),
 (3,'Autre');
 
 
-INSERT INTO EVENEMENT (idEvenement, nomEvenement, dateEvenement, heureEvenement, lieuEvenement, idType) VALUES
-(1, 'Concert de Queen', '2020-12-12', '20:00:00', 'Scène Bleu', 1),
-(2, 'Concert de Daft Punk', '2020-12-12', '20:00:00','Scène Rouge', 1),
-(3, 'Concert de Nirvana', '2020-05-06', '20:00:00','Scène Jaune', 1),
-(4, 'Concert de The Beatles', '2020-10-25', '20:00:00','Scène Bleu', 1),
-(5, 'Concert de The Rolling Stones', '2021-09-15', '20:00:00','Scène Noir', 1),
-(6, 'Concert de Zouhair Bahaoui', '2021-09-10', '20:00:00','Scène Rose', 1);
+INSERT INTO LIEU (idLieu,nomLieu,adresseLieu,capacitéLieu) VALUES
+(1, 'Scène Rouge', '1 rue de la scène rouge', 1000),
+(2, 'Scène Bleue', '2 rue de la scène bleue', 2000),
+(3, 'Scène Verte', '3 rue de la scène verte', 3000),
+(4, 'Scène Jaune', '4 rue de la scène jaune', 4000),
+(5, 'Scène Orange', '5 rue de la scène orange', 5000),
+(6, 'Scène Violette', '6 rue de la scène violette', 6000),
+(7, 'Scène Rose', '7 rue de la scène rose', 7000),
+(8, 'Scène Blanche', '8 rue de la scène blanche', 8000),
+(9, 'Scène Noire', '9 rue de la scène noire', 9000),
+(10, 'Scène Marron', '10 rue de la scène marron', 10000);
+
+
+INSERT INTO EVENEMENT (idEvenement, nomEvenement, dateEvenement, heureEvenement, idType, idLieu) VALUES
+(1, 'Concert de Queen', '2020-12-12', '20:00:00', 1, 1),
+(2, 'Concert de Daft Punk', '2020-12-12', '20:00:00', 1, 8),
+(3, 'Concert de Nirvana', '2020-05-06', '20:00:00', 1, 9),
+(4, 'Concert de The Beatles', '2020-10-25', '20:00:00', 1, 2),
+(5, 'Concert de The Rolling Stones', '2021-09-15', '20:00:00', 1, 4),
+(6, 'Concert de Zouhair Bahaoui', '2021-09-10', '20:00:00', 1, 3);
 
 
 
@@ -98,15 +111,15 @@ INSERT INTO MEMBRE (idMembre, nomMembre, prenomMembre, idGroupe, instrumentMembr
 (30, 'Mason', 'Nick', 10, 'Batterie');
 
 
-INSERT INTO PARTICIPE (idGroupe, idEvenement, dateArriveeGroupe, heureArriveeGroupe, tempsDeMontage) VALUES
-(1, 4, '2020-12-12', '18:00:00', 2),
-(2, 2, '2020-12-12', '18:00:00', 2),
-(3, 3, '2020-05-06', '18:00:00', 2),
-(4, 1, '2020-10-25', '18:00:00', 2),
-(5, 5, '2021-09-15', '18:00:00', 2),
-(6, 6, '2021-09-10', '18:00:00', 2);
+INSERT INTO PARTICIPE (idGroupe, idEvenement, dateArriveeGroupe, heureArriveeGroupe, tempsDeMontage, tempsDeDemontage) VALUES
+(1, 4, '2020-12-12', '18:00:00', 2, 3),
+(2, 2, '2020-12-12', '18:00:00', 2, 1.5),
+(3, 3, '2020-05-06', '18:00:00', 2, 2),
+(4, 1, '2020-10-25', '18:00:00', 2, 1),
+(5, 5, '2021-09-15', '18:00:00', 2, 2),
+(6, 6, '2021-09-10', '18:00:00', 2, 1.5);
 
-INSERT INTO LOGER (idHergement, idGroupe, dateDebutHebergement, dateFinHebergement) VALUES
+INSERT INTO LOGER (idHebergement, idGroupe, dateDebutHebergement, dateFinHebergement) VALUES
 (1, 1, '2020-12-12', '2020-12-13'),
 (2, 2, '2020-12-12', '2020-12-13'),
 (3, 3, '2020-05-06', '2020-05-07'),

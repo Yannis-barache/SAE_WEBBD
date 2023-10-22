@@ -121,7 +121,7 @@ CREATE TABLE RESSEMBLE(
     idStyle1 int NOT NULL,
     idStyle2 int NOT NULL,
     PRIMARY KEY (idStyle1, idStyle2)
-)
+);
 
 
 -- FOREIGN KEYS à ajouter
