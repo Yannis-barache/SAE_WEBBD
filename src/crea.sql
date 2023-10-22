@@ -123,6 +123,12 @@ CREATE TABLE RESSEMBLE(
     PRIMARY KEY (idStyle1, idStyle2)
 );
 
+CREATE TABLE AIME(
+    idClient int NOT NULL,
+    idGroupe int NOT NULL,
+    PRIMARY KEY (idClient, idGroupe)
+)
+
 
 -- FOREIGN KEYS à ajouter
 ALTER TABLE MEMBRE ADD FOREIGN KEY (idGroupe) REFERENCES GROUPE(idGroupe);
@@ -137,10 +143,17 @@ ALTER TABLE EVENEMENT ADD FOREIGN KEY (idLieu) REFERENCES LIEU(idLieu);
 ALTER TABLE BILLET ADD FOREIGN KEY (idClient) REFERENCES CLIENT(idClient);
 ALTER TABLE RESSEMBLE ADD FOREIGN KEY (idStyle1) REFERENCES STYLE(idStyle);
 ALTER TABLE RESSEMBLE ADD FOREIGN KEY (idStyle2) REFERENCES STYLE(idStyle);
+ALTER TABLE SINSCRIT ADD FOREIGN KEY (idClient) REFERENCES CLIENT(idClient);
+ALTER TABLE SINSCRIT ADD FOREIGN KEY (idEvenement) REFERENCES EVENEMENT(idEvenement);
+ALTER TABLE AIME ADD FOREIGN KEY (idClient) REFERENCES CLIENT(idClient);
+ALTER TABLE AIME ADD FOREIGN KEY (idGroupe) REFERENCES GROUPE(idGroupe);
 
--- TRIGGER --
+-- A changer dans le MCD : association loger --> ajouter une table date qui contient les dates et les durees
+-- revoir le systeme de billets
 
--- Trigger qui vérifie que le nombre de billets achetés par un client ne dépasse pas 3 -- 
+-- Triggers : ----------------------------------------------------------
+
+-- verifNbBillets : Vérifie que chaque utilisateur n’achète pas plus de 3 billets. 
 delimiter |
 CREATE OR REPLACE TRIGGER verifNbBillets BEFORE INSERT ON BILLET
 FOR EACH ROW
@@ -151,7 +164,7 @@ BEGIN
 END |
 delimiter ;
 
--- trigger qui vérifie que le nombre d'inscrit dans un événement ne dépasse pas la capacité du lieu --
+-- verifCapacite : Vérifie que la capacité du lieu n’est pas dépassée chaque fois qu’un utilisateur s’inscrit à un concert.
 delimiter |
 CREATE OR REPLACE TRIGGER verifCapacite BEFORE INSERT ON SINSCRIT
 FOR EACH ROW
@@ -162,7 +175,7 @@ BEGIN
 END |
 delimiter ;
 
--- trigger qui vérifie que le nombre de logés dans un hébergement ne dépasse pas la capacité de l'hébergement --
+-- verifCapaciteHebergement : Vérifie que la capacité de l’hébergement n’est pas dépassée chaque fois qu’un groupe est logé.
 delimiter |
 CREATE OR REPLACE TRIGGER verifCapaciteHebergement BEFORE INSERT ON LOGER
 FOR EACH ROW
@@ -173,10 +186,174 @@ BEGIN
 END |
 delimiter ;
 
--- trigger qui vérifie que deux événement ne se déroulent pas au même endroit au même moment --
+-- verifEvenement : Vérifie qu’il n’y a pas de conflits d’événements chaque fois qu’un nouvel événement est ajouté.
+delimiter |
+CREATE OR REPLACE TRIGGER verifEvenement BEFORE INSERT ON EVENEMENT
+FOR EACH ROW
+BEGIN
+    IF (SELECT COUNT(*) FROM EVENEMENT WHERE idLieu = NEW.idLieu AND dateEvenement = NEW.dateEvenement AND heureEvenement = NEW.heureEvenement) >= 1 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Un événement se déroule déjà à cette date et à cette heure';
+    END IF;
+END |
 
--- trigger qui vérifie que deux groupes ne soient pas logés au même endroit au même moment --
+-- VerifierHebergement : Vérifie qu’il n’y a pas de conflits d’hébergement chaque fois qu’un groupe est logé.
+DELIMITER |
+CREATE TRIGGER VerifierHebergement
+BEFORE INSERT ON LOGER
+FOR EACH ROW
+BEGIN
+    DECLARE conflit INT;
+    SELECT COUNT(*) INTO conflit
+    FROM LOGER
+    WHERE idHebergement = NEW.idHebergement AND idGroupe = NEW.idGroupe AND dateDebutHebergement = NEW.dateDebutHebergement AND dateFinHebergement = NEW.dateFinHebergement;
+    IF conflit > 0 THEN 
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Conflit dhébergement détecté. Le même groupe ne peut pas être logé au même endroit au même moment.';
+    END IF;
+END;|
+DELIMITER ;
+
+-- VérifierDisponibilitéBillet : Vérifie la disponibilité des billets chaque fois qu’un utilisateur tente d’acheter un billet.
+delimiter |
+CREATE OR REPLACE TRIGGER VérifierDisponibilitéBillet
+BEFORE INSERT ON BILLET
+FOR EACH ROW
+BEGIN
+    DECLARE nbBillets INT;
+    SELECT COUNT(*) INTO nbBillets
+    FROM BILLET
+    WHERE idBillet = NEW.idBillet;
+    IF nbBillets > 0 THEN 
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Il n''y a plus de billets disponibles pour ce concert.';
+    END IF;
+END |
+delimiter ;
+
+-- MettreAJourStockBillets : Met à jour le stock de billets chaque fois qu’un billet est acheté.
+delimiter |
+CREATE OR REPLACE TRIGGER MettreAJourStockBillets
+AFTER INSERT ON BILLET
+FOR EACH ROW
+BEGIN
+    UPDATE BILLET
+    SET nbBillets = nbBillets - 1
+    WHERE idBillet = NEW.idBillet;
+END |
+delimiter ;
+
+-- VérifierProgrammation : Vérifie qu’il n’y a pas de conflits dans la programmation chaque fois qu’un nouveau concert est ajouté.
+DELIMITER |
+CREATE TRIGGER VerifierProgrammation
+BEFORE INSERT ON PARTICIPE
+FOR EACH ROW
+BEGIN
+    DECLARE conflit INT;
+    SELECT COUNT(*) INTO conflit
+    FROM PARTICIPE
+    WHERE idGroupe = NEW.idGroupe AND dateArriveeGroupe = NEW.dateArriveeGroupe AND heureArriveeGroupe = NEW.heureArriveeGroupe;
+    IF conflit > 0 THEN 
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Conflit de programmation détecté. Le même groupe ne peut pas être programmé pour jouer à la même date et heure.';
+    END IF;
+END;|
+DELIMITER ;
 
 
--- A changer dans le MCD : association loger --> ajouter une table date qui contient les dates et les durees
--- revoir le systeme de billets
+-- Fonctions : -----------------------------------------------------------
+
+-- Une fonction pour afficher la programmation par jour, lieu et artiste en MySQL.
+delimiter |
+CREATE FUNCTION ConsulterProgrammation (type VARCHAR(50), id int) RETURNS VARCHAR(50)
+BEGIN
+    DECLARE result VARCHAR(50);
+    IF type = 'jour' THEN
+        SELECT nomEvenement INTO result
+        FROM EVENEMENT
+        WHERE dateEvenement = id;
+    ELSEIF type = 'lieu' THEN
+        SELECT nomEvenement INTO result
+        FROM EVENEMENT
+        WHERE idLieu = id;
+    ELSEIF type = 'artiste' THEN
+        SELECT nomEvenement INTO result
+        FROM EVENEMENT
+        WHERE idEvenement = id;
+    END IF;
+    RETURN result;
+END |
+delimiter ;
+
+-- Une fonction pour permettre aux utilisateurs de rechercher des groupes par style musical.
+delimiter |
+CREATE FUNCTION RechercherGroupeParStyle (style VARCHAR(50)) RETURNS VARCHAR(50)
+BEGIN
+    DECLARE result VARCHAR(50);
+    SELECT nomGroupe INTO result
+    FROM GROUPE
+    WHERE idStyle = (SELECT idStyle FROM STYLE WHERE nomStyle = style);
+    RETURN result;
+END |
+delimiter ;
+
+-- Une fonction pour gérer les groupes favoris des utilisateurs.
+delimiter |
+CREATE FUNCTION ConsulterGroupesFavoris (idClient int) RETURNS VARCHAR(50)
+BEGIN
+    DECLARE result VARCHAR(50);
+    SELECT nomGroupe INTO result
+    FROM GROUPE
+    WHERE idGroupe = (SELECT idGroupe FROM AIME WHERE idClient = idClient);
+    RETURN result;
+END |
+delimiter ;
+
+-- Une fonction pour recommander des groupes similaires lors de la consultation d’un groupe.
+CREATE FUNCTION SuggérerGroupes (idGroupe int) RETURNS VARCHAR(50)
+BEGIN
+    DECLARE result VARCHAR(50);
+    SELECT nomGroupe INTO result
+    FROM GROUPE
+    WHERE idStyle = (SELECT idStyle FROM GROUPE WHERE idGroupe = idGroupe);
+    RETURN result;
+END |
+-- Une fonction pour afficher les informations d’arrivée et de départ, la durée du concert, le temps de montage et de démontage, et l’hébergement pour chaque groupe.
+delimiter |
+CREATE FUNCTION ConsulterInfosGroupe (idGroupe int) RETURNS VARCHAR(50)
+BEGIN
+    DECLARE result VARCHAR(50);
+    SELECT dateArriveeGroupe, heureArriveeGroupe, tempsDeMontage, tempsDeDemontage INTO result
+    FROM PARTICIPE
+    WHERE idGroupe = idGroupe;
+    RETURN result;
+END |
+delimiter ;
+
+-- Procédures : ------------------------------------------------
+-- AjouterGroupe : Ajoute un nouveau groupe à la base de données avec toutes les informations nécessaires (description, photos, liens réseaux sociaux, liens vidéo, membres du groupe et instruments joués, etc.).
+delimiter |
+CREATE OR REPLACE PROCEDURE AjouterGroupe (nomGroupe VARCHAR(50), descriptionGroupe VARCHAR(50), idStyle int, photosGroupe VARCHAR(50), reseauxGroupe VARCHAR(50), liensVideoGroupe VARCHAR(50), nomMembre VARCHAR(50), prenomMembre VARCHAR(50), instrumentMembre VARCHAR(50))
+BEGIN
+    INSERT INTO GROUPE (nomGroupe, descriptionGroupe, idStyle, photosGroupe, reseauxGroupe, liensVideoGroupe) VALUES (nomGroupe, descriptionGroupe, idStyle, photosGroupe, reseauxGroupe, liensVideoGroupe);
+    INSERT INTO MEMBRE (nomMembre, prenomMembre, instrumentMembre) VALUES (nomMembre, prenomMembre, instrumentMembre);
+END |
+delimiter ;
+
+-- AjouterConcert : Ajoute un nouveau concert à la programmation du festival.
+delimiter |
+CREATE OR REPLACE PROCEDURE AjouterConcert (nomEvenement VARCHAR(50), dateEvenement DATE, heureEvenement TIME, idType int, idLieu int)
+BEGIN
+    INSERT INTO EVENEMENT (nomEvenement, dateEvenement, heureEvenement, idType, idLieu) VALUES (nomEvenement, dateEvenement, heureEvenement, idType, idLieu);
+END |
+delimiter ;
+-- AcheterBillet : Permet à un spectateur d’acheter un billet pour le festival.
+delimiter |
+CREATE OR REPLACE PROCEDURE AcheterBillet (nomBillet VARCHAR(50), prixBillet int, idClient int)
+BEGIN
+    INSERT INTO BILLET (nomBillet, prixBillet, idClient) VALUES (nomBillet, prixBillet, idClient);
+END |
+delimiter ;
+-- InscrireSpectateur : Inscrire un spectateur à un concert spécifique.
+delimiter |
+CREATE OR REPLACE PROCEDURE InscrireSpectateur (idClient int, idEvenement int)
+BEGIN
+    INSERT INTO SINSCRIT (idClient, idEvenement) VALUES (idClient, idEvenement);
+END |
+delimiter ;
