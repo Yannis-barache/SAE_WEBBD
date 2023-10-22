@@ -53,7 +53,6 @@ INSERT INTO EVENEMENT (idEvenement, nomEvenement, dateEvenement, heureEvenement,
 (6, 'Concert de Zouhair Bahaoui', '2021-09-10', '20:00:00', 1, 3);
 
 
-
 INSERT INTO HEBERGEMENT (idHebergement, nomHebergement, adresseHebergement, nbPlacesJour) VALUES
 (1, 'Hôtel de la gare', '1 rue de la gare', 50),
 (2, 'Hôtel du centre', '2 rue du centre', 100),
@@ -119,6 +118,7 @@ INSERT INTO PARTICIPE (idGroupe, idEvenement, dateArriveeGroupe, heureArriveeGro
 (5, 5, '2021-09-15', '18:00:00', 2, 2),
 (6, 6, '2021-09-10', '18:00:00', 2, 1.5);
 
+
 INSERT INTO LOGER (idHebergement, idGroupe, dateDebutHebergement, dateFinHebergement) VALUES
 (1, 1, '2020-12-12', '2020-12-13'),
 (2, 2, '2020-12-12', '2020-12-13'),
@@ -127,11 +127,13 @@ INSERT INTO LOGER (idHebergement, idGroupe, dateDebutHebergement, dateFinHeberge
 (5, 5, '2021-09-15', '2021-09-16'),
 (6, 6, '2021-09-10', '2021-09-11');
 
+
 insert into BILLET (idBillet, nomBillet, prixBillet, idclient) VALUES
 (1,"patrick", 2, 1),
 (2,"patrick1", 2, 1),
 (3,"patrick2", 2, 1),
 (4,"patrick3", 2, 1);
+
 
 insert into SINSCRIT(idEvenement, idClient) VALUES
 (1,1),

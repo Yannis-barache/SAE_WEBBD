@@ -173,5 +173,10 @@ BEGIN
 END |
 delimiter ;
 
+-- trigger qui vérifie que deux événement ne se déroulent pas au même endroit au même moment --
+
+-- trigger qui vérifie que deux groupes ne soient pas logés au même endroit au même moment --
+
+
 -- A changer dans le MCD : association loger --> ajouter une table date qui contient les dates et les durees
 -- revoir le systeme de billets
