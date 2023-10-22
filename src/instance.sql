@@ -31,7 +31,7 @@ INSERT INTO TYPES (idType,nomType) VALUES
 (3,'Autre');
 
 
-INSERT INTO LIEU (idLieu,nomLieu,adresseLieu,capacitéLieu) VALUES
+INSERT INTO LIEU (idLieu,nomLieu,adresseLieu,capaciteLieu) VALUES
 (1, 'Scène Rouge', '1 rue de la scène rouge', 1000),
 (2, 'Scène Bleue', '2 rue de la scène bleue', 2000),
 (3, 'Scène Verte', '3 rue de la scène verte', 3000),
@@ -129,10 +129,12 @@ INSERT INTO LOGER (idHebergement, idGroupe, dateDebutHebergement, dateFinHeberge
 
 
 insert into BILLET (idBillet, nomBillet, prixBillet, idclient) VALUES
-(1,'patrick', 2, 1),
-(2,'patrick1', 2, 1),
-(3,'patrick2', 2, 1),
-(4,'patrick3', 2, 1);
+(1,'Jour1', 2, 1),
+(2,'Jour2', 2, 1),
+(3,'Jour3', 2, 1),
+(4,'Jour2', 2, 2);
+
+
 
 
 insert into SINSCRIT(idEvenement, idClient) VALUES
