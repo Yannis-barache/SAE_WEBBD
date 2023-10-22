@@ -84,7 +84,7 @@ CREATE TABLE LIEU(
     idLieu int NOT NULL AUTO_INCREMENT,
     nomLieu VARCHAR(50) NOT NULL,
     adresseLieu VARCHAR(50) NOT NULL,
-    capacitéLieu int NOT NULL,
+    capaciteLieu int NOT NULL,
     PRIMARY KEY (idLieu)
 );
 
@@ -154,7 +154,7 @@ delimiter |
 CREATE OR REPLACE TRIGGER verifCapacite BEFORE INSERT ON SINSCRIT
 FOR EACH ROW
 BEGIN
-    IF (SELECT COUNT(*) FROM SINSCRIT WHERE idEvenement = NEW.idEvenement) >= (SELECT capacitéLieu FROM LIEU WHERE idLieu = (SELECT idLieu FROM EVENEMENT WHERE idEvenement = NEW.idEvenement)) THEN
+    IF (SELECT COUNT(*) FROM SINSCRIT WHERE idEvenement = NEW.idEvenement) >= (SELECT capaciteLieu FROM LIEU WHERE idLieu = (SELECT idLieu FROM EVENEMENT WHERE idEvenement = NEW.idEvenement)) THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La capacité du lieu est atteinte';
     END IF;
 END |
@@ -199,7 +199,7 @@ DELIMITER ;
 
 -- VérifierDisponibilitéBillet : Vérifie la disponibilité des billets chaque fois qu’un utilisateur tente d’acheter un billet.
 delimiter |
-CREATE OR REPLACE TRIGGER VérifierDisponibilitéBillet
+CREATE OR REPLACE TRIGGER VerifierDisponibiliteBillet
 BEFORE INSERT ON BILLET
 FOR EACH ROW
 BEGIN
@@ -213,19 +213,9 @@ BEGIN
 END |
 delimiter ;
 
--- MettreAJourStockBillets : Met à jour le stock de billets chaque fois qu’un billet est acheté.
-delimiter |
-CREATE OR REPLACE TRIGGER MettreAJourStockBillets
-AFTER INSERT ON BILLET
-FOR EACH ROW
-BEGIN
-    UPDATE BILLET
-    SET nbBillets = nbBillets - 1
-    WHERE idBillet = NEW.idBillet;
-END |
-delimiter ;
 
--- VérifierProgrammation : Vérifie qu’il n’y a pas de conflits dans la programmation chaque fois qu’un nouveau concert est ajouté.
+
+-- VerifierProgrammation : Vérifie qu’il n’y a pas de conflits dans la programmation chaque fois qu’un nouveau concert est ajouté.
 DELIMITER |
 CREATE TRIGGER VerifierProgrammation
 BEFORE INSERT ON PARTICIPE
@@ -243,7 +233,7 @@ DELIMITER ;
 
 -- VérifierInscription : Vérifie qu’un utilisateur ne s’inscrit pas deux fois au même concert.
 delimiter |
-CREATE OR REPLACE TRIGGER VérifierInscription
+CREATE OR REPLACE TRIGGER VerifierInscription
 BEFORE INSERT ON SINSCRIT
 FOR EACH ROW
 BEGIN
@@ -259,7 +249,7 @@ delimiter ;
 
 -- VérifierFavoris : Vérifie qu’un utilisateur n’ajoute pas deux fois le même groupe à ses favoris.
 delimiter |
-CREATE OR REPLACE TRIGGER VérifierFavoris
+CREATE OR REPLACE TRIGGER VerifierFavoris
 BEFORE INSERT ON AIME
 FOR EACH ROW
 BEGIN
@@ -275,7 +265,7 @@ delimiter ;
 
 -- VérifierRessemblance : Vérifie qu’il n’y a pas de ressemblance entre deux styles musicaux déjà existante.
 delimiter |
-CREATE OR REPLACE TRIGGER VérifierRessemblance
+CREATE OR REPLACE TRIGGER VerifierRessemblance
 BEFORE INSERT ON RESSEMBLE
 FOR EACH ROW
 BEGIN
@@ -291,7 +281,7 @@ delimiter ;
 
 -- VérifierStyle : Vérifie qu’il n’y a pas de style musical déjà existant.
 delimiter |
-CREATE OR REPLACE TRIGGER VérifierStyle
+CREATE OR REPLACE TRIGGER VerifierStyle
 BEFORE INSERT ON STYLE
 FOR EACH ROW
 BEGIN
@@ -307,7 +297,7 @@ delimiter ;
 
 -- VérifierLieu : Vérifie qu’il n’y a pas de lieu déjà existant.
 delimiter |
-CREATE OR REPLACE TRIGGER VérifierLieu
+CREATE OR REPLACE TRIGGER VerifierLieu
 BEFORE INSERT ON LIEU
 FOR EACH ROW
 BEGIN
@@ -323,7 +313,7 @@ delimiter ;
 
 -- VérifierType : Vérifie qu’il n’y a pas de type de concert déjà existant.
 delimiter |
-CREATE OR REPLACE TRIGGER VérifierType
+CREATE OR REPLACE TRIGGER VerifierType
 BEFORE INSERT ON TYPES
 FOR EACH ROW
 BEGIN
@@ -339,7 +329,7 @@ delimiter ;
 
 -- VérifierGroupe : Vérifie qu’il n’y a pas de groupe déjà existant.
 delimiter |
-CREATE OR REPLACE TRIGGER VérifierGroupe
+CREATE OR REPLACE TRIGGER VerifierGroupe
 BEFORE INSERT ON GROUPE
 FOR EACH ROW
 BEGIN
@@ -355,7 +345,7 @@ delimiter ;
 
 -- VérifierMembre : Vérifie qu’il n’y a pas de membre déjà existant.
 delimiter |
-CREATE OR REPLACE TRIGGER VérifierMembre
+CREATE OR REPLACE TRIGGER VerifierMembre
 BEFORE INSERT ON MEMBRE
 FOR EACH ROW
 BEGIN
@@ -373,7 +363,7 @@ delimiter ;
 
 -- Une fonction pour afficher la programmation par jour, lieu et artiste en MySQL.
 delimiter |
-CREATE FUNCTION ConsulterProgrammation (type VARCHAR(50), id int) RETURNS VARCHAR(50)
+CREATE OR REPLACE FUNCTION ConsulterProgrammation (type VARCHAR(50), id int) RETURNS VARCHAR(50)
 BEGIN
     DECLARE result VARCHAR(50);
     IF type = 'jour' THEN
@@ -395,7 +385,7 @@ delimiter ;
 
 -- Une fonction pour permettre aux utilisateurs de rechercher des groupes par style musical.
 delimiter |
-CREATE FUNCTION RechercherGroupeParStyle (style VARCHAR(50)) RETURNS VARCHAR(50)
+CREATE OR REPLACE FUNCTION RechercherGroupeParStyle (style VARCHAR(50)) RETURNS VARCHAR(50)
 BEGIN
     DECLARE result VARCHAR(50);
     SELECT nomGroupe INTO result
@@ -407,7 +397,7 @@ delimiter ;
 
 -- Une fonction pour gérer les groupes favoris des utilisateurs.
 delimiter |
-CREATE FUNCTION ConsulterGroupesFavoris (idClient int) RETURNS VARCHAR(50)
+CREATE OR REPLACE FUNCTION ConsulterGroupesFavoris (idClient int) RETURNS VARCHAR(50)
 BEGIN
     DECLARE result VARCHAR(50);
     SELECT nomGroupe INTO result
@@ -418,7 +408,8 @@ END |
 delimiter ;
 
 -- Une fonction pour recommander des groupes similaires lors de la consultation d’un groupe.
-CREATE FUNCTION SuggérerGroupes (idGroupe int) RETURNS VARCHAR(50)
+delimiter |
+CREATE OR REPLACE FUNCTION SuggererGroupes (idGroupe int) RETURNS VARCHAR(50)
 BEGIN
     DECLARE result VARCHAR(50);
     SELECT nomGroupe INTO result
@@ -426,9 +417,10 @@ BEGIN
     WHERE idStyle = (SELECT idStyle FROM GROUPE WHERE idGroupe = idGroupe);
     RETURN result;
 END |
+delimiter ;
 -- Une fonction pour afficher les informations d’arrivée et de départ, la durée du concert, le temps de montage et de démontage, et l’hébergement pour chaque groupe.
 delimiter |
-CREATE FUNCTION ConsulterInfosGroupe (idGroupe int) RETURNS VARCHAR(50)
+CREATE OR REPLACE FUNCTION ConsulterInfosGroupe (idGroupe int) RETURNS VARCHAR(50)
 BEGIN
     DECLARE result VARCHAR(50);
     SELECT dateArriveeGroupe, heureArriveeGroupe, tempsDeMontage, tempsDeDemontage INTO result
