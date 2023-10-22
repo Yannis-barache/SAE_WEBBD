@@ -256,6 +256,133 @@ BEGIN
 END;|
 DELIMITER ;
 
+-- VérifierInscription : Vérifie qu’un utilisateur ne s’inscrit pas deux fois au même concert.
+delimiter |
+CREATE OR REPLACE TRIGGER VérifierInscription
+BEFORE INSERT ON SINSCRIT
+FOR EACH ROW
+BEGIN
+    DECLARE conflit INT;
+    SELECT COUNT(*) INTO conflit
+    FROM SINSCRIT
+    WHERE idClient = NEW.idClient AND idEvenement = NEW.idEvenement;
+    IF conflit > 0 THEN 
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Vous êtes déjà inscrit à ce concert.';
+    END IF;
+END |
+delimiter ;
+
+-- VérifierFavoris : Vérifie qu’un utilisateur n’ajoute pas deux fois le même groupe à ses favoris.
+delimiter |
+CREATE OR REPLACE TRIGGER VérifierFavoris
+BEFORE INSERT ON AIME
+FOR EACH ROW
+BEGIN
+    DECLARE conflit INT;
+    SELECT COUNT(*) INTO conflit
+    FROM AIME
+    WHERE idClient = NEW.idClient AND idGroupe = NEW.idGroupe;
+    IF conflit > 0 THEN 
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Vous avez déjà ajouté ce groupe à vos favoris.';
+    END IF;
+END |
+delimiter ;
+
+-- VérifierRessemblance : Vérifie qu’il n’y a pas de ressemblance entre deux styles musicaux déjà existante.
+delimiter |
+CREATE OR REPLACE TRIGGER VérifierRessemblance
+BEFORE INSERT ON RESSEMBLE
+FOR EACH ROW
+BEGIN
+    DECLARE conflit INT;
+    SELECT COUNT(*) INTO conflit
+    FROM RESSEMBLE
+    WHERE idStyle1 = NEW.idStyle1 AND idStyle2 = NEW.idStyle2;
+    IF conflit > 0 THEN 
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Ces deux styles musicaux sont déjà ressemblants.';
+    END IF;
+END |
+delimiter ;
+
+-- VérifierStyle : Vérifie qu’il n’y a pas de style musical déjà existant.
+delimiter |
+CREATE OR REPLACE TRIGGER VérifierStyle
+BEFORE INSERT ON STYLE
+FOR EACH ROW
+BEGIN
+    DECLARE conflit INT;
+    SELECT COUNT(*) INTO conflit
+    FROM STYLE
+    WHERE nomStyle = NEW.nomStyle;
+    IF conflit > 0 THEN 
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Ce style musical existe déjà.';
+    END IF;
+END |
+delimiter ;
+
+-- VérifierLieu : Vérifie qu’il n’y a pas de lieu déjà existant.
+delimiter |
+CREATE OR REPLACE TRIGGER VérifierLieu
+BEFORE INSERT ON LIEU
+FOR EACH ROW
+BEGIN
+    DECLARE conflit INT;
+    SELECT COUNT(*) INTO conflit
+    FROM LIEU
+    WHERE nomLieu = NEW.nomLieu;
+    IF conflit > 0 THEN 
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Ce lieu existe déjà.';
+    END IF;
+END |
+delimiter ;
+
+-- VérifierType : Vérifie qu’il n’y a pas de type de concert déjà existant.
+delimiter |
+CREATE OR REPLACE TRIGGER VérifierType
+BEFORE INSERT ON TYPES
+FOR EACH ROW
+BEGIN
+    DECLARE conflit INT;
+    SELECT COUNT(*) INTO conflit
+    FROM TYPES
+    WHERE nomType = NEW.nomType;
+    IF conflit > 0 THEN 
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Ce type de concert existe déjà.';
+    END IF;
+END |
+delimiter ;
+
+-- VérifierGroupe : Vérifie qu’il n’y a pas de groupe déjà existant.
+delimiter |
+CREATE OR REPLACE TRIGGER VérifierGroupe
+BEFORE INSERT ON GROUPE
+FOR EACH ROW
+BEGIN
+    DECLARE conflit INT;
+    SELECT COUNT(*) INTO conflit
+    FROM GROUPE
+    WHERE nomGroupe = NEW.nomGroupe;
+    IF conflit > 0 THEN 
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Ce groupe existe déjà.';
+    END IF;
+END |
+delimiter ;
+
+-- VérifierMembre : Vérifie qu’il n’y a pas de membre déjà existant.
+delimiter |
+CREATE OR REPLACE TRIGGER VérifierMembre
+BEFORE INSERT ON MEMBRE
+FOR EACH ROW
+BEGIN
+    DECLARE conflit INT;
+    SELECT COUNT(*) INTO conflit
+    FROM MEMBRE
+    WHERE nomMembre = NEW.nomMembre AND prenomMembre = NEW.prenomMembre;
+    IF conflit > 0 THEN 
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Ce membre existe déjà.';
+    END IF;
+END |
+delimiter ;
 
 -- Fonctions : -----------------------------------------------------------
 
