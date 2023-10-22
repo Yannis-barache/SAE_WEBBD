@@ -357,3 +357,123 @@ BEGIN
     INSERT INTO SINSCRIT (idClient, idEvenement) VALUES (idClient, idEvenement);
 END |
 delimiter ;
+
+-- LogerGroupe : Loger un groupe dans un hébergement spécifique.
+delimiter |
+CREATE OR REPLACE PROCEDURE LogerGroupe (idHebergement int, idGroupe int, dateDebutHebergement DATE, dateFinHebergement DATE)
+BEGIN
+    INSERT INTO LOGER (idHebergement, idGroupe, dateDebutHebergement, dateFinHebergement) VALUES (idHebergement, idGroupe, dateDebutHebergement, dateFinHebergement);
+END |
+delimiter ;
+
+-- SupprimerGroupe : Supprimer un groupe de la base de données.
+delimiter |
+CREATE OR REPLACE PROCEDURE SupprimerGroupe (idGroupe int)
+BEGIN
+    DELETE FROM GROUPE WHERE idGroupe = idGroupe;
+END |
+delimiter ;
+
+-- SupprimerConcert : Supprimer un concert de la programmation du festival.
+delimiter |
+CREATE OR REPLACE PROCEDURE SupprimerConcert (idEvenement int)
+BEGIN
+    DELETE FROM EVENEMENT WHERE idEvenement = idEvenement;
+END |
+delimiter ;
+
+-- SupprimerBillet : Supprimer un billet de la base de données.
+delimiter |
+CREATE OR REPLACE PROCEDURE SupprimerBillet (idBillet int)
+BEGIN
+    DELETE FROM BILLET WHERE idBillet = idBillet;
+END |
+delimiter ;
+
+-- SupprimerSpectateur : Supprimer un spectateur de la base de données.
+delimiter |
+CREATE OR REPLACE PROCEDURE SupprimerSpectateur (idClient int)
+BEGIN
+    DELETE FROM CLIENT WHERE idClient = idClient;
+END |
+delimiter ;
+
+-- SupprimerMembre : Supprimer un membre d’un groupe.
+delimiter |
+CREATE OR REPLACE PROCEDURE SupprimerMembre (idMembre int)
+BEGIN
+    DELETE FROM MEMBRE WHERE idMembre = idMembre;
+END |
+delimiter ;
+
+-- SupprimerHebergement : Supprimer un hébergement de la base de données.
+delimiter |
+CREATE OR REPLACE PROCEDURE SupprimerHebergement (idHebergement int)
+BEGIN
+    DELETE FROM HEBERGEMENT WHERE idHebergement = idHebergement;
+END |
+delimiter ;
+
+-- SupprimerInscription : Supprimer l’inscription d’un spectateur à un concert.
+delimiter |
+CREATE OR REPLACE PROCEDURE SupprimerInscription (idClient int, idEvenement int)
+BEGIN
+    DELETE FROM SINSCRIT WHERE idClient = idClient AND idEvenement = idEvenement;
+END |
+delimiter ;
+
+-- SupprimerLogement : Supprimer le logement d’un groupe.
+delimiter |
+CREATE OR REPLACE PROCEDURE SupprimerLogement (idHebergement int, idGroupe int, dateDebutHebergement DATE)
+BEGIN
+    DELETE FROM LOGER WHERE idHebergement = idHebergement AND idGroupe = idGroupe AND dateDebutHebergement = dateDebutHebergement;
+END |
+delimiter ;
+
+-- SupprimerParticipation : Supprimer la participation d’un groupe à un concert.
+delimiter |
+CREATE OR REPLACE PROCEDURE SupprimerParticipation (idGroupe int, idEvenement int)
+BEGIN
+    DELETE FROM PARTICIPE WHERE idGroupe = idGroupe AND idEvenement = idEvenement;
+END |
+delimiter ;
+
+-- SupprimerStyle : Supprimer un style musical de la base de données.
+delimiter |
+CREATE OR REPLACE PROCEDURE SupprimerStyle (idStyle int)
+BEGIN
+    DELETE FROM STYLE WHERE idStyle = idStyle;
+END |
+delimiter ;
+
+-- SupprimerLieu : Supprimer un lieu de la base de données.
+delimiter |
+CREATE OR REPLACE PROCEDURE SupprimerLieu (idLieu int)
+BEGIN
+    DELETE FROM LIEU WHERE idLieu = idLieu;
+END |
+delimiter ;
+
+-- SupprimerType : Supprimer un type de concert de la base de données.
+delimiter |
+CREATE OR REPLACE PROCEDURE SupprimerType (idType int)
+BEGIN
+    DELETE FROM TYPES WHERE idType = idType;
+END |
+delimiter ;
+
+-- SupprimerRessemblanceStyle : Supprimer une ressemblance entre deux styles musicaux.
+delimiter |
+CREATE OR REPLACE PROCEDURE SupprimerRessemblanceStyle (idStyle1 int, idStyle2 int)
+BEGIN
+    DELETE FROM RESSEMBLE WHERE idStyle1 = idStyle1 AND idStyle2 = idStyle2;
+END |
+delimiter ;
+
+-- SupprimerFavoris : Supprimer un groupe des favoris d’un utilisateur.
+delimiter |
+CREATE OR REPLACE PROCEDURE SupprimerFavoris (idClient int, idGroupe int)
+BEGIN
+    DELETE FROM AIME WHERE idClient = idClient AND idGroupe = idGroupe;
+END |
+delimiter ;
