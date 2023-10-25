@@ -7,7 +7,7 @@ from flask import render_template,request,redirect,url_for
 def home():
     return render_template(
         "home.html",
-        title="Bienvenue sur le site du Festiut'O",
+        title="Festiut'O",
         names=[1,2,3,4,5,6,7,8,9,10])
 
 @app.route("/connexion")

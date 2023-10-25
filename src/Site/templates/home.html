@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 {% block main %}
-        <ul>
-            {% for x in names %}
-            <li>{{ x }}</li>
-            {% endfor %}
-        </ul>
+    <main id="bienvenue">
+        <h2>BIENVENUE</h2>
+        <p>Connecte toi ou crée un compte : </p>
+        <button class="button"><span class="button-content">INSCRIPTION</span></button>
+        <p>ou</p>
+        <button class="button"><span class="button-content">CONNEXION</span></button>
+    </main>
 {% endblock %}
     
