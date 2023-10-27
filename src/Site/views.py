@@ -6,17 +6,12 @@ from flask import render_template,request,redirect,url_for
 @app.route('/') 
 def home():
     return render_template(
-        "home.html",
-        title="Festiut'O",
-        names=[1,2,3,4,5,6,7,8,9,10])
+        "home.html")
 
-@app.route("/connexion")
-
-def page2():
+@app.route("/connexion/")
+def page_connexion():
     return render_template(
-        "connexion.html",
-        title="Page de connexion",
-        message="Veuillez rentrer vos identifiants",
+        "PageConnexion.html"
         )
 
 @app.route('/success/<name>')

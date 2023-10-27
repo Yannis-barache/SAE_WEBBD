@@ -24,6 +24,14 @@ body {
     font-family: 'Open Sans';
 }
 
+#bienvenue h2{
+text-decoration-line: underline;
+text-decoration-style: "solid";
+text-decoration-color: rgba(0,0,0,1);
+text-decoration-thickness: 9px;
+
+}
+
 .button {
     position: relative;
     overflow: hidden;

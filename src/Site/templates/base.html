@@ -1,8 +1,8 @@
 <!doctype html>
 <html>
     <head>
-        <title>{{ title }}</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+        {% block styles %}
+        {% endblock %}
     </head>
     <header>
         

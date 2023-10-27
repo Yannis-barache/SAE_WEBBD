@@ -1,11 +1,14 @@
 {% extends "base.html" %}
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename = 'home.css')}}">
+{% endblock %}
 {% block main %}
     <main id="bienvenue">
         <h2>BIENVENUE</h2>
         <p>Connecte toi ou crée un compte : </p>
-        <button class="button"><span class="button-content">INSCRIPTION</span></button>
+        <a href=""><button class="button"><span class="button-content">INSCRIPTION</span></button></a>
         <p>ou</p>
-        <button class="button"><span class="button-content">CONNEXION</span></button>
+        <a href="{{url_for('page_connexion')}}"><button class="button"><span class="button-content">CONNEXION</span></button></a>
     </main>
 {% endblock %}
     
