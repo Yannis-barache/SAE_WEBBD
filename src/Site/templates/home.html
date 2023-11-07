@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "baseConnexionInscription.html" %}
 {% block styles %}
 <link rel="stylesheet" href="{{ url_for('static', filename = 'home.css')}}">
 {% endblock %}
@@ -6,7 +6,7 @@
     <main id="bienvenue">
         <h2>BIENVENUE</h2>
         <p>Connecte toi ou crée un compte : </p>
-        <a href=""><button class="button"><span class="button-content">INSCRIPTION</span></button></a>
+        <a href="{{url_for('page_inscription')}}"><button class="button"><span class="button-content">INSCRIPTION</span></button></a>
         <p>ou</p>
         <a href="{{url_for('page_connexion')}}"><button class="button"><span class="button-content">CONNEXION</span></button></a>
     </main>

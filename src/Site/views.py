@@ -14,6 +14,12 @@ def page_connexion():
         "PageConnexion.html"
         )
 
+@app.route("/inscription/")
+def page_inscription():
+    return render_template(
+        "PageInscription.html"
+    )
+
 @app.route('/success/<name>')
 def success(name):
    return 'welcome %s' % name

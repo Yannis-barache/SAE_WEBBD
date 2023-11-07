@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "baseConnexionInscription.html" %}
 {% block styles %}
 <link rel="stylesheet" href="{{ url_for('static', filename = 'pageconnexion.css')}}">
 {% endblock %}
@@ -19,9 +19,9 @@
         <span></span>
         <span></span>
         <span></span>
-        Submit
+        SE CONNECTER
       </a>
     </form>
-    <p>Don't have an account? <a href="" class="a2">Sign up!</a></p>
+    <p>Don't have an account? <a href="{{url_for('page_inscription')}}" class="a2">Sign up!</a></p>
   </div>
 {% endblock %}
