@@ -18,7 +18,8 @@ class Groupe:
         la classe Groupe
     """
 
-    def __init__(self, id_groupe: int, nom_groupe: str, description_groupe: str, id_style: int, photo_groupe: int,
+    def __init__(self, id_groupe: int, nom_groupe: str,
+                 description_groupe: str, id_style: int, photo_groupe: int,
                  reseaux_groupe: [str], liens_videos_groupe: str):
         """
         Constructeur de la classe Groupe
@@ -110,7 +111,12 @@ class Groupe:
         Returns:
             str: informations du groupe
         """
-        return "Groupe : id_groupe = " + str(self.id_groupe) + " nom_groupe = " + str(
-            self.nom_groupe) + " description_groupe = " + str(self.description_groupe) + " id_style = " + str(
-            self.id_style) + " photo_groupe = " + str(self.photo_groupe) + " reseaux_groupe = " + str(
-            self.reseaux_groupe) + " liensVideosGroupe = " + str(self.liensVideosGroupe)
+        return "Groupe : id_groupe = " + str(
+            self.id_groupe) + " nom_groupe = " + str(
+                self.nom_groupe) + " description_groupe = " + str(
+                    self.description_groupe) + " id_style = " + str(
+                        self.id_style) + " photo_groupe = " + str(
+                            self.photo_groupe) + " reseaux_groupe = " + str(
+                                self.reseaux_groupe
+                            ) + " liensVideosGroupe = " + str(
+                                self.liensVideosGroupe)

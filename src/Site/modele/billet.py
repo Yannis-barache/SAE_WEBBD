@@ -8,7 +8,8 @@ class Billet:
     Classe Billet
     """
 
-    def __init__(self, id_billet: int, nom_billet: str, prix: int, id_client: int):
+    def __init__(self, id_billet: int, nom_billet: str, prix: int,
+                 id_client: int):
         """
         Constructeur de la classe Billet
         """
@@ -16,7 +17,6 @@ class Billet:
         self.nom_billet = nom_billet
         self.prix = prix
         self.id_client = id_client
-
 
     def get_id_billet(self):
         """
@@ -56,7 +56,6 @@ class Billet:
         """
         return self.id_client
 
-
     def __str__(self):
         """
         Méthode magique qui permet de faire un print() sur un objet Billet
@@ -68,4 +67,3 @@ class Billet:
         Méthode magique qui permet de faire un print() sur un objet Billet
         """
         return self.__str__()
-

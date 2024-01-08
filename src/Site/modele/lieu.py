@@ -18,7 +18,8 @@ class Lieu:
         __str__(self) : Méthode d'affichage de la classe Lieu
     """
 
-    def __init__(self, id_lieu: int, nom_lieu: str, adresse_lieu: str, capacite_lieu: int):
+    def __init__(self, id_lieu: int, nom_lieu: str, adresse_lieu: str,
+                 capacite_lieu: int):
         """
         Constructeur de la classe Lieu
 
@@ -74,5 +75,6 @@ class Lieu:
         Méthode d'affichage de la classe Lieu
         """
         return "Lieu : id = " + str(
-            self.id_lieu) + ", nom = " + self.nom_lieu + ", adresse = " + self.adresse_lieu + ", capacité = " + str(
+            self.id_lieu
+        ) + ", nom = " + self.nom_lieu + ", adresse = " + self.adresse_lieu + ", capacité = " + str(
             self.capacite_lieu)

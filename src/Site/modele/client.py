@@ -2,8 +2,8 @@
 Module comportant la classe Client
 """
 
-class Client:
 
+class Client:
     """ Classe Client
 
     Methods:
@@ -16,7 +16,8 @@ class Client:
         __str__(self) : Méthode d'affichage de la classe Client
     """
 
-    def __init__(self, id_client: int, nom_client: str, prenom_client: str, mdp_client: str, email_client: str):
+    def __init__(self, id_client: int, nom_client: str, prenom_client: str,
+                 mdp_client: str, email_client: str):
         """
         Constructeur de la classe Client
 
@@ -85,4 +86,6 @@ class Client:
         Returns:
             str: affichage de la classe Client
         """
-        return "Client : id_client = " + str(self.id_client) + ", nom_client = " + self.nom_client + ", prenom_client = " + self.prenom_client + ", mdp_client = " + self.mdp_client + ", email_client = " + self.email_client
+        return "Client : id_client = " + str(
+            self.id_client
+        ) + ", nom_client = " + self.nom_client + ", prenom_client = " + self.prenom_client + ", mdp_client = " + self.mdp_client + ", email_client = " + self.email_client

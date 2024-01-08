@@ -18,7 +18,9 @@ class Evenement:
         __str__(self) : Méthode d'affichage de la classe Evenement
     """
 
-    def __init__(self, id_evenement: int, nom_evenement: str, date_evenement: str, heure_evenement: str, id_type: int, id_lieu: int):
+    def __init__(self, id_evenement: int, nom_evenement: str,
+                 date_evenement: str, heure_evenement: str, id_type: int,
+                 id_lieu: int):
         """
         Constructeur de la classe Evenement
 
@@ -98,7 +100,10 @@ class Evenement:
         Returns:
             str: Affichage de la classe Evenement
         """
-        return ("Evenement : id_evenement = {}, nom_evenement = {}, date_evenement = {}, heure_evenement = {}, "
-                "id_type = {}, id_lieu = {}").format(self.id_evenement, self.nom_evenement, self.date_evenement,
-                                                     self.heure_evenement, self.id_type, self.id_lieu)
-
+        return (
+            "Evenement : id_evenement = {}, nom_evenement = {}, date_evenement = {}, heure_evenement = {}, "
+            "id_type = {}, id_lieu = {}").format(self.id_evenement,
+                                                 self.nom_evenement,
+                                                 self.date_evenement,
+                                                 self.heure_evenement,
+                                                 self.id_type, self.id_lieu)

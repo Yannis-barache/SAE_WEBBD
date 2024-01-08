@@ -2,6 +2,7 @@
 Module de la classe loger
 """
 
+
 class Loger:
     """
     Classe Loger
@@ -18,7 +19,8 @@ class Loger:
         __str__(self) : Méthode d'affichage de la classe Loger
     """
 
-    def __init__(self, id_hebergement: int, id_groupe: int, date_debut: str, date_fin: str):
+    def __init__(self, id_hebergement: int, id_groupe: int, date_debut: str,
+                 date_fin: str):
         """
         Constructeur de la classe Loger
 
@@ -94,4 +96,8 @@ class Loger:
         Returns:
             str: affichage de la classe Loger
         """
-        return "Loger : id_hebergement = " + str(self.id_hebergement) + " id_groupe = " + str(self.id_groupe) + " date_debut = " + self.date_debut + " date_fin = " + self.date_fin
+        return "Loger : id_hebergement = " + str(
+            self.id_hebergement
+        ) + " id_groupe = " + str(
+            self.id_groupe
+        ) + " date_debut = " + self.date_debut + " date_fin = " + self.date_fin

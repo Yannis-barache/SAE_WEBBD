@@ -19,7 +19,8 @@ class Hebergement:
         __str__(self) : Méthode d'affichage de la classe Hebergement
     """
 
-    def __init__(self, id_hebergement: int, nom_hebergement: str, adresse_hebergement: str, nb_places_jour: int):
+    def __init__(self, id_hebergement: int, nom_hebergement: str,
+                 adresse_hebergement: str, nb_places_jour: int):
         """
         Constructeur de la classe Hebergement
 
@@ -107,5 +108,6 @@ class Hebergement:
         """
 
         return "Hebergement : id_hebergement = " + str(
-            self.id_hebergement) + ", nom_hebergement = " + self.nom_hebergement + ", adresse_hebergement = " + self.adresse_hebergement + ", nb_places_jour = " + str(
+            self.id_hebergement
+        ) + ", nom_hebergement = " + self.nom_hebergement + ", adresse_hebergement = " + self.adresse_hebergement + ", nb_places_jour = " + str(
             self.nb_places_jour)
