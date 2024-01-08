@@ -13,7 +13,7 @@ CREATE TABLE MEMBRE (
     nomMembre VARCHAR(50) NOT NULL,
     prenomMembre VARCHAR(50) NOT NULL,
     idGroupe int NOT NULL,
-    instrumentMembre VARCHAR(50),    
+    idInstrument int NOT NULL,
     PRIMARY KEY (idMembre)
 );
 
@@ -114,6 +114,21 @@ CREATE TABLE AIME(
     PRIMARY KEY (idClient, idGroupe)
 );
 
+CREATE TABLE INSTRUMENT(
+    idInstrument int NOT NULL AUTO_INCREMENT,
+    nomInstrument VARCHAR(50) NOT NULL,
+    PRIMARY KEY (idInstrument)
+);
+
+CREATE TABLE ORGANISATEUR(
+    idOrganisateur int NOT NULL AUTO_INCREMENT,
+    nomOrganisateur VARCHAR(50) NOT NULL,
+    prenomOrganisateur VARCHAR(50) NOT NULL,
+    mdpOrganisateur VARCHAR(50) NOT NULL,
+    emailOrganisateur VARCHAR(50) NOT NULL,
+    PRIMARY KEY (idOrganisateur)
+);
+
 
 -- FOREIGN KEYS à ajouter
 ALTER TABLE MEMBRE ADD FOREIGN KEY (idGroupe) REFERENCES GROUPE(idGroupe);
@@ -132,6 +147,7 @@ ALTER TABLE SINSCRIT ADD FOREIGN KEY (idClient) REFERENCES CLIENT(idClient);
 ALTER TABLE SINSCRIT ADD FOREIGN KEY (idEvenement) REFERENCES EVENEMENT(idEvenement);
 ALTER TABLE AIME ADD FOREIGN KEY (idClient) REFERENCES CLIENT(idClient);
 ALTER TABLE AIME ADD FOREIGN KEY (idGroupe) REFERENCES GROUPE(idGroupe);
+ALTER TABLE MEMBRE ADD FOREIGN KEY (idInstrument) REFERENCES INSTRUMENT(idInstrument);
 
 -- A changer dans le MCD : association loger --> ajouter une table date qui contient les dates et les durees
 -- revoir le systeme de billets
