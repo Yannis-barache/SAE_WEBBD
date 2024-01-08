@@ -114,6 +114,15 @@ CREATE TABLE AIME(
     PRIMARY KEY (idClient, idGroupe)
 );
 
+CREATE TABLE ORGANISATEUR(
+    idOrganisateur int NOT NULL AUTO_INCREMENT,
+    nomOrganisateur VARCHAR(50) NOT NULL,
+    prenomOrganisateur VARCHAR(50) NOT NULL,
+    mdpOrganisateur VARCHAR(50) NOT NULL,
+    emailOrganisateur VARCHAR(50) NOT NULL,
+    PRIMARY KEY (idOrganisateur)
+);
+
 
 -- FOREIGN KEYS à ajouter
 ALTER TABLE MEMBRE ADD FOREIGN KEY (idGroupe) REFERENCES GROUPE(idGroupe);
