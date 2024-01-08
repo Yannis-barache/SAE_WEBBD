@@ -147,7 +147,6 @@ ALTER TABLE SINSCRIT ADD FOREIGN KEY (idClient) REFERENCES CLIENT(idClient);
 ALTER TABLE SINSCRIT ADD FOREIGN KEY (idEvenement) REFERENCES EVENEMENT(idEvenement);
 ALTER TABLE AIME ADD FOREIGN KEY (idClient) REFERENCES CLIENT(idClient);
 ALTER TABLE AIME ADD FOREIGN KEY (idGroupe) REFERENCES GROUPE(idGroupe);
-ALTER TABLE MEMBRE ADD FOREIGN KEY (idInstrument) REFERENCES INSTRUMENT(idInstrument);
 
 -- A changer dans le MCD : association loger --> ajouter une table date qui contient les dates et les durees
 -- revoir le systeme de billets
@@ -452,7 +451,7 @@ delimiter |
 CREATE OR REPLACE PROCEDURE AjouterGroupe (nomGroupe VARCHAR(50), descriptionGroupe VARCHAR(50), idStyle int, photosGroupe VARCHAR(50), reseauxGroupe VARCHAR(50), liensVideoGroupe VARCHAR(50), nomMembre VARCHAR(50), prenomMembre VARCHAR(50), instrumentMembre VARCHAR(50))
 BEGIN
     INSERT INTO GROUPE (nomGroupe, descriptionGroupe, idStyle, photosGroupe, reseauxGroupe, liensVideoGroupe) VALUES (nomGroupe, descriptionGroupe, idStyle, photosGroupe, reseauxGroupe, liensVideoGroupe);
-    INSERT INTO MEMBRE (nomMembre, prenomMembre, instrumentMembre) VALUES (nomMembre, prenomMembre, instrumentMembre);
+    INSERT INTO MEMBRE (nomMembre, prenomMembre, idInstrument) VALUES (nomMembre, prenomMembre, instrumentMembre);
 END |
 delimiter ;
 
