@@ -7,15 +7,28 @@
     font-family: 'Ubuntu', sans-serif;
 }
 
+body{
+    min-height: 100vh;
+    margin: 0; 
+    padding: 0; 
+}
+
 .background{
     background-image: url("images/home1.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+    min-height: 100vh;
+
 }
+
+header img{
+    width: 15vh;
+}
+
 
 header {
     width: 100%;
-    position: fixed;
+    position:sticky;
     z-index: 1;
 }
 nav > div {
@@ -53,7 +66,7 @@ nav > div {
 
 
 :root {
-    --primary: #2E31A6;
+    --primary: black;
     --text-color: white;
     --white: white;
     --text-gray: #FEFEFE;
@@ -73,7 +86,7 @@ footer {
     display: flex;
     align-items: center;
     flex-direction: column;
-    position: absolute;
+    position: inherit;
 }
 
 .footer-wrapper {

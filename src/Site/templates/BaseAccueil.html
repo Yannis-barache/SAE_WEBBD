@@ -15,7 +15,7 @@
         <nav class="navbar navbar-expand-lg bg-transparent mt-2">
             <div class="container-fluid container-lg" id="round-onclick">
                 <a class="logo d-lg-none d-block text-decoration-none" href="#">
-                    <h1>Logo</h1>
+                    <h1><img src="../static/images/logo.png" alt="logo du site"></h1>
                 </a>
                 <button class="navbar-toggler menu border-0" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -35,7 +35,7 @@
                         </li>
                     </ul>
                     <a class="logo d-lg-block text-decoration-none d-none" href="#">
-                        <h1><img src="../static/images/logo.png" alt=""></h1>
+                        <h1><img src="../static/images/logo.png" alt="logo du site"></h1>
                     </a>
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
@@ -202,5 +202,15 @@
             </div>
         </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script>
+        const btn = document.getElementById("menu");
+        const addRadius = document.getElementById("round-onclick");
+        btn.addEventListener("click", function(){
+            addRadius.classList.toggle("radius-50");
+        })
+    </script>
 </body>
 </html>
