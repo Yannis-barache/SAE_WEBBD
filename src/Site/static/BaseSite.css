@@ -43,7 +43,7 @@ nav > div {
 .collapse:not(.show) 
 .nav-link {
     font-size: 1.1rem;
-    color: #FFFFFF !important;
+    color: black !important;
     padding: 0 1.5rem !important;
 }
 .menu:focus {
