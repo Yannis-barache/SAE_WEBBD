@@ -5,6 +5,9 @@
 {% block main %}
 <div class="login-box">
     <p>Login</p>
+    {% if inscription == True %}
+        <p class="valide">Inscription réussie !</p>
+    {% endif %}
     {% if error %}
         {% for erreur in error %}
             <p class="alerte">{{ erreur }}</p>
