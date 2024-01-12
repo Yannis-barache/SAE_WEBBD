@@ -1,7 +1,7 @@
 """
 Module qui contient la classe ModeleAppli
 """
-from .connexion_bd import ConnexionBD
+from connexion_bd import ConnexionBD
 
 import sys
 import os
@@ -28,8 +28,6 @@ from type_bd import TypeBD
 
 
 class ModeleAppli:
-    
-
     """
     Classe qui va contenir toutes les façons d'interagir avec la base de données
     
@@ -58,24 +56,24 @@ class ModeleAppli:
         Constructeur de la classe ModeleAppli
         """
         connexion = ConnexionBD()
+        self.__connexion = connexion
 
-
-        self.aime_bd = AimeBD(connexion)
-        self.billet_bd = BilletBD(connexion)
-        self.client_bd = ClientBD(connexion)
-        self.evenement_bd = EvenementBD(connexion)
-        self.groupe_bd = GroupeBD(connexion)
-        self.hebergement_bd = HebergementBD(connexion)
-        self.instrument_bd = InstrumentBD(connexion)
-        self.lieu_bd = LieuBD(connexion)
-        self.loger_bd = LogerBD(connexion)
-        self.membre_bd = MembreBD(connexion)
-        self.organisateur_bd = OrganisateurBD(connexion)
-        self.participe_bd = ParticipeBD(connexion)
-        self.ressemble_bd = RessembleBD(connexion)
-        self.sinscrit_bd = SinscritBD(connexion)
-        self.style_bd = StyleBD(connexion)
-        self.type_bd = TypeBD(connexion)
+        self.__aime_bd = AimeBD(self.__connexion.get_connexion())
+        self.__billet_bd = BilletBD(self.__connexion.get_connexion())
+        self.__client_bd = ClientBD(self.__connexion.get_connexion())
+        self.__evenement_bd = EvenementBD(self.__connexion.get_connexion())
+        self.__groupe_bd = GroupeBD(self.__connexion.get_connexion())
+        self.__hebergement_bd = HebergementBD(self.__connexion.get_connexion())
+        self.__instrument_bd = InstrumentBD(self.__connexion.get_connexion())
+        self.__lieu_bd = LieuBD(self.__connexion.get_connexion())
+        self.__loger_bd = LogerBD(self.__connexion.get_connexion())
+        self.__membre_bd = MembreBD(self.__connexion.get_connexion())
+        self.__organisateur_bd = OrganisateurBD(self.__connexion.get_connexion())
+        self.__participe_bd = ParticipeBD(self.__connexion.get_connexion())
+        self.__ressemble_bd = RessembleBD(self.__connexion.get_connexion())
+        self.__sinscrit_bd = SinscritBD(self.__connexion.get_connexion())
+        self.__style_bd = StyleBD(self.__connexion.get_connexion())
+        self.__type_bd = TypeBD(self.__connexion.get_connexion())
 
     def get_aime_bd(self):
         """
@@ -84,7 +82,7 @@ class ModeleAppli:
         Returns:
             aime_bd : La classe aime_bd
         """
-        return self.aime_bd
+        return self.__aime_bd
 
     def get_billet_bd(self):
         """
@@ -93,7 +91,7 @@ class ModeleAppli:
         Returns:
             billet_bd : La classe billet_bd
         """
-        return self.billet_bd
+        return self.__billet_bd
 
     def get_client_bd(self):
         """
@@ -102,7 +100,7 @@ class ModeleAppli:
         Returns:
             client_bd : La classe client_bd
         """
-        return self.client_bd
+        return self.__client_bd
 
     def get_evenement_bd(self):
         """
@@ -111,7 +109,7 @@ class ModeleAppli:
         Returns:
             evenement_bd : La classe evenement_bd
         """
-        return self.evenement_bd
+        return self.__evenement_bd
 
     def get_groupe_bd(self):
         """
@@ -120,7 +118,7 @@ class ModeleAppli:
         Returns:
             groupe_bd : La classe groupe_bd
         """
-        return self.groupe_bd
+        return self.__groupe_bd
 
     def get_hebergement_bd(self):
         """
@@ -129,7 +127,7 @@ class ModeleAppli:
         Returns:
             hebergement_bd : La classe hebergement_bd
         """
-        return self.hebergement_bd
+        return self.__hebergement_bd
 
     def get_instrument_bd(self):
         """
@@ -138,7 +136,7 @@ class ModeleAppli:
         Returns:
             instrument_bd : La classe instrument_bd
         """
-        return self.instrument_bd
+        return self.__instrument_bd
 
     def get_lieu_bd(self):
         """
@@ -147,7 +145,7 @@ class ModeleAppli:
         Returns:
             lieu_bd : La classe lieu_bd
         """
-        return self.lieu_bd
+        return self.__lieu_bd
 
     def get_loger_bd(self):
         """
@@ -156,7 +154,7 @@ class ModeleAppli:
         Returns:
             loger_bd : La classe loger_bd
         """
-        return self.loger_bd
+        return self.__loger_bd
 
     def get_membre_bd(self):
         """
@@ -165,7 +163,7 @@ class ModeleAppli:
         Returns:
             membre_bd : La classe membre_bd
         """
-        return self.membre_bd
+        return self.__membre_bd
 
     def get_organisateur_bd(self):
         """
@@ -174,7 +172,7 @@ class ModeleAppli:
             Returns:
                 organisateur_bd : La classe organisateur_bd
             """
-        return self.organisateur_bd
+        return self.__organisateur_bd
 
     def get_participe_bd(self):
         """
@@ -183,7 +181,7 @@ class ModeleAppli:
                 Returns:
                     participe_bd : La classe participe_bd
                 """
-        return self.participe_bd
+        return self.__participe_bd
 
     def get_ressemble_bd(self):
         """
@@ -192,7 +190,7 @@ class ModeleAppli:
                 Returns:
                     ressemble_bd : La classe ressemble_bd
                 """
-        return self.ressemble_bd
+        return self.__ressemble_bd
 
     def get_sinscrit_bd(self):
         """
@@ -201,7 +199,7 @@ class ModeleAppli:
                 Returns:
                     sinscrit_bd : La classe sinscrit_bd
                 """
-        return self.sinscrit_bd
+        return self.__sinscrit_bd
 
     def get_style_bd(self):
         """
@@ -210,7 +208,7 @@ class ModeleAppli:
                 Returns:
                     style_bd : La classe style_bd
                 """
-        return self.style_bd
+        return self.__style_bd
 
     def get_type_bd(self):
         """
@@ -219,4 +217,7 @@ class ModeleAppli:
         Returns:
             type_bd : La classe type_bd
         """
-        return self.type_bd
+        return self.__type_bd
+
+    def close(self):
+        self.__connexion.fermer_connexion()
