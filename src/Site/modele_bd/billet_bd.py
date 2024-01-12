@@ -8,8 +8,6 @@ from billet import Billet
 
 class BilletBD:
 
-    def get_all_billet(self):
-
     def __init__(self, connexion):
         self.__connexion = connexion
 
