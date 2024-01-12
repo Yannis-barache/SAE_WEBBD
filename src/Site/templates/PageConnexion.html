@@ -5,22 +5,28 @@
 {% block main %}
 <div class="login-box">
     <p>Login</p>
-    <form>
+    {% if error %}
+        {% for erreur in error %}
+            <p class="alerte">{{ erreur }}</p>
+        {% endfor %}
+    {% endif %}
+    <form method="POST" action="{{ url_for('page_connexion') }}">
+        {{ form.hidden_tag() }}
       <div class="user-box">
-        <input required="" name="" type="text">
-        <label>Email</label>
+          {{ form.email }}
+          {{ form.email.label }}
       </div>
       <div class="user-box">
-        <input required="" name="" type="password">
-        <label>Password</label>
+          {{ form.mdp }}
+          {{ form.mdp.label }}
       </div>
-      <a href="#">
+      <div id="submit">
         <span></span>
         <span></span>
         <span></span>
         <span></span>
-        SE CONNECTER
-      </a>
+        {{ form.submit() }}
+      </div>
     </form>
     <p>Don't have an account? <a href="{{url_for('page_inscription')}}" class="a2">Sign up!</a></p>
   </div>

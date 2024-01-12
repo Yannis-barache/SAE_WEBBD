@@ -4,7 +4,7 @@
 {% endblock %}
 {% block main %}
     <main id="bienvenue">
-        <h2>BIENVENUE</h2>
+        <h2>BIENVENUE {{ name }}</h2>
         <p>Connecte toi ou crée un compte : </p>
         <a href="{{url_for('page_inscription')}}"><button class="button"><span class="button-content">INSCRIPTION</span></button></a>
         <p>ou</p>

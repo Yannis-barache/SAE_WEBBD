@@ -85,13 +85,13 @@ body {
     letter-spacing: 3px
   }
   
-  .login-box a:hover {
+  .login-box .submit:hover {
     background: #fff;
     color: #272727;
     border-radius: 5px;
   }
   
-  .login-box a span {
+  .login-box .submit span {
     position: absolute;
     display: block;
   }
@@ -155,7 +155,7 @@ body {
     }
   }
   
-  .login-box a span:nth-child(4) {
+  .login-box .submit span:nth-child(4) {
     bottom: -100%;
     left: 0;
     width: 2px;
@@ -189,4 +189,10 @@ body {
     background: transparent;
     color: #aaa;
     border-radius: 5px;
+  }
+
+  .alerte {
+    color: red;
+    font-size: 20px;
+    text-align: center;
   }

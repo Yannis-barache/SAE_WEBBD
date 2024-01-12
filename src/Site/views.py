@@ -8,17 +8,42 @@ def home():
     return render_template(
         "home.html")
 
-@app.route("/connexion/")
+@app.route("/connexion/",methods=['GET','POST'])
 def page_connexion():
-    return render_template(
-        "PageConnexion.html"
-        )
+    from .form import connexion_form
+    form = connexion_form()
 
-@app.route("/inscription/")
-def page_inscription():
+    if request.method == 'POST':
+        if not form.validate():
+            messages = []
+            for field, errors in form.errors.items():
+                if field != 'csrf_token':
+                    messages.append(errors[0])
+
+
+            return render_template('PageConnexion.html', form=form, error=messages)
+        email = request.form['email']
+        mdp = request.form['mdp']
+        return redirect(url_for('success', name=email))
     return render_template(
-        "PageInscription.html"
-    )
+        "PageConnexion.html", form=form)
+
+@app.route("/inscription/",methods=['GET','POST'])
+def page_inscription():
+
+    from .form import inscription_form
+    form =inscription_form()
+    if request.method == 'POST':
+        nom = request.form['nom']
+        prenom = request.form['prenom']
+        email = request.form['email']
+        mdp = request.form['mdp']
+
+        return redirect(url_for('page_connexion'))
+    else:
+        user = request.args.get('nm')
+    return render_template(
+        "PageInscription.html", form = form)
 
 @app.route('/success/<name>')
 def success(name):
