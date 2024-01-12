@@ -16,7 +16,7 @@ USER = None
 @app.route('/')
 def home():
     return render_template(
-        "home.html")
+        "PageAccueil.html")
 
 
 @app.route("/connexion/", methods=['GET', 'POST'])
