@@ -37,6 +37,7 @@ nav > div {
     background-color: #ffffff2b;
     border-radius: 50rem;
 }
+
 .radius-50 {
     border-radius: 1rem;
 }
@@ -57,6 +58,22 @@ nav > div {
     font-size: 1.8rem !important;
     font-weight: bold;
     color: #FFFFFF;
+}
+
+/* RECTANGLE NOIR TRANSPARENT */
+
+.rectangle-noir-transparent {
+    background-color: #000000;
+    opacity: 0.5;
+    width: 70%;
+    height: 50%;
+    position: absolute;
+    z-index: 0;
+    
+    /* Centre l'élément horizontalement et verticalement */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 /* FOOTER */
