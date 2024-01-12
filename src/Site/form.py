@@ -19,7 +19,7 @@ def inscription_form():
         nom = StringField('Nom', validators=[validators.DataRequired()])
         prenom = StringField('Prénom', validators=[validators.DataRequired()])
         email = StringField('Email', validators=[validators.DataRequired(), Email()])
-        mdp = PasswordField('Mot de passe', validators=[validators.DataRequired()])
+        mdp = PasswordField('Mot de passe', validators=[validators.DataRequired(), validators.Length(min=8)])
         confirm_mdp = PasswordField('Confirmer le mot de passe',
                                     validators=[validators.DataRequired(),EqualTo('mdp')])
         submit = SubmitField('S\'inscrire')
