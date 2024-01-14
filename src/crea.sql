@@ -375,6 +375,21 @@ BEGIN
 END |
 delimiter ;
 
+-- VérifieremailClient : Vérifie qu’il n’y a pas d’utilisateur déjà existant avec la même adresse mail.
+delimiter |
+CREATE OR REPLACE TRIGGER VerifieremailClient
+BEFORE INSERT ON CLIENT
+FOR EACH ROW
+BEGIN
+    DECLARE conflit INT;
+    SELECT COUNT(*) INTO conflit
+    FROM CLIENT
+    WHERE emailClient = NEW.emailClient;
+    IF conflit > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Un utilisateur existe déjà avec cette adresse mail.';
+    END IF;
+END |
+
 -- Fonctions : -----------------------------------------------------------
 
 -- Une fonction pour afficher la programmation par jour, lieu et artiste en MySQL.

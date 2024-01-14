@@ -15,7 +15,7 @@ class TypeBD:
 
     def get_all_type(self):
         try:
-            query = text('SELECT idType, nomType FROM TYPE')
+            query = text('SELECT idType, nomType FROM TYPES')
             result = self.type_bd.execute(query)
             types = []
             for id_type, nom in result:
@@ -28,7 +28,7 @@ class TypeBD:
     def get_type_by_id(self, id_t: int):
         try:
             query = text(
-                'SELECT idType, nomType FROM TYPE WHERE idType =' +
+                'SELECT idType, nomType FROM TYPES WHERE idType =' +
                 str(id_t))
             result = self.type_bd.execute(query)
             for id_type, nom in result:

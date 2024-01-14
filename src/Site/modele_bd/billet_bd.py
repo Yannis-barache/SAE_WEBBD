@@ -8,14 +8,12 @@ from billet import Billet
 
 class BilletBD:
 
-    def get_all_billet(self):
-
     def __init__(self, connexion):
         self.__connexion = connexion
 
     def get_all_billet(self):
         try:
-            query = text('SELECT idBillet, nomBillet, prixBillet, idClient FROM BILLETS')
+            query = text('SELECT idBillet, nomBillet, prixBillet, idClient FROM BILLET')
             result = self.__connexion.execute(query)
             billets = []
             for id_billet, nom, prix, id_client in result:
@@ -28,7 +26,7 @@ class BilletBD:
     def get_billet_by_id(self, id_bil: int):
         try:
             query = text(
-                'SELECT idBillet, nomBillet, prixBillet, idClient FROM BILLETS WHERE idBillet =' +
+                'SELECT idBillet, nomBillet, prixBillet, idClient FROM BILLET WHERE idBillet =' +
                 str(id_bil))
             result = self.__connexion.execute(query)
             for id_billet, nom, prix, id_client in result:
