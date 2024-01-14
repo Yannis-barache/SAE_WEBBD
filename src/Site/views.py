@@ -6,7 +6,6 @@ import sys
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), './')
 sys.path.append(os.path.join(ROOT, 'modele'))
 from modeleAppli import ModeleAppli
-
 from .models import  traduire_erreurs
 
 USER = None
@@ -17,6 +16,14 @@ USER = None
 def home():
     return render_template(
         "PageAccueil.html")
+
+@app.route('/festival')
+def festival():
+    modele = ModeleAppli()
+    groupes = modele.get_groupe_bd().get_all_groupes()
+    modele.close()
+    return render_template(
+        "PageLeFestival.html", groupes=groupes)
 
 
 @app.route("/connexion/", methods=['GET', 'POST'])
