@@ -91,6 +91,9 @@ main{
 
 main h2 {
     color: #FFFFFF;
+    display: block !important;
+    width: 100%;
+    text-align: center;
 }
 
 ::-webkit-scrollbar {
