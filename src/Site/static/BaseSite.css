@@ -17,7 +17,9 @@ body, html {
 body{
     min-height: 100vh;
     margin: 0; 
-    padding: 0; 
+    padding: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .background{
@@ -69,23 +71,35 @@ nav > div {
 
 .rectangle-noir-transparent {
     background-color: rgba(0, 0, 0, 0.5);
-    width: 70%;
+    width: 90%;
+    position: absolute;
+    overflow-y : scroll;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     height: 60%;
-    position:relative;
-    z-index: 0;
-    height: auto;
     
     /* Centre l'élément horizontalement et verticalement */
-    top: 50%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-main {
-    height: 90%;
-    position: relative;
+main{
+    height: 600px;
 }
 
+main h2 {
+    color: #FFFFFF;
+}
+
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to right, orange, white);
+}
 /* FOOTER */
 
 

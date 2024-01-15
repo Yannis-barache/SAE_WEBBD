@@ -1,5 +1,5 @@
 .card {
-    max-width: 300px;
+    width: 300px;
     border-radius: 0.5rem;
     background-color: #fff;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -61,20 +61,8 @@
   .action:hover span {
     transform: translateX(4px);
   }
-  
-  .container {
-    flex-grow: 1; /* Permet au conteneur de grandir pour occuper tout l'espace disponible dans le main */
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    color: white;
-    overflow: auto; /* Empêche les cartes de déborder */
-    margin-bottom: 50px; /* Ajoute une marge en bas du conteneur */
-}
 
-.container h2{
-    text-align: center;
-}
+
 
 /* Responsive layout - makes the menu and the content stack on top of each other */
 @media (max-width: 600px) {
