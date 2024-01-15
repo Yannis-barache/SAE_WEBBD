@@ -64,14 +64,21 @@ CREATE TABLE TYPES (
     PRIMARY KEY (idType)
 );
 
+CREATE TABLE DATE (
+    id_date int NOT NULL AUTO_INCREMENT,
+    dateEvenement DATE NOT NULL,
+    PRIMARY KEY (id_date)
+);
+
 CREATE TABLE EVENEMENT (
     idEvenement int NOT NULL AUTO_INCREMENT,
     nomEvenement VARCHAR(50) NOT NULL,
-    dateEvenement DATE NOT NULL,
+    id_date int NOT NULL,
     heureEvenement TIME NOT NULL,
     idType int NOT NULL,
     idLieu int NOT NULL,
     PRIMARY KEY (idEvenement)
+
 );
 
 CREATE TABLE STYLE(
@@ -148,6 +155,7 @@ ALTER TABLE SINSCRIT ADD FOREIGN KEY (idEvenement) REFERENCES EVENEMENT(idEvenem
 ALTER TABLE AIME ADD FOREIGN KEY (idClient) REFERENCES CLIENT(idClient);
 ALTER TABLE AIME ADD FOREIGN KEY (idGroupe) REFERENCES GROUPE(idGroupe);
 ALTER TABLE MEMBRE ADD FOREIGN KEY (idInstrument) REFERENCES INSTRUMENT(idInstrument);
+ALTER TABLE EVENEMENT ADD FOREIGN KEY (id_date) REFERENCES DATE(id_date);
 
 -- A changer dans le MCD : association loger --> ajouter une table date qui contient les dates et les durees
 -- revoir le systeme de billets
@@ -192,7 +200,7 @@ delimiter |
 CREATE OR REPLACE TRIGGER verifEvenement BEFORE INSERT ON EVENEMENT
 FOR EACH ROW
 BEGIN
-    IF (SELECT COUNT(*) FROM EVENEMENT WHERE idLieu = NEW.idLieu AND dateEvenement = NEW.dateEvenement AND heureEvenement = NEW.heureEvenement) >= 1 THEN
+    IF (SELECT COUNT(*) FROM EVENEMENT natural join DATE WHERE idLieu = NEW.idLieu AND id_date = NEW.id_date AND heureEvenement = NEW.heureEvenement) >= 1 THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Un événement se déroule déjà à cette date et à cette heure';
     END IF;
 END |
@@ -392,28 +400,6 @@ END |
 
 -- Fonctions : -----------------------------------------------------------
 
--- Une fonction pour afficher la programmation par jour, lieu et artiste en MySQL.
-delimiter |
-CREATE OR REPLACE FUNCTION ConsulterProgrammation (type VARCHAR(50), id int) RETURNS VARCHAR(50)
-BEGIN
-    DECLARE result VARCHAR(50);
-    IF type = 'jour' THEN
-        SELECT nomEvenement INTO result
-        FROM EVENEMENT
-        WHERE dateEvenement = id;
-    ELSEIF type = 'lieu' THEN
-        SELECT nomEvenement INTO result
-        FROM EVENEMENT
-        WHERE idLieu = id;
-    ELSEIF type = 'artiste' THEN
-        SELECT nomEvenement INTO result
-        FROM EVENEMENT
-        WHERE idEvenement = id;
-    END IF;
-    RETURN result;
-END |
-delimiter ;
-
 -- Une fonction pour permettre aux utilisateurs de rechercher des groupes par style musical.
 delimiter |
 CREATE OR REPLACE FUNCTION RechercherGroupeParStyle (style VARCHAR(50)) RETURNS VARCHAR(50)
@@ -471,13 +457,6 @@ BEGIN
 END |
 delimiter ;
 
--- AjouterConcert : Ajoute un nouveau concert à la programmation du festival.
-delimiter |
-CREATE OR REPLACE PROCEDURE AjouterConcert (nomEvenement VARCHAR(50), dateEvenement DATE, heureEvenement TIME, idType int, idLieu int)
-BEGIN
-    INSERT INTO EVENEMENT (nomEvenement, dateEvenement, heureEvenement, idType, idLieu) VALUES (nomEvenement, dateEvenement, heureEvenement, idType, idLieu);
-END |
-delimiter ;
 -- AcheterBillet : Permet à un spectateur d’acheter un billet pour le festival.
 delimiter |
 CREATE OR REPLACE PROCEDURE AcheterBillet (nomBillet VARCHAR(50), prixBillet int, idClient int)
