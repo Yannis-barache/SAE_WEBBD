@@ -7,7 +7,7 @@ ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), './')
 sys.path.append(os.path.join(ROOT, 'modele'))
 from modeleAppli import ModeleAppli
 
-from .models import  traduire_erreurs
+from .models import traduire_erreurs
 
 USER = None
 
@@ -57,7 +57,7 @@ def page_connexion():
 
     modele.close()
     return render_template(
-        "PageConnexion.html", form=form,inscription=inscription)
+        "PageConnexion.html", form=form, inscription=inscription)
 
 
 @app.route("/inscription/", methods=['GET', 'POST'])
@@ -97,17 +97,32 @@ def page_inscription():
 def success(name):
     return 'welcome %s' % name
 
-# @app.route('/inscription')
-# def login():
-#    if request.method == 'POST':
-#         nom = request.form['nom']
-#         prenom = request.form['prenom']
-#         email = request.form['email']
-#         mdp = request.form['mdp']
-#         CS=mysql.connection.cursor()
-#         CS.execute("INSERT INTO CLIENT (nomClient,prenomClient,emailClient,mdpClient) VALUES (%s,%s,%s,%s)",(nom,prenom,email,mdp))
-#         mysql.connection.commit()
-#         return redirect(url_for('home.html',name=nom))
-#    else:
-#         user = request.args.get('nm')
-#         return render_template("inscription.html")
+
+@app.route('/deconnexion/')
+def deconnexion():
+    global USER
+    USER = None
+    return redirect(url_for('home'))
+
+
+@app.route('/calendrier')
+def calendrier():
+    modele = ModeleAppli()
+    events = modele.get_sinscrit_bd().get_sinscrit_by_id_client_jour(1, 1)
+    print(events)
+    liste_id_even = []
+    for event in events:
+        liste_id_even.append(event.get_id_evenement())
+    events = modele.get_evenement_bd().get_evenement_by_liste_inscrit(liste_id_even)
+    modele.close()
+    return render_template(
+        "calendrier.html", events=events)
+
+@app.route('/image')
+def image():
+    modele = ModeleAppli()
+    groupe = modele.get_groupe_bd().get_groupe_by_id(1)
+    modele.close()
+    blob = groupe.get_photo_groupe()
+    return render_template(
+        "image.html", blob=blob)

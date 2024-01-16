@@ -1,0 +1,33 @@
+ul li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    color: #FEFEFE;
+}
+
+body {
+            font-family: Arial, sans-serif;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            justify-content: center;
+
+        }
+
+        .day {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+            background-color: #eee;
+        }
+
+        .event {
+            background-color: #3498db;
+            color: #fff;
+            padding: 5px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+        }

@@ -36,3 +36,18 @@ class EvenementBD:
         except Exception as e:
             print(e)
             return None
+
+    def get_evenement_by_liste_inscrit(self, liste_id_inscrit):
+        try:
+            query = text('SELECT idEvenement, nomEvenement, id_date, heureEvenement, idType, idLieu FROM EVENEMENT WHERE idEvenement IN (' +
+                         str(liste_id_inscrit)[1:-1] + ")")
+            print(query)
+            result = self.__connexion.execute(query)
+            evenement = []
+            for id_evenement, nom, date, heure, id_type, id_lieu in result:
+                evenement.append(Evenement(id_evenement, nom, date, heure, id_type, id_lieu))
+            return evenement
+        except Exception as e:
+            print(e)
+            return None
+

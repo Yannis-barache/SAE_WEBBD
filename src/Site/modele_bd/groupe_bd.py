@@ -34,3 +34,13 @@ class GroupeBD:
         except Exception as e:
             print(e)
             return None
+
+    def ajout_image(self, id_groupe, image):
+        try:
+            query = text('UPDATE GROUPE SET photosGroupe = ' + str(image) + ' WHERE idGroupe = ' + str(id_groupe))
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
