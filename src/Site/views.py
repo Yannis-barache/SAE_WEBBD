@@ -115,7 +115,14 @@ def page_inscription():
 
 @app.route('/success/<name>')
 def success(name):
-    return 'welcome %s' % name
+   return 'welcome %s' % name
+
+@app.route('/billetterie/')
+def billeterie():
+    modele = ModeleAppli()
+    dates = modele.get_date_bd().get_all_date()
+    modele.close()
+    return render_template("PageBilletterie.html", dates=dates, user=USER)
 
 # @app.route('/inscription')
 # def login():

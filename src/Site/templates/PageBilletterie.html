@@ -1,0 +1,46 @@
+{% extends "BaseSite.html" %}
+
+{% block styles %}
+    <link  href="../static/Billetterie.css" rel="stylesheet">
+{% endblock %}
+
+
+{% block main %}
+{% for date in dates %}
+<div class="card">
+    <div class="image"></div>
+    <div class="content">
+        <a href="">
+            <span class="title">
+                Billet pour le {{ date.date }} 
+            </span>
+        </a>
+        <a class="action" href="">
+            Find out more
+            <span aria-hidden="true">
+                →
+            </span>
+        </a>
+    </div>
+</div>
+{% endfor %}
+<div class="card">
+    <div class="image"></div>
+    <div class="content">
+        <a href="">
+            <span class="title">
+                Billet pour les 3 jours 
+            </span>
+        </a>
+        <div class="desc">
+            Un pack de 3 billets pour les 3 jours du festival
+        </div>
+        <a class="action" href="">
+            Find out more
+            <span aria-hidden="true">
+                →
+            </span>
+        </a>
+    </div>
+</div>
+{% endblock %}
