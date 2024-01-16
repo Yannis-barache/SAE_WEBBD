@@ -24,6 +24,9 @@ def page_inscription():
 def success(name):
    return 'welcome %s' % name
 
+@app.route('/billetterie/')
+def billeterie():
+   return render_template("PageBilletterie.html")
 
 # @app.route('/inscription')
 # def login():
