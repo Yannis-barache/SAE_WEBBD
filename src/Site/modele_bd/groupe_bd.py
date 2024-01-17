@@ -34,3 +34,16 @@ class GroupeBD:
         except Exception as e:
             print(e)
             return None
+
+    def get_groupes_similaires(self, id_style):
+        try:
+            query = text('SELECT DISTINCT idGroupe, nomGroupe, descriptionGroupe, idStyle, photosGroupe, reseauxGroupe, liensVideoGroupe FROM GROUPE NATURAL JOIN RESSEMBLE WHERE idStyle1 = '+ str(id_style) + ' OR idStyle2 = ' + str(id_style))
+            result = self.__connexion.execute(query)
+            groupes = []
+            for id_groupe, nom_groupe, description_groupe, id_style, photos_groupe, reseaux_groupe, liens_video_groupe in result:
+                groupes.append(Groupe(id_groupe, nom_groupe, description_groupe, id_style, photos_groupe, reseaux_groupe, liens_video_groupe))
+            return groupes
+        except Exception as e:
+            print(e)
+            return None
+    

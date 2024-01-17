@@ -1,0 +1,48 @@
+{% extends "BaseSite.html"%}
+{% block styles %}
+<link rel="stylesheet" href="../static/pageInfosGroupe.css">
+{% endblock %}
+{% block main %}
+<h2><u>Infos du groupe</u></h2>
+<aside>
+    <img src="{{groupe.get_photo_groupe()}}" alt="image du groupe">
+</aside>
+<div class="infos">
+    <p><u>Nom du groupe</u> : {{groupe.get_nom_groupe()}}</p>
+    <p><u>Description du groupe</u> : {{groupe.get_description_groupe()}}</p>
+    <p><u>Style de musique</u> : {{style.get_nom_style()}}</p>
+    <p><u>Réseaux du groupe</u> : {{groupe.get_reseaux_groupe()}} </p>
+    <p><u>Liens vidéos du groupe</u> : <a
+            href="{{groupe.get_liens_videos_groupe()}}">{{groupe.get_liens_videos_groupe()}}</a></p>
+</div>
+{% endblock %}
+{% block complement %}
+<section class="groupes-similaires">
+    <h2>Groupes similaires</h2>
+    {% for groupe_similaire in groupes_similaires %}
+    <div class="card">
+        <div class="image"></div>
+        <div class="content">
+            <a href="{{ url_for('groupe', id=groupe_similaire.get_id_groupe()) }}">
+                <span class="title">
+                    {{ groupe_similaire.get_nom_groupe() }}
+                </span>
+            </a>
+            <p class="desc">
+                {{ groupe_similaire.get_description_groupe() }}
+            </p>
+            <a class="action" href="{{ url_for('groupe', id=groupe_similaire.get_id_groupe()) }}">
+                Find out more
+                <span aria-hidden="true">
+                    →
+                </span>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+<section class="planning">
+    <h2>Planning</h2>
+    <button>Voir planning</button>
+</section>
+{% endblock %}

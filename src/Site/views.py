@@ -6,7 +6,6 @@ import sys
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), './')
 sys.path.append(os.path.join(ROOT, 'modele'))
 from modeleAppli import ModeleAppli
-
 from .models import  traduire_erreurs
 
 USER = None
@@ -16,7 +15,28 @@ USER = None
 @app.route('/')
 def home():
     return render_template(
-        "PageAccueil.html")
+        "PageAccueil.html", user=USER)
+
+@app.route('/festival')
+def festival():
+    modele = ModeleAppli()
+    groupes = modele.get_groupe_bd().get_all_groupes()
+    modele.close()
+    return render_template(
+        "PageLeFestival.html", groupes=groupes, user=USER)
+
+@app.route('/groupe/<id>')
+def groupe(id):
+    modele = ModeleAppli()
+    groupe = modele.get_groupe_bd().get_groupe_by_id(id)
+    if groupe is None:
+        # Gérer le cas où le groupe n'existe pas
+        return "Groupe non trouvé", 404
+    groupes_similaires = modele.get_groupe_bd().get_groupes_similaires(groupe.get_id_style())
+    style = modele.get_style_bd().get_style_by_id(groupe.get_id_style())
+    modele.close()
+    return render_template(
+        "PageInfosGroupe.html", groupe=groupe, style=style, user=USER, groupes_similaires=groupes_similaires)
 
 
 @app.route("/connexion/", methods=['GET', 'POST'])

@@ -1,0 +1,14 @@
+p {
+    color: white;
+    font-size: 20px;
+    padding-left: 100px;
+    padding-right: 100px;
+    text-align: justify;
+}
+
+main{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
