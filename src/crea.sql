@@ -64,6 +64,12 @@ CREATE TABLE TYPES (
     PRIMARY KEY (idType)
 );
 
+CREATE TABLE DATE (
+    id_date int NOT NULL,
+    dateEvenement DATE NOT NULL,
+    PRIMARY KEY (id_date)
+);
+
 CREATE TABLE EVENEMENT (
     idEvenement int NOT NULL AUTO_INCREMENT,
     nomEvenement VARCHAR(50) NOT NULL,
@@ -71,6 +77,7 @@ CREATE TABLE EVENEMENT (
     heureEvenement TIME NOT NULL,
     idType int NOT NULL,
     idLieu int NOT NULL,
+    id_date int NOT NULL,
     PRIMARY KEY (idEvenement)
 );
 
@@ -148,6 +155,7 @@ ALTER TABLE SINSCRIT ADD FOREIGN KEY (idEvenement) REFERENCES EVENEMENT(idEvenem
 ALTER TABLE AIME ADD FOREIGN KEY (idClient) REFERENCES CLIENT(idClient);
 ALTER TABLE AIME ADD FOREIGN KEY (idGroupe) REFERENCES GROUPE(idGroupe);
 ALTER TABLE MEMBRE ADD FOREIGN KEY (idInstrument) REFERENCES INSTRUMENT(idInstrument);
+ALTER TABLE EVENEMENT ADD FOREIGN KEY (id_date) REFERENCES DATE(id_date);
 
 -- A changer dans le MCD : association loger --> ajouter une table date qui contient les dates et les durees
 -- revoir le systeme de billets

@@ -118,11 +118,4 @@ def calendrier():
     return render_template(
         "calendrier.html", events=events)
 
-@app.route('/image')
-def image():
-    modele = ModeleAppli()
-    groupe = modele.get_groupe_bd().get_groupe_by_id(1)
-    modele.close()
-    blob = groupe.get_photo_groupe()
-    return render_template(
-        "image.html", blob=blob)
+
