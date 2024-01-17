@@ -398,6 +398,32 @@ BEGIN
     END IF;
 END |
 
+-- VérifieremailOrganisateur : Vérifie qu’il n’y a pas d’organisateur déjà existant avec la même adresse mail.
+delimiter |
+CREATE OR REPLACE TRIGGER VerifieremailOrganisateur
+BEFORE INSERT ON ORGANISATEUR
+FOR EACH ROW
+BEGIN
+    DECLARE conflit INT;
+    SELECT COUNT(*) INTO conflit
+    FROM ORGANISATEUR
+    WHERE emailOrganisateur = NEW.emailOrganisateur;
+    IF conflit > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Un organisateur existe déjà avec cette adresse mail.';
+    END IF;
+END |
+delimiter ;
+
+-- SupprimerMembreGroupes : Supprime tous les membres d'un groupe lors de la suppression du groupe.
+delimiter |
+CREATE OR REPLACE TRIGGER SupprimerMembreGroupes
+BEFORE DELETE ON GROUPE
+FOR EACH ROW
+BEGIN
+    DELETE FROM MEMBRE WHERE idGroupe = OLD.idGroupe;
+END |
+delimiter ;
+
 -- Fonctions : -----------------------------------------------------------
 
 -- Une fonction pour afficher la programmation par jour, lieu et artiste en MySQL.

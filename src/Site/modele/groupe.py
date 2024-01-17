@@ -104,7 +104,7 @@ class Groupe:
         Returns:
             str: liens vidéos du groupe
         """
-        return self.liensVideosGroupe
+        return self.liens_videos_groupes
 
     def __str__(self):
         """

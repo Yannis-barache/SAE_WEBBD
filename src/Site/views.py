@@ -119,3 +119,31 @@ def calendrier():
         "calendrier.html", events=events)
 
 
+@app.route('/admin')
+def admin():
+    return render_template(
+        "organisateur/acceuil_organisateur.html")
+
+
+@app.route('/admin/groupes')
+def groupes():
+    modele = ModeleAppli()
+    groupes = modele.get_groupe_bd().get_all_groupes()
+    modele.close()
+    return render_template(
+        "organisateur/admin_groupe.html", groupes=groupes)
+
+@app.route('/admin/modifier_groupe/<id_groupe>', methods=['GET', 'POST'])
+def modifier_groupe(id_groupe):
+    modele = ModeleAppli()
+    groupe = modele.get_groupe_bd().get_groupe_by_id(id_groupe)
+    modele.close()
+    return render_template(
+        "organisateur/modifier_groupe.html", groupe=groupe)
+
+@app.route('/admin/supprimer_groupe/<id_groupe>', methods=['GET', 'POST'])
+def supprimer_groupe(id_groupe):
+    modele = ModeleAppli()
+    modele.get_groupe_bd().delete_groupe(id_groupe)
+    modele.close()
+    return redirect(request.referrer)

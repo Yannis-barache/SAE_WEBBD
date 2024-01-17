@@ -25,3 +25,11 @@ def inscription_form():
         submit = SubmitField('S\'inscrire')
 
     return InscriptionForm()
+
+def modification_groupe():
+    class ModificationGroupe(FlaskForm):
+        nom = StringField('Nom', validators=[validators.DataRequired()])
+        description = StringField('Description', validators=[validators.DataRequired()])
+        submit = SubmitField('Modifier')
+
+    return ModificationGroupe()
