@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="image"></div>
                 <div class="content">
-                    <a href="#">
+                    <a href="{{ url_for('groupe', id=groupe.get_id_groupe()) }}">
                         <span class="title">
                             {{ groupe.get_nom_groupe() }}
                         </span>
@@ -16,7 +16,7 @@
                     <p class="desc">
                         {{ groupe.get_description_groupe() }}
                     </p>
-                    <a class="action" href="#">
+                    <a class="action" href="{{ url_for('groupe', id=groupe.get_id_groupe()) }}">
                         Find out more
                         <span aria-hidden="true">
                             →

@@ -62,9 +62,11 @@
     transform: translateX(4px);
   }
 
+  .rectangle-noir-transparent h2{
+    margin-top: 1%;
+  }
 
 
-/* Responsive layout - makes the menu and the content stack on top of each other */
 @media (max-width: 600px) {
     .container {
         flex-direction: column;

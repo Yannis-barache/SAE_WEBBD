@@ -70,7 +70,7 @@ nav > div {
 }
 
 .rectangle-noir-transparent {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6);
     width: 90%;
     position: absolute;
     overflow-y : scroll;
@@ -118,16 +118,13 @@ main h2 {
 
 /*? footer containers */
 footer {
-    bottom: 0px;
-    background-color: var(
-        --primary);
+    background-color: var(--primary);
     width: 100%;
     min-width: 300px;
-    bottom: 0px;
     display: flex;
     align-items: center;
     flex-direction: column;
-    position: inherit;
+    position: relative;
 }
 
 .footer-wrapper {
