@@ -64,7 +64,7 @@ def page_connexion():
                         USER = resultat
                         print("On redirige vers la page de succès ", USER)
                         modele.close()
-                        return redirect(url_for('success', name=USER))
+                        return redirect(url_for('home', user=USER))
                     else:
                         messages.append("Email ou mot de passe incorrect")
                         modele.close()
@@ -118,7 +118,7 @@ def success(name):
    return 'welcome %s' % name
 
 @app.route('/billetterie/')
-def billeterie():
+def billetterie():
     modele = ModeleAppli()
     dates = modele.get_date_bd().get_all_date()
     modele.close()

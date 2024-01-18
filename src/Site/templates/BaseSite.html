@@ -44,11 +44,11 @@
                                 <a class="nav-link" href="#">Évènements</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Billeterie</a>
+                                <a class="nav-link" href="{{ url_for('billetterie')}}">Billeterie</a>
                             </li>
-                            {% if USER == None %}
+                            {% if user == None %}
                             <li class="nav-item">
-                                <a class="nav-link" href="url_for(page_connexion)">S'identifier</a>
+                                <a class="nav-link" href="{{url_for('page_connexion')}}">S'identifier</a>
                             </li>
                             {% else %}
                             <li class="nav-item">
