@@ -4,6 +4,9 @@ p {
     padding-left: 100px;
     padding-right: 100px;
     text-align: justify;
+    font-family: Playfair;
+    font-weight: bold;
+
 }
 
 main{
@@ -11,4 +14,21 @@ main{
     align-items: center;
     display: flex;
     flex-direction: column;
+}
+
+h2{
+    font-weight: bolder;
+    font-family: Playfair;
+    font-size: 4vh;
+}
+
+
+h2, p {
+    text-align: center;
+    
+}
+
+a.nav-link{
+    
+    font-weight: bold;
 }

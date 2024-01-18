@@ -303,4 +303,9 @@ footer {
     .social-wrapper {
         justify-content: center;
     }
+
+    a.nav-link{
+    
+        font-weight: bold;
+    }
 }
