@@ -126,7 +126,7 @@ def admin():
 
 
 @app.route('/admin/groupes')
-def groupes():
+def groupes_admin():
     modele = ModeleAppli()
     groupes = modele.get_groupe_bd().get_all_groupes()
     modele.close()
@@ -161,7 +161,7 @@ def ajouter_groupe():
         "organisateur/groupe/ajouter_groupe.html")
 
 @app.route('/admin/clients')
-def clients():
+def clients_admin():
     modele = ModeleAppli()
     clients = modele.get_client_bd().get_all_client()
     modele.close()
@@ -180,5 +180,43 @@ def modifier_client(id_client):
 def supprimer_client(id_client):
     modele = ModeleAppli()
     modele.get_client_bd().delete_client(id_client)
+    modele.close()
+    return redirect(request.referrer)
+
+@app.route('/admin/ajouter_client', methods=['GET', 'POST'])
+def ajouter_client():
+    modele = ModeleAppli()
+    if request.method == 'POST':
+        nom = request.form['nom']
+        prenom = request.form['prenom']
+        email = request.form['email']
+        mdp = request.form['mdp']
+        modele.get_client_bd().insert_client(nom, prenom, mdp, email)
+        modele.close()
+        return redirect(url_for('clients'))
+    modele.close()
+    return render_template(
+        "organisateur/clients/ajouter_client.html")
+
+@app.route('/admin/evenements')
+def evenements_admin():
+    modele = ModeleAppli()
+    evenements = modele.get_evenement_bd().get_all_evenement()
+    modele.close()
+    return render_template(
+        "organisateur/evenements/admin_evenements.html", evenements=evenements)
+
+@app.route('/admin/modifier_evenement/<id_evenement>', methods=['GET', 'POST'])
+def modifier_evenement(id_evenement):
+    modele = ModeleAppli()
+    evenement = modele.get_evenement_bd().get_evenement_by_id(id_evenement)
+    modele.close()
+    return render_template(
+        "organisateur/evenements/modifier_evenement.html", evenement=evenement)
+
+@app.route('/admin/supprimer_evenement/<id_evenement>', methods=['GET', 'POST'])
+def supprimer_evenement(id_evenement):
+    modele = ModeleAppli()
+    modele.get_evenement_bd().delete_evenement(id_evenement)
     modele.close()
     return redirect(request.referrer)

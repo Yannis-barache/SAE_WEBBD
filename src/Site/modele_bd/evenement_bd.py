@@ -51,3 +51,13 @@ class EvenementBD:
             print(e)
             return None
 
+    def delete_evenement(self, id_even):
+        try:
+            query = text('DELETE FROM EVENEMENT WHERE idEvenement =' +
+                         str(id_even))
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False

@@ -438,6 +438,25 @@ BEGIN
     DELETE FROM SINSCRIT WHERE idClient = OLD.idClient;
 END |
 
+-- SupprimerDependancesHebergement : Supprime toutes les lignes dont d'autres tables dépendent lorsqu'un hébergement est supprimé.
+delimiter |
+CREATE OR REPLACE TRIGGER SupprimerDependancesHebergement
+BEFORE DELETE ON HEBERGEMENT
+FOR EACH ROW
+BEGIN
+    DELETE FROM LOGER WHERE idHebergement = OLD.idHebergement;
+END |
+delimiter ;
+
+-- SupprimerDependancesEvenement : Supprime toutes les lignes dont d'autres tables dépendent lorsqu'un concert est supprimé.
+delimiter |
+CREATE OR REPLACE TRIGGER SupprimerDependancesEvenement
+BEFORE DELETE ON EVENEMENT
+FOR EACH ROW
+BEGIN
+    DELETE FROM PARTICIPE WHERE idEvenement = OLD.idEvenement;
+    DELETE FROM SINSCRIT WHERE idEvenement = OLD.idEvenement;
+END |
 -- Fonctions : -----------------------------------------------------------
 
 -- Une fonction pour afficher la programmation par jour, lieu et artiste en MySQL.
