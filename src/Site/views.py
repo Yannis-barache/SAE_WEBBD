@@ -131,7 +131,7 @@ def groupes():
     groupes = modele.get_groupe_bd().get_all_groupes()
     modele.close()
     return render_template(
-        "organisateur/admin_groupe.html", groupes=groupes)
+        "organisateur/groupe/admin_groupe.html", groupes=groupes)
 
 @app.route('/admin/modifier_groupe/<id_groupe>', methods=['GET', 'POST'])
 def modifier_groupe(id_groupe):
@@ -139,11 +139,46 @@ def modifier_groupe(id_groupe):
     groupe = modele.get_groupe_bd().get_groupe_by_id(id_groupe)
     modele.close()
     return render_template(
-        "organisateur/modifier_groupe.html", groupe=groupe)
+        "organisateur/groupe/modifier_groupe.html", groupe=groupe)
 
 @app.route('/admin/supprimer_groupe/<id_groupe>', methods=['GET', 'POST'])
 def supprimer_groupe(id_groupe):
     modele = ModeleAppli()
     modele.get_groupe_bd().delete_groupe(id_groupe)
+    modele.close()
+    return redirect(request.referrer)
+
+@app.route('/admin/ajouter_groupe', methods=['GET', 'POST'])
+def ajouter_groupe():
+    modele = ModeleAppli()
+    if request.method == 'POST':
+        nom = request.form['nom']
+        modele.get_groupe_bd().insert_groupe(nom)
+        modele.close()
+        return redirect(url_for('groupes'))
+    modele.close()
+    return render_template(
+        "organisateur/groupe/ajouter_groupe.html")
+
+@app.route('/admin/clients')
+def clients():
+    modele = ModeleAppli()
+    clients = modele.get_client_bd().get_all_client()
+    modele.close()
+    return render_template(
+        "organisateur/clients/admin_clients.html", clients=clients)
+
+@app.route('/admin/modifier_client/<id_client>', methods=['GET', 'POST'])
+def modifier_client(id_client):
+    modele = ModeleAppli()
+    client = modele.get_client_bd().get_client_by_id(id_client)
+    modele.close()
+    return render_template(
+        "organisateur/clients/modifier_client.html", client=client)
+
+@app.route('/admin/supprimer_client/<id_client>', methods=['GET', 'POST'])
+def supprimer_client(id_client):
+    modele = ModeleAppli()
+    modele.get_client_bd().delete_client(id_client)
     modele.close()
     return redirect(request.referrer)

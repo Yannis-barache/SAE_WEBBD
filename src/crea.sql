@@ -414,15 +414,29 @@ BEGIN
 END |
 delimiter ;
 
--- SupprimerMembreGroupes : Supprime tous les membres d'un groupe lors de la suppression du groupe.
+-- SupprimerDependancesGroupe : Supprime toutes les lignes dont d'autres tables dépendent lorsqu'un groupe est supprimé.
 delimiter |
-CREATE OR REPLACE TRIGGER SupprimerMembreGroupes
+CREATE OR REPLACE TRIGGER SupprimerDependancesGroupe
 BEFORE DELETE ON GROUPE
 FOR EACH ROW
 BEGIN
     DELETE FROM MEMBRE WHERE idGroupe = OLD.idGroupe;
+    DELETE FROM AIME WHERE idGroupe = OLD.idGroupe;
+    DELETE FROM PARTICIPE WHERE idGroupe = OLD.idGroupe;
+    DELETE FROM LOGER WHERE idGroupe = OLD.idGroupe;
 END |
 delimiter ;
+
+-- SupprimerDependancesClients : Supprime toutes les lignes dont d'autres tables dépendent lorsqu'un utilisateur est supprimé.
+delimiter |
+CREATE OR REPLACE TRIGGER SupprimerDependancesClients
+BEFORE DELETE ON CLIENT
+FOR EACH ROW
+BEGIN
+    DELETE FROM AIME WHERE idClient = OLD.idClient;
+    DELETE FROM BILLET WHERE idClient = OLD.idClient;
+    DELETE FROM SINSCRIT WHERE idClient = OLD.idClient;
+END |
 
 -- Fonctions : -----------------------------------------------------------
 
