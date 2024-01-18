@@ -1,5 +1,7 @@
 from .app import app
 from flask import render_template, request, redirect, url_for
+from flask_mail import Message, Mail
+
 import os
 import sys
 
@@ -9,6 +11,8 @@ from modeleAppli import ModeleAppli
 from .models import  traduire_erreurs
 
 USER = None
+mail = Mail(app)
+
 
 
 # Configuration de la connection à la base de données
@@ -37,6 +41,23 @@ def groupe(id):
     modele.close()
     return render_template(
         "PageInfosGroupe.html", groupe=groupe, style=style, user=USER, groupes_similaires=groupes_similaires)
+    
+@app.route('/contact', methods=['GET', 'POST'])
+def billetterie():
+    if request.method == 'POST':
+        name = request.form.get('nom')
+        email = request.form.get('email')
+        message = request.form.get('message')
+
+        if name and email and message:
+            msg = Message('New message from ' + name,
+                          sender='khabox52@gmail.com',
+                          recipients=['khabox52@gmail.com'])
+            msg.body = f"From: {name} <{email}>\n\n{message}"
+            mail.send(msg)
+    
+    return render_template(
+        "PageContact.html", user=USER)
 
 
 @app.route("/connexion/", methods=['GET', 'POST'])
