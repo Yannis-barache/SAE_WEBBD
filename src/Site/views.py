@@ -12,10 +12,13 @@ USER = None
 
 
 # Configuration de la connection à la base de données
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def home():
+    modele = ModeleAppli()
+    evenements = modele.get_evenement_bd().get_all_evenement()
+    modele.close()
     return render_template(
-        "PageAccueil.html", user=USER)
+        "PageAccueil.html", user=USER, evenements=evenements)
 
 @app.route('/festival')
 def festival():
@@ -64,7 +67,7 @@ def page_connexion():
                         USER = resultat
                         print("On redirige vers la page de succès ", USER)
                         modele.close()
-                        return redirect(url_for('home', user=USER))
+                        return redirect(url_for('home'))
                     else:
                         messages.append("Email ou mot de passe incorrect")
                         modele.close()
