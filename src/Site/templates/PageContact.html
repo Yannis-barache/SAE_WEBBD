@@ -50,4 +50,21 @@
         </div>
     </div>
 </div>
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
 {% endblock %}
+{% block scripts %}
+<script>
+    setTimeout(function() {
+        $('.flash-message').fadeOut('slow');
+    }, 10000); // <-- time in milliseconds, 10000 ms = 10 s
+</script>
+{% endblock %}
+```

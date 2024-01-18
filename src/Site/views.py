@@ -1,5 +1,5 @@
 from .app import app
-from flask import render_template, request, redirect, url_for
+from flask import Flask, render_template, request, flash
 from flask_mail import Message, Mail
 
 import os
@@ -43,18 +43,19 @@ def groupe(id):
         "PageInfosGroupe.html", groupe=groupe, style=style, user=USER, groupes_similaires=groupes_similaires)
     
 @app.route('/contact', methods=['GET', 'POST'])
-def billetterie():
+def contact():
     if request.method == 'POST':
         name = request.form.get('nom')
         email = request.form.get('email')
         message = request.form.get('message')
 
-        if name and email and message:
+        if name!='' and email!='' and message!='':
             msg = Message('New message from ' + name,
-                          sender='khabox52@gmail.com',
-                          recipients=['khabox52@gmail.com'])
+                          sender=email,
+                          recipients=['khabox52x@gmail.com'])
             msg.body = f"From: {name} <{email}>\n\n{message}"
             mail.send(msg)
+            flash("Votre message a été envoyé avec succès!", "success")  # Ajoute un message de confirmation
     
     return render_template(
         "PageContact.html", user=USER)

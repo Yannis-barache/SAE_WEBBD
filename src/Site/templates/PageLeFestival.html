@@ -6,7 +6,7 @@
         <h2>Les Groupes</h2>
         {% for groupe in groupes %}
             <div class="card">
-                <div class="image"></div>
+                <div class="image"><img src="{{groupe.get_photo_groupe()}}" alt="image groupe"></div>
                 <div class="content">
                     <a href="{{ url_for('groupe', id=groupe.get_id_groupe()) }}">
                         <span class="title">
