@@ -1,0 +1,32 @@
+{% extends "organisateur/base_organisateur.html" %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename = 'tableau.css')}}">
+{% endblock %}
+{% block body %}
+<h1>Les evenements</h1>
+<div class="table">
+    <table>
+        <tr>
+            <th>Nom</th>
+            <th>Date</th>
+            <th>Heure</th>
+            <th>Type</th>
+            <th>Lieu</th>
+            <th colspan="2">Action</th>
+        </tr>
+        {% for evenement in evenements %}
+        <tr>
+            <td>{{ evenement.get_nom_evenement() }}</td>
+            <td>{{ evenement.date }}</td>
+            <td>{{ evenement.get_heure_evenement() }}</td>
+            <td>{{ evenement.get_id_type() }}</td>
+            <td>{{ evenement.get_id_lieu() }}</td>
+            <td><a href="{{ url_for('modifier_evenement', id_evenement=evenement.get_id_evenement()) }}">Modifier</a></td>
+            <td><a href="{{ url_for('supprimer_evenement', id_evenement=evenement.get_id_evenement()) }}">Supprimer</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
+

@@ -34,7 +34,7 @@
                                 <a class="nav-link" href="{{ url_for('festival') }}">Le Festival</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Nous contacter</a>
+                                <a class="nav-link" href="{{url_for('contact')}}">Nous contacter</a>
                             </li>
                         </ul>
                         <a class="logo d-lg-block text-decoration-none d-none" href="#">
@@ -155,6 +155,8 @@
             addRadius.classList.toggle("radius-50");
         })
     </script>
+    {% block scripts %}
+    {% endblock %}
 </body>
 
 </html>

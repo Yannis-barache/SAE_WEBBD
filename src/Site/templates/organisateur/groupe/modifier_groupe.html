@@ -1,0 +1,35 @@
+{% extends "organisateur/base_organisateur.html" %}
+
+{% block title %}Modificaion de groupe{% endblock %}
+
+{% block body %}
+    <h1>Modification de groupe</h1>
+    <form action="modifier_groupe.html" method="post">
+        {{ form.hidden_tag() }}
+        {{ form.id }}
+        <div class="field">
+            {{ form.nom.label }}
+            {{ form.nom }}
+        </div>
+        <div class="field">
+            {{ form.description.label }}
+            {{ form.description }}
+        </div>
+        <div class="field">
+            {{ form.style.label }}
+            {{ form.style }}
+        </div>
+        <div class="field">
+            {{ form.lien_photo.label }}
+            {{ form.lien_photo }}
+        </div>
+        <div class="field">
+            {{ form.lien_video.label }}
+            {{ form.lien_video }}
+        </div>
+        <div class="field">
+            {{ form.submit }}
+        </div>
+    </form>
+{% endblock %}
+```

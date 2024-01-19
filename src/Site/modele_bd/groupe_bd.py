@@ -35,6 +35,37 @@ class GroupeBD:
             print(e)
             return None
 
+
+    def ajout_image(self, id_groupe, image):
+        try:
+            query = text('UPDATE GROUPE SET photosGroupe = ' + str(image) + ' WHERE idGroupe = ' + str(id_groupe))
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
+
+    def delete_groupe(self, id_groupe):
+        try:
+            query = text('DELETE FROM GROUPE WHERE idGroupe = ' + str(id_groupe))
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
+
+    def ajout_groupe(self, nom_groupe, description_groupe, id_style, photos_groupe, reseaux_groupe, liens_video_groupe):
+        try:
+            query = text('INSERT INTO GROUPE (nomGroupe, descriptionGroupe, idStyle, photosGroupe, reseauxGroupe, liensVideoGroupe) VALUES (\'' + nom_groupe + '\', \'' + description_groupe + '\', ' + str(id_style) + ', \'' + photos_groupe + '\', \'' + reseaux_groupe + '\', \'' + liens_video_groupe + '\')')
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
+
     def get_groupes_similaires(self, id_style):
         try:
             query = text('SELECT DISTINCT idGroupe, nomGroupe, descriptionGroupe, idStyle, photosGroupe, reseauxGroupe, liensVideoGroupe FROM GROUPE NATURAL JOIN RESSEMBLE WHERE idStyle1 = '+ str(id_style) + ' OR idStyle2 = ' + str(id_style))
@@ -47,3 +78,4 @@ class GroupeBD:
             print(e)
             return None
     
+
