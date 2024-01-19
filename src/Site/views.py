@@ -22,9 +22,12 @@ mail = Mail(app)
 def home():
     modele = ModeleAppli()
     evenements = modele.get_evenement_bd().get_all_evenement()
+    dates =[]
+    for evenement in evenements:
+        dates.append(modele.get_date_bd().get_date_by_id(evenement.get_date_evenement()).get_date_evenement())
     modele.close()
     return render_template(
-        "PageAccueil.html", user=USER, evenements=evenements)
+        "PageAccueil.html", user=USER, evenements=evenements, dates=dates)
 
 
 @app.route('/festival')

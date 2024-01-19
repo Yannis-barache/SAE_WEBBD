@@ -33,17 +33,16 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url_for('festival') }}">Le Festival</a>
                             </li>
+                            {% if user|is_organisateur %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{{url_for('contact')}}">Nous contacter</a>
+                                <a class="nav-link" href="{{url_for('admin')}}">Administration</a>
                             </li>
+                            {% endif %}
                         </ul>
                         <a class="logo d-lg-block text-decoration-none d-none" href="#">
                             <h1><img src="../static/images/logo.png" alt="logo du site"></h1>
                         </a>
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Évènements</a>
-                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url_for('billetterie')}}">Billetterie</a>
                             </li>
@@ -82,11 +81,6 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" title="Linkedin">
-                                <img src="{{  url_for('static', filename='images/linkedin.svg')}}" alt='Linkedin'>
-                            </a>
-                        </li>
-                        <li>
                             <a href="#" title="Twitter">
                                 <img src="{{ url_for('static', filename='images/twitter.svg')}}" alt='Twitter'>
                             </a>
@@ -97,7 +91,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" title="GitHub">
+                            <a href="https://github.com/Yannis-barache/SAE_WEBBD" title="GitHub">
                                 <img src="{{ url_for('static', filename='images/github.svg')}}" alt='GitHub'>
                             </a>
                         </li>
@@ -130,7 +124,7 @@
                         <h3>À propos</h3>
                         <ul>
                             <li>
-                                <a href="#" title="About Us">À propos</a>
+                                <a href="{{url_for('contact')}}" title="Envoi de mail">Nous contacter</a>
                             </li>
                         </ul>
                     </section>

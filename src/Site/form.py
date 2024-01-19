@@ -14,6 +14,7 @@ def connexion_form():
     class ConnexionForm(FlaskForm):
         email = StringField('Email', validators=[validators.DataRequired()])
         mdp = PasswordField('Mot de passe', validators=[validators.DataRequired()])
+        statut = SelectField('Statut', choices=[('1', 'Utilisateur'), ('2', 'Administrateur')])
         submit = SubmitField('Se connecter')
 
     return ConnexionForm()
