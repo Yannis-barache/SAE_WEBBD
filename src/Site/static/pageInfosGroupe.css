@@ -1,0 +1,175 @@
+.infos{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+.infos p {
+    font-size: 1.5em;
+}
+
+aside{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    margin: 0 0 0 2em;
+}
+
+h2{
+    margin-top: 10px;
+    font-size: 2.3em;
+}
+
+a {
+    display: inline-block;
+    transition: .3s;
+    font-weight:bold;
+    text-decoration:none;
+    }
+
+a:hover {
+-webkit-transform: scale(1.2);
+transform: scale(1.2);
+}
+
+/* CARD */
+.card {
+    width: 300px;
+    border-radius: 0.5rem;
+    background-color: #fff;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    border: 1px solid transparent;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .card a {
+    text-decoration: none
+  }
+  
+  .content {
+    padding: 1.1rem;
+  }
+  
+  .image {
+    object-fit: cover;
+    width: 100%;
+    height: 150px;
+    background-color: rgb(253, 217, 125);
+  }
+  
+  .title {
+    color: #111827;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+  }
+  
+  .desc {
+    margin-top: 0.5rem;
+    color: #6B7280;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+  
+  .action {
+    display: inline-flex;
+    margin-top: 1rem;
+    color: #ffffff;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    align-items: center;
+    gap: 0.25rem;
+    background-color: #262626;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+  
+  .action span {
+    transition: .3s ease;
+  }
+  
+  .action:hover span {
+    transform: translateX(4px);
+  }
+
+  /* Responsive layout - makes the menu and the content stack on top of each other */
+@media (max-width: 600px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.groupes-similaires{
+    background-color: orange; 
+    transition: background-color 0.5s ease; 
+    display: flex;
+    flex-direction: row; 
+    flex-wrap: wrap;
+    align-items: center;
+    position: relative;
+}
+
+.groupes-similaires:hover, .planning:hover{
+    background-color: #ff8c00; 
+    transition: background-color 0.5s ease; 
+}
+
+.groupes-similaires h2 {
+    display: block !important;
+    width: 100%;
+    text-align: center;
+    border-bottom : 3px solid #000;
+    border-top : 3px solid #000;
+}
+
+.planning{
+    background-color: orange;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.planning h2 {
+    display: block !important;
+    width: 100%;
+    text-align: center;
+    border-bottom : 3px solid #000;
+    border-top : 3px solid #000;
+}
+
+/* BUTTON PLANNING */
+
+button {
+    background: #fbca1f;
+    font-family: inherit;
+    padding: 0.6em 1.3em;
+    font-weight: 900;
+    font-size: 18px;
+    border: 3px solid black;
+    border-radius: 0.4em;
+    box-shadow: 0.1em 0.1em;
+    cursor: pointer;
+    margin: 10px;
+    margin-bottom: 20px;
+  }
+  
+  button:hover {
+    transform: translate(-0.05em, -0.05em);
+    box-shadow: 0.15em 0.15em;
+  }
+  
+  button:active {
+    transform: translate(0.05em, 0.05em);
+    box-shadow: 0.05em 0.05em;
+  }
+  

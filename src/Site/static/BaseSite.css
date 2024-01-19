@@ -7,10 +7,19 @@
     font-family: 'Ubuntu', sans-serif;
 }
 
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
 body{
     min-height: 100vh;
     margin: 0; 
-    padding: 0; 
+    padding: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .background{
@@ -37,6 +46,7 @@ nav > div {
     background-color: #ffffff2b;
     border-radius: 50rem;
 }
+
 .radius-50 {
     border-radius: 1rem;
 }
@@ -59,6 +69,40 @@ nav > div {
     color: #FFFFFF;
 }
 
+.rectangle-noir-transparent {
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 90%;
+    position: absolute;
+    overflow-y : scroll;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    height: 60%;
+    
+    /* Centre l'élément horizontalement et verticalement */
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+main{
+    height: 600px;
+}
+
+main h2{
+    color: #FFFFFF;
+    display: block !important;
+    width: 100%;
+    text-align: center;
+}
+
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to right, orange, white);
+}
 /* FOOTER */
 
 
@@ -74,16 +118,13 @@ nav > div {
 
 /*? footer containers */
 footer {
-    bottom: 0px;
-    background-color: var(
-        --primary);
+    background-color: var(--primary);
     width: 100%;
     min-width: 300px;
-    bottom: 0px;
     display: flex;
     align-items: center;
     flex-direction: column;
-    position: inherit;
+    position: relative;
 }
 
 .footer-wrapper {
