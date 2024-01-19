@@ -38,6 +38,11 @@
                                 <a class="nav-link" href="{{url_for('admin')}}">Administration</a>
                             </li>
                             {% endif %}
+                            {% if user|is_client %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{url_for('calendrier')}}">Calendrier</a>
+                            </li>
+                            {% endif %}
                         </ul>
                         <a class="logo d-lg-block text-decoration-none d-none" href="#">
                             <h1><img src="../static/images/logo.png" alt="logo du site"></h1>

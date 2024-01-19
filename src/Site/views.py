@@ -173,16 +173,32 @@ def deconnexion():
 
 @app.route('/calendrier')
 def calendrier():
+    if USER is None:
+        return redirect(url_for('page_connexion'))
     modele = ModeleAppli()
-    events = modele.get_sinscrit_bd().get_sinscrit_by_id_client_jour(1, 1)
-    print(events)
-    liste_id_even = []
-    for event in events:
-        liste_id_even.append(event.get_id_evenement())
-    events = modele.get_evenement_bd().get_evenement_by_liste_inscrit(liste_id_even)
+    events_1 = modele.get_sinscrit_bd().get_sinscrit_by_id_client_jour(USER.get_id(), 1)
+    events_2 = modele.get_sinscrit_bd().get_sinscrit_by_id_client_jour(USER.get_id(), 2)
+    events_3 = modele.get_sinscrit_bd().get_sinscrit_by_id_client_jour(USER.get_id(), 3)
+    liste_id_even1 = []
+    liste_id_even2 = []
+    liste_id_even3 = []
+    if events_1 is not None:
+        for event in events_1:
+            liste_id_even1.append(event.get_id_evenement())
+
+    if events_2 is not None:
+        for event in events_2:
+            liste_id_even2.append(event.get_id_evenement())
+    if events_3 is not None:
+        for event in events_3:
+            liste_id_even3.append(event.get_id_evenement())
+    events1 = modele.get_evenement_bd().get_evenement_by_liste_inscrit(liste_id_even1)
+    events2 = modele.get_evenement_bd().get_evenement_by_liste_inscrit(liste_id_even2)
+    events3 = modele.get_evenement_bd().get_evenement_by_liste_inscrit(liste_id_even3)
+
     modele.close()
     return render_template(
-        "calendrier.html", events=events)
+        "calendrier.html",events1=events1, events2=events2, events3=events3, user=USER)
 
 
 @app.route('/admin')
@@ -324,7 +340,7 @@ def detail_evenement(id_event):
     inscrit = False
     if USER is not None:
         if isinstance(USER, Client):
-            inscrit = modele.get_sinscrit_bd().get_sinscrit_event_client(id_event, USER.get_id_client()) is not None
+            inscrit = modele.get_sinscrit_bd().get_sinscrit_event_client(id_event, USER.get_id()) is not None
         else:
             inscrit = None
     modele.close()
@@ -340,8 +356,8 @@ def inscription_event(id_event):
     if USER is None:
         modele.close()
         return redirect(url_for('page_connexion'))
-    if USER.get_id_client() is not None:
-        modele.get_sinscrit_bd().insert_sinscrit(USER.get_id_client(), id_event)
+    if USER.get_id() is not None:
+        modele.get_sinscrit_bd().insert_sinscrit(USER.get_id(), id_event)
         modele.close()
     return redirect(request.referrer)
 
@@ -352,8 +368,8 @@ def desinscription_event(id_event):
     if USER is None:
         modele.close()
         return redirect(url_for('page_connexion'))
-    if USER.get_id_client() is not None:
-        modele.get_sinscrit_bd().delete_sinscrit(USER.get_id_client(), id_event)
+    if USER.get_id() is not None:
+        modele.get_sinscrit_bd().delete_sinscrit(USER.get_id(), id_event)
         modele.close()
     return redirect(request.referrer)
 

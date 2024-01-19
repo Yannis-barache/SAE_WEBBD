@@ -4,23 +4,52 @@
     <link rel="stylesheet" href="{{ url_for('static', filename = 'calendrier.css')}}">
 {% endblock %}
 {% block main %}
-    {% if events %}
-    {% else %}
+    {% if events == None %}
         <p>Vous n'êtes inscrit à aucun evenement!</p>
-    {% endif %}
-    <div class="calendar">
+    {% else %}
+        <div class="calendar">
     <!-- Jours de la semaine -->
         <div class="day">Vendredi</div>
         <div class="day">Samedi</div>
         <div class="day">Dimanche</div>
-        {% for evenement in events %}
-            <div class="event" style="grid-row: {{ 1+loop.index }}; grid-column: 1">
-                <strong>{{ evenement.get_nom_evenement() }}</strong><br>
-                heure: {{ evenement.get_heure_evenement() }}
+        {% if events1 !=None %}
+            {% for evenement in events1 %}
+                <div class="event" style="grid-row: {{ 1+loop.index }}; grid-column: 1">
+                    <strong>{{ evenement.get_nom_evenement() }}</strong><br>
+                    heure: {{ evenement.get_heure_evenement() }}
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="event" style="grid-row: 2; grid-column: 1">
+                <strong>C'est bien vide ici</strong><br>
             </div>
-        {% endfor %}
+        {% endif %}
+        {% if events2 !=None %}
+            {% for evenement in events2 %}
+                <div class="event" style="grid-row: {{ 1+loop.index }}; grid-column: 2">
+                    <strong>{{ evenement.get_nom_evenement() }}</strong><br>
+                    heure: {{ evenement.get_heure_evenement() }}
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="event" style="grid-row: 2; grid-column: 2">
+                <strong>C'est bien vide ici</strong><br>
+            </div>
+        {% endif %}
+        {% if events3 !=None %}
+            {% for evenement in events3 %}
+                <div class="event" style="grid-row: {{ 1+loop.index }}; grid-column: 3">
+                    <strong>{{ evenement.get_nom_evenement() }}</strong><br>
+                    heure: {{ evenement.get_heure_evenement() }}
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="event" style="grid-row: 2; grid-column: 3">
+                <strong>C'est bien vide ici</strong><br>
+            </div>
+        {% endif %}
 
-    <!-- Répétez cela pour chaque jour -->
+    {% endif %}
 
 </div>
 {% endblock %}

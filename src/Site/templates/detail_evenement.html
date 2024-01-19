@@ -50,11 +50,11 @@
     </table>
     <p>Vous pouvez vous inscrire à l'événement en cliquant sur le bouton ci-dessous</p>
     {%  if inscrit == False %}
-        <button type="button" class="btn btn-primary" onclick="window.location.href='{{ url_for('inscription_event', id_event=evenement.get_id_evenement()) }}'">Je veux y aller!</button>
+        <button type="button"  onclick="window.location.href='{{ url_for('inscription_event', id_event=evenement.get_id_evenement()) }}'">Je veux y aller!</button>
     {% elif inscrit == None %}
         <p>Vous n'êtes pas un client!</p>
     {% else %}
-        <button type="button" class="btn btn-primary" onclick="window.location.href='{{ url_for('desinscription_event', id_event=evenement.get_id_evenement()) }}'">Je ne veux plus y aller!</button>
+        <button type="button"  onclick="window.location.href='{{ url_for('desinscription_event', id_event=evenement.get_id_evenement()) }}'">Je ne veux plus y aller!</button>
     {% endif %}
 
 
