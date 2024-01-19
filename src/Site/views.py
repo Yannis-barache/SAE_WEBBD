@@ -127,6 +127,12 @@ def billetterie():
     modele.close()
     return render_template("PageBilletterie.html", dates=dates, user=USER)
 
+@app.route('/mon-compte/')
+def mon_compte():
+    if USER is None:
+        return redirect(url_for('page_connexion'))
+    return render_template("PageMonCompte.html", user=USER)
+
 # @app.route('/inscription')
 # def login():
 #    if request.method == 'POST':

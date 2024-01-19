@@ -9,6 +9,7 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     {% block styles %}
     {% endblock %}
+    {% block title %}{% endblock %}
 </head>
 
 <body>
@@ -44,7 +45,7 @@
                                 <a class="nav-link" href="#">Évènements</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url_for('billetterie')}}">Billeterie</a>
+                                <a class="nav-link" href="{{ url_for('billetterie')}}">Billetterie</a>
                             </li>
                             {% if user == None %}
                             <li class="nav-item">
@@ -52,7 +53,7 @@
                             </li>
                             {% else %}
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Mon compte</a>
+                                <a class="nav-link" href="{{url_for('mon_compte')}}">Mon compte</a>
                             </li>
                             {% endif %}
                         </ul>

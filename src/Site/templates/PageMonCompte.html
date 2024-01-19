@@ -1,0 +1,19 @@
+{% extends "BaseSite.html" %}
+
+{% block styles %}
+    <link  href="../static/MonCompte.css" rel="stylesheet">
+{% endblock %}
+
+{% block title %}
+    <title>Mon Compte</title>
+{% endblock %}
+
+{% block main %}
+    <div class="profile">
+        <h2>Bonjour, {{ user.get_nom_client() }} {{ user.get_prenom_client() }}</h2>
+        <p><strong>Email:</strong> {{ user.get_email_client() }}</p>
+        <p><strong>Mot de passe:</strong> {{ user.get_mdp_client() }}</p>
+    </div>
+
+    <button class="deconnexion">Se déconnecter</button>
+{% endblock %}

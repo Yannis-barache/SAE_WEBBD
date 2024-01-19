@@ -2,6 +2,11 @@
 {% block styles %}
 <link rel="stylesheet" href="../static/pageInfosGroupe.css">
 {% endblock %}
+
+{% block title %}
+<title>Infos du groupe {{groupe.get_nom_groupe()}}</title>
+{% endblock %}
+
 {% block main %}
 <h2><u>Infos du groupe</u></h2>
 <aside>

@@ -4,17 +4,18 @@
     <link  href="../static/Billetterie.css" rel="stylesheet">
 {% endblock %}
 
+{% block title %}
+    <title>Billetterie</title>
+{% endblock %}
 
 {% block main %}
 {% for date in dates %}
 <div class="card">
     <div class="image"></div>
     <div class="content">
-        <a href="">
             <span class="title">
                 Billet pour le {{ date.get_date_evenement() }} 
             </span>
-        </a>
         <a class="action" href="">
             Acheter
             <span aria-hidden="true">
@@ -27,11 +28,9 @@
 <div class="card">
     <div class="image"></div>
     <div class="content">
-        <a href="">
             <span class="title">
-                Billet pour les 3 jours 
+                Billet pour les 3 jours
             </span>
-        </a>
         <div class="desc">
             Un pack de 3 billets pour les 3 jours du festival
         </div>
