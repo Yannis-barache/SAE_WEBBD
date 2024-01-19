@@ -90,24 +90,15 @@ mysql -h servinfo-maria -u barache -p
 ```
 
 
-## Liste des tâches à faire 
+## Liste des améliorations à faire 
 
-
-- [x] Déterminer toutes les tables de la base de données
-- [ ] Déterminer toutes les fonctionnalités du site
-- [ ] Déterminer toutes les contraintes de la base de données
-- [x] Connecter l'application flask à la base de données
-- [x] Créer les tables de la base de données
-- [x] Créer les contraintes de la base de données
-- [ ] Coder les pages flask
-    - [ ] Page d'accueil
-    - [ ] Page de connexion
-    - [ ] Page d'inscription
-    - [ ] Page de déconnexion
-    - [ ] Page de profil
-    - [ ] Page de modification du profil
-    - [ ] Page de paiement des tickets
-    - [ ] Page de consultation des tickets
-    - [ ] Page de l'emploi du temps
-    - [ ] Page de consultation des artistes
+- [ ] Gestions des erreurs SQL
+- [ ] Gestion des blobs
+- [ ] Module admin fini
+- [ ] Planning général à générer 
+- [ ] Préremplir automatiquement le formulaire de contact (si connecté)
+- [ ] Billeterie à finir
+- [ ] Verif du billet pour s'inscrire si l'evenement est payant
+- [ ] Espace groupe
+- [ ] Css à finir
 
