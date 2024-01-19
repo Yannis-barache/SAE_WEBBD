@@ -1,0 +1,27 @@
+{% extends "BaseSite.html" %}
+
+{% block main %}
+    <h1>{{ evenement.get_nom_evenement() }}</h1>
+
+    <h2>Le line up</h2>
+    <ul>
+        {% for group in groupes %}
+            <li>{{ group.get_nom_groupe() }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Informations</h2>
+    <p>{{ lieu.get_nom_lieu() }}</p>
+    <p>Places disponibles {{ places }}</p>
+    <h2>Vous êtes intéressé ?</h2>
+    <p>Vous pouvez vous inscrire à l'événement en cliquant sur le bouton ci-dessous</p>
+    {%  if inscrit == False %}
+        <button type="button" class="btn btn-primary" onclick="window.location.href='{{ url_for('inscription_event', id_event=evenement.get_id_evenement()) }}'">Je veux y aller!</button>
+    {% else %}
+        <button type="button" class="btn btn-primary" onclick="window.location.href='{{ url_for('desinscription_event', id_event=evenement.get_id_evenement()) }}'">Je ne veux plus y aller!</button>
+    {% endif %}
+
+
+
+
+{% endblock %}

@@ -4,13 +4,16 @@ from flask_mail import Message, Mail
 
 import os
 import sys
+from .constantes import USER
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), './')
 sys.path.append(os.path.join(ROOT, 'modele'))
 from modeleAppli import ModeleAppli
-from .models import  traduire_erreurs
 
-USER = None
+
+from .models import traduire_erreurs
+
+USER = USER
 mail = Mail(app)
 
 
@@ -18,6 +21,7 @@ mail = Mail(app)
 # Configuration de la connection à la base de données
 @app.route('/')
 def home():
+    global USER
     return render_template(
         "PageAccueil.html", user=USER)
 
@@ -60,7 +64,6 @@ def contact():
     return render_template(
         "PageContact.html", user=USER)
 
-
 @app.route("/connexion/", methods=['GET', 'POST'])
 def page_connexion():
     from .form import connexion_form
@@ -86,7 +89,7 @@ def page_connexion():
                         USER = resultat
                         print("On redirige vers la page de succès ", USER)
                         modele.close()
-                        return redirect(url_for('success', name=USER))
+                        return redirect(url_for('home'))
                     else:
                         messages.append("Email ou mot de passe incorrect")
                         modele.close()
@@ -99,7 +102,7 @@ def page_connexion():
 
     modele.close()
     return render_template(
-        "PageConnexion.html", form=form,inscription=inscription)
+        "PageConnexion.html", form=form, inscription=inscription)
 
 
 @app.route("/inscription/", methods=['GET', 'POST'])
@@ -134,22 +137,179 @@ def page_inscription():
     return render_template(
         "PageInscription.html", form=form, errors=messages)
 
+@app.route('/deconnexion/')
+def deconnexion():
+    global USER
+    USER = None
+    return redirect(url_for('home'))
 
-@app.route('/success/<name>')
-def success(name):
-    return 'welcome %s' % name
 
-# @app.route('/inscription')
-# def login():
-#    if request.method == 'POST':
-#         nom = request.form['nom']
-#         prenom = request.form['prenom']
-#         email = request.form['email']
-#         mdp = request.form['mdp']
-#         CS=mysql.connection.cursor()
-#         CS.execute("INSERT INTO CLIENT (nomClient,prenomClient,emailClient,mdpClient) VALUES (%s,%s,%s,%s)",(nom,prenom,email,mdp))
-#         mysql.connection.commit()
-#         return redirect(url_for('home.html',name=nom))
-#    else:
-#         user = request.args.get('nm')
-#         return render_template("inscription.html")
+@app.route('/calendrier')
+def calendrier():
+    modele = ModeleAppli()
+    events = modele.get_sinscrit_bd().get_sinscrit_by_id_client_jour(1, 1)
+    print(events)
+    liste_id_even = []
+    for event in events:
+        liste_id_even.append(event.get_id_evenement())
+    events = modele.get_evenement_bd().get_evenement_by_liste_inscrit(liste_id_even)
+    modele.close()
+    return render_template(
+        "calendrier.html", events=events)
+
+
+@app.route('/admin')
+def admin():
+    return render_template(
+        "organisateur/acceuil_organisateur.html")
+
+
+@app.route('/admin/groupes')
+def groupes_admin():
+    modele = ModeleAppli()
+    groupes = modele.get_groupe_bd().get_all_groupes()
+    modele.close()
+    return render_template(
+        "organisateur/groupe/admin_groupe.html", groupes=groupes)
+
+@app.route('/admin/modifier_groupe/<id_groupe>', methods=['GET', 'POST'])
+def modifier_groupe(id_groupe):
+    from .form import modification_groupe
+    form = modification_groupe()
+    modele = ModeleAppli()
+    groupe = modele.get_groupe_bd().get_groupe_by_id(id_groupe)
+    print(groupe)
+    form.set_nom(groupe.get_nom_groupe())
+    messages = []
+    if request.method == 'POST':
+        if not form.validate():
+            print("Form is not valid")
+            for field, errors in form.errors.items():
+                if field != 'csrf_token':
+                    messages.append(traduire_erreurs(errors[0]))
+            print(messages)
+            return render_template('organisateur/groupe/modifier_groupe.html', form=form, errors=messages)
+        nom = request.form['nom']
+        description = request.form['description']
+        style = request.form['style']
+        lien_photo = request.form['lien_photo']
+        lien_video = request.form['lien_video']
+        modele.get_groupe_bd().update_groupe(id_groupe, nom, description, style, lien_photo, lien_video)
+        modele.close()
+        return redirect(url_for('groupes_admin'))
+    modele.close()
+    return render_template(
+        "organisateur/groupe/modifier_groupe.html", groupe=groupe,form = modification_groupe())
+
+@app.route('/admin/supprimer_groupe/<id_groupe>', methods=['GET', 'POST'])
+def supprimer_groupe(id_groupe):
+    modele = ModeleAppli()
+    modele.get_groupe_bd().delete_groupe(id_groupe)
+    modele.close()
+    return redirect(request.referrer)
+
+@app.route('/admin/clients')
+def clients_admin():
+    modele = ModeleAppli()
+    clients = modele.get_client_bd().get_all_client()
+    modele.close()
+    return render_template(
+        "organisateur/clients/admin_clients.html", clients=clients)
+
+@app.route('/admin/modifier_client/<id_client>/', methods=['GET', 'POST'])
+def modifier_client(id_client):
+    modele = ModeleAppli()
+    client = modele.get_client_bd().get_client_by_id(id_client)
+    modele.close()
+    return render_template(
+        "organisateur/clients/modifier_client.html", client=client)
+
+@app.route('/admin/supprimer_client/<id_client>', methods=['GET', 'POST'])
+def supprimer_client(id_client):
+    modele = ModeleAppli()
+    modele.get_client_bd().delete_client(id_client)
+    modele.close()
+    return redirect(request.referrer)
+
+@app.route('/admin/ajouter_client', methods=['GET', 'POST'])
+def ajouter_client():
+    modele = ModeleAppli()
+    if request.method == 'POST':
+        nom = request.form['nom']
+        prenom = request.form['prenom']
+        email = request.form['email']
+        mdp = request.form['mdp']
+        modele.get_client_bd().insert_client(nom, prenom, mdp, email)
+        modele.close()
+        return redirect(url_for('clients'))
+    modele.close()
+    return render_template(
+        "organisateur/clients/ajouter_client.html")
+
+@app.route('/admin/evenements')
+def evenements_admin():
+    modele = ModeleAppli()
+    evenements = modele.get_evenement_bd().get_all_evenement()
+    modele.close()
+    return render_template(
+        "organisateur/evenements/admin_evenements.html", evenements=evenements)
+
+@app.route('/admin/modifier_evenement/<id_evenement>', methods=['GET', 'POST'])
+def modifier_evenement(id_evenement):
+    modele = ModeleAppli()
+    evenement = modele.get_evenement_bd().get_evenement_by_id(id_evenement)
+    modele.close()
+    return render_template(
+        "organisateur/evenements/modifier_evenement.html", evenement=evenement)
+
+@app.route('/admin/supprimer_evenement/<id_evenement>', methods=['GET', 'POST'])
+def supprimer_evenement(id_evenement):
+    modele = ModeleAppli()
+    modele.get_evenement_bd().delete_evenement(id_evenement)
+    modele.close()
+    return redirect(request.referrer)
+
+@app.route('/evenement/<id_event>')
+def detail_evenement(id_event):
+    modele = ModeleAppli()
+    evenement = modele.get_evenement_bd().get_evenement_by_id(id_event)
+    lieu = modele.get_lieu_bd().get_lieu_by_id(evenement.get_id_lieu())
+    participants = modele.get_participe_bd().get_participe_by_id_evenement(id_event)
+    places = lieu.get_capacite_lieu() - len(participants)
+
+    groupes = []
+    for participant in participants:
+        groupes.append(modele.get_groupe_bd().get_groupe_by_id(participant.get_id_groupe()))
+    inscrit = False
+    if USER is not None:
+        inscrit = modele.get_sinscrit_bd().get_sinscrit_event_client(id_event, USER.get_id_client()) is not None
+        print("inscrit")
+        print(inscrit)
+    modele.close()
+
+    return render_template(
+        "detail_evenement.html", evenement=evenement, user=USER,lieu=lieu, groupes=groupes,inscrit=inscrit, places=places)
+
+
+@app.route('/inscription_event/<id_event>')
+def inscription_event(id_event):
+    modele = ModeleAppli()
+    if USER is None:
+        modele.close()
+        return redirect(url_for('page_connexion'))
+    if USER.get_id_client() is not None:
+        modele.get_sinscrit_bd().insert_sinscrit(USER.get_id_client(), id_event)
+        modele.close()
+    return redirect(request.referrer)
+
+@app.route('/desinscription_event/<id_event>')
+def desinscription_event(id_event):
+    modele = ModeleAppli()
+    if USER is None:
+        modele.close()
+        return redirect(url_for('page_connexion'))
+    if USER.get_id_client() is not None:
+        modele.get_sinscrit_bd().delete_sinscrit(USER.get_id_client(), id_event)
+        modele.close()
+    return redirect(request.referrer)
+

@@ -83,7 +83,7 @@ class ClientBD:
             query = text(
                 "DELETE FROM CLIENT WHERE idClient = " + str(id_client))
             self.__connexion.execute(query)
-
+            self.__connexion.commit()
             return True
         except Exception as e:
             print(e)

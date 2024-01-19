@@ -19,7 +19,7 @@ class Groupe:
     """
 
     def __init__(self, id_groupe: int, nom_groupe: str,
-                 description_groupe: str, id_style: int, photo_groupe: int,
+                 description_groupe: str, id_style: int, photo_groupe: str,
                  reseaux_groupe: [str], liens_videos_groupe: str):
         """
         Constructeur de la classe Groupe
@@ -82,9 +82,11 @@ class Groupe:
         Getter de la photo du groupe
 
         Returns:
-            List[int]: photo du groupe
+
         """
+
         return self.photo_groupe
+
 
     def get_reseaux_groupe(self):
         """

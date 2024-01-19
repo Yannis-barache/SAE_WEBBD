@@ -64,13 +64,19 @@ CREATE TABLE TYPES (
     PRIMARY KEY (idType)
 );
 
+CREATE TABLE DATE (
+    id_date int NOT NULL,
+    dateEvenement DATE NOT NULL,
+    PRIMARY KEY (id_date)
+);
+
 CREATE TABLE EVENEMENT (
     idEvenement int NOT NULL AUTO_INCREMENT,
     nomEvenement VARCHAR(50) NOT NULL,
-    dateEvenement DATE NOT NULL,
     heureEvenement TIME NOT NULL,
     idType int NOT NULL,
     idLieu int NOT NULL,
+    id_date int NOT NULL,
     PRIMARY KEY (idEvenement)
 );
 
@@ -148,6 +154,8 @@ ALTER TABLE SINSCRIT ADD FOREIGN KEY (idEvenement) REFERENCES EVENEMENT(idEvenem
 ALTER TABLE AIME ADD FOREIGN KEY (idClient) REFERENCES CLIENT(idClient);
 ALTER TABLE AIME ADD FOREIGN KEY (idGroupe) REFERENCES GROUPE(idGroupe);
 ALTER TABLE MEMBRE ADD FOREIGN KEY (idInstrument) REFERENCES INSTRUMENT(idInstrument);
+ALTER TABLE EVENEMENT ADD FOREIGN KEY (id_date) REFERENCES DATE(id_date);
+ALTER TABLE EVENEMENT ADD FOREIGN KEY (id_date) REFERENCES DATE(id_date);
 
 -- A changer dans le MCD : association loger --> ajouter une table date qui contient les dates et les durees
 -- revoir le systeme de billets
@@ -390,6 +398,65 @@ BEGIN
     END IF;
 END |
 
+-- VérifieremailOrganisateur : Vérifie qu’il n’y a pas d’organisateur déjà existant avec la même adresse mail.
+delimiter |
+CREATE OR REPLACE TRIGGER VerifieremailOrganisateur
+BEFORE INSERT ON ORGANISATEUR
+FOR EACH ROW
+BEGIN
+    DECLARE conflit INT;
+    SELECT COUNT(*) INTO conflit
+    FROM ORGANISATEUR
+    WHERE emailOrganisateur = NEW.emailOrganisateur;
+    IF conflit > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Un organisateur existe déjà avec cette adresse mail.';
+    END IF;
+END |
+delimiter ;
+
+-- SupprimerDependancesGroupe : Supprime toutes les lignes dont d'autres tables dépendent lorsqu'un groupe est supprimé.
+delimiter |
+CREATE OR REPLACE TRIGGER SupprimerDependancesGroupe
+BEFORE DELETE ON GROUPE
+FOR EACH ROW
+BEGIN
+    DELETE FROM MEMBRE WHERE idGroupe = OLD.idGroupe;
+    DELETE FROM AIME WHERE idGroupe = OLD.idGroupe;
+    DELETE FROM PARTICIPE WHERE idGroupe = OLD.idGroupe;
+    DELETE FROM LOGER WHERE idGroupe = OLD.idGroupe;
+END |
+delimiter ;
+
+-- SupprimerDependancesClients : Supprime toutes les lignes dont d'autres tables dépendent lorsqu'un utilisateur est supprimé.
+delimiter |
+CREATE OR REPLACE TRIGGER SupprimerDependancesClients
+BEFORE DELETE ON CLIENT
+FOR EACH ROW
+BEGIN
+    DELETE FROM AIME WHERE idClient = OLD.idClient;
+    DELETE FROM BILLET WHERE idClient = OLD.idClient;
+    DELETE FROM SINSCRIT WHERE idClient = OLD.idClient;
+END |
+
+-- SupprimerDependancesHebergement : Supprime toutes les lignes dont d'autres tables dépendent lorsqu'un hébergement est supprimé.
+delimiter |
+CREATE OR REPLACE TRIGGER SupprimerDependancesHebergement
+BEFORE DELETE ON HEBERGEMENT
+FOR EACH ROW
+BEGIN
+    DELETE FROM LOGER WHERE idHebergement = OLD.idHebergement;
+END |
+delimiter ;
+
+-- SupprimerDependancesEvenement : Supprime toutes les lignes dont d'autres tables dépendent lorsqu'un concert est supprimé.
+delimiter |
+CREATE OR REPLACE TRIGGER SupprimerDependancesEvenement
+BEFORE DELETE ON EVENEMENT
+FOR EACH ROW
+BEGIN
+    DELETE FROM PARTICIPE WHERE idEvenement = OLD.idEvenement;
+    DELETE FROM SINSCRIT WHERE idEvenement = OLD.idEvenement;
+END |
 -- Fonctions : -----------------------------------------------------------
 
 -- Une fonction pour afficher la programmation par jour, lieu et artiste en MySQL.

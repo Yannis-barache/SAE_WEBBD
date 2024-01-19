@@ -43,14 +43,19 @@ INSERT INTO LIEU (idLieu,nomLieu,adresseLieu,capaciteLieu) VALUES
 (9, 'Scène Noire', '9 rue de la scène noire', 9000),
 (10, 'Scène Marron', '10 rue de la scène marron', 10000);
 
+INSERT INTO DATE(id_date, dateEvenement) VALUES
+        (1,'2024-03-22'),
+        (2,'2024-03-23'),
+        (3,'2024-03-24');
 
-INSERT INTO EVENEMENT (idEvenement, nomEvenement, dateEvenement, heureEvenement, idType, idLieu) VALUES
-(1, 'Concert de Queen', '2020-12-12', '20:00:00', 1, 1),
-(2, 'Concert de Daft Punk', '2020-12-12', '20:00:00', 1, 8),
-(3, 'Concert de Nirvana', '2020-05-06', '20:00:00', 1, 9),
-(4, 'Concert de The Beatles', '2020-10-25', '20:00:00', 1, 2),
-(5, 'Concert de The Rolling Stones', '2021-09-15', '20:00:00', 1, 4),
-(6, 'Concert de Zouhair Bahaoui', '2021-09-10', '20:00:00', 1, 3);
+
+INSERT INTO EVENEMENT (idEvenement, nomEvenement, id_date, heureEvenement, idType, idLieu) VALUES
+(1, 'Concert de Queen', 1, '19:00:00', 1, 1),
+(2, 'Concert de Daft Punk', 1, '20:00:00', 1, 8),
+(3, 'Concert de Nirvana', 2, '20:00:00', 1, 9),
+(4, 'Concert de The Beatles', 2, '20:00:00', 1, 2),
+(5, 'Concert de The Rolling Stones', 3, '20:00:00', 1, 4),
+(6, 'Concert de Zouhair Bahaoui', 1, '20:00:00', 1, 3);
 
 
 INSERT INTO HEBERGEMENT (idHebergement, nomHebergement, adresseHebergement, nbPlacesJour) VALUES
