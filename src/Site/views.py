@@ -10,6 +10,7 @@ from .constantes import USER
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), './')
 sys.path.append(os.path.join(ROOT, 'modele'))
 from modeleAppli import ModeleAppli
+from client import Client
 
 from .models import traduire_erreurs
 
@@ -74,7 +75,6 @@ def contact():
         for field, errors in form.errors.items():
             if field != 'csrf_token':
                 messages.append(traduire_erreurs(errors[0]))
-    print(messages)
     return render_template(
         "PageContact.html", user=USER, form=form, messages=messages)
 
@@ -313,20 +313,25 @@ def detail_evenement(id_event):
     lieu = modele.get_lieu_bd().get_lieu_by_id(evenement.get_id_lieu())
     participants = modele.get_participe_bd().get_participe_by_id_evenement(id_event)
     places = lieu.get_capacite_lieu() - len(participants)
+    date = modele.get_date_bd().get_date_by_id(evenement.get_date_evenement())
 
     groupes = []
     for participant in participants:
+        print(participant.get_id_groupe())
         groupes.append(modele.get_groupe_bd().get_groupe_by_id(participant.get_id_groupe()))
+    for groupe in groupes:
+        print(groupe.get_nom_groupe())
     inscrit = False
     if USER is not None:
-        inscrit = modele.get_sinscrit_bd().get_sinscrit_event_client(id_event, USER.get_id_client()) is not None
-        print("inscrit")
-        print(inscrit)
+        if isinstance(USER, Client):
+            inscrit = modele.get_sinscrit_bd().get_sinscrit_event_client(id_event, USER.get_id_client()) is not None
+        else:
+            inscrit = None
     modele.close()
 
     return render_template(
         "detail_evenement.html", evenement=evenement, user=USER, lieu=lieu, groupes=groupes, inscrit=inscrit,
-        places=places)
+        places=places,date=date)
 
 
 @app.route('/inscription_event/<id_event>')
