@@ -15,5 +15,5 @@
         <p><strong>Mot de passe:</strong> {{ user.get_mdp_client() }}</p>
     </div>
 
-    <button class="deconnexion">Se déconnecter</button>
+    <button class="deconnexion" onclick="window.location.href='{{ url_for('deconnexion') }}'">Déconnexion</button>
 {% endblock %}

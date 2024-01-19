@@ -1,12 +1,33 @@
 {% extends "BaseSite.html" %}
+{% block styles %}
+    <link rel="stylesheet" href="../static/pageLeFestival.css">
+{% endblock %}
 
 {% block main %}
     <h1>{{ evenement.get_nom_evenement() }}</h1>
 
     <h2>Le line up</h2>
     <ul>
-        {% for group in groupes %}
-            <li>{{ group.get_nom_groupe() }}</li>
+          {% for groupe in groupes %}
+            <div class="card">
+                <div class="image"><img src="{{groupe.get_photo_groupe()}}" alt="image groupe"></div>
+                <div class="content">
+                    <a href="{{ url_for('groupe', id=groupe.get_id_groupe()) }}">
+                        <span class="title">
+                            {{ groupe.get_nom_groupe() }}
+                        </span>
+                    </a>
+                    <p class="desc">
+                        {{ groupe.get_description_groupe() }}
+                    </p>
+                    <a class="action" href="{{ url_for('groupe', id=groupe.get_id_groupe()) }}">
+                        Voir plus
+                        <span aria-hidden="true">
+                            →
+                        </span>
+                    </a>
+                </div>
+            </div>
         {% endfor %}
     </ul>
 

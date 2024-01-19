@@ -9,7 +9,7 @@
 
 {% block main %}
 <div class="login-box">
-    <p>Login</p>
+    <p>Connexion</p>
     {% if inscription == True %}
         <p class="valide">Inscription réussie !</p>
     {% endif %}
@@ -36,6 +36,6 @@
         {{ form.submit() }}
       </div>
     </form>
-    <p>Don't have an account? <a href="{{url_for('page_inscription')}}" class="a2">Sign up!</a></p>
+    <p>Vous n'avez pas de compte? <a href="{{url_for('page_inscription')}}" class="a2">Inscrivez-vous!</a></p>
   </div>
 {% endblock %}

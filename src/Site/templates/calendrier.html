@@ -4,24 +4,15 @@
     <link rel="stylesheet" href="{{ url_for('static', filename = 'calendrier.css')}}">
 {% endblock %}
 {% block main %}
-    <h1>qodhzdo</h1>
-    <p>Home page</p>
     {% if events %}
-        <ul>
-            {% for event in events %}
-                <li>{{ event.get_id_evenement()}}</li>
-            {% endfor %}
-        </ul>
     {% else %}
-        <p>No events found.</p>
+        <p>Vous n'êtes inscrit à aucun evenement!</p>
     {% endif %}
     <div class="calendar">
     <!-- Jours de la semaine -->
         <div class="day">Vendredi</div>
         <div class="day">Samedi</div>
         <div class="day">Dimanche</div>
-
-
         {% for evenement in events %}
             <div class="event" style="grid-row: {{ 1+loop.index }}; grid-column: 1">
                 <strong>{{ evenement.get_nom_evenement() }}</strong><br>

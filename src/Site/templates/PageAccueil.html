@@ -12,9 +12,10 @@
 <p><u>Les évènements</u></p>
 {% for evenement in evenements %}
 <div class="card">
-    <div class="image"></div>
+    <div class="image"><img src="{{ url_for('static', filename='images/event.jpg') }}" alt="image_evenement"></div>
+
     <div class="content">
-        <a href="{{ url_for('detail_event', id=evenement.get_id_evenement()) }}">
+        <a href="{{ url_for('detail_evenement', id_event=evenement.get_id_evenement()) }}">
             <span class="title">
                 {{ evenement.get_nom_evenement() }}
             </span>
@@ -22,7 +23,7 @@
         <p class="desc">
             La date de l'évènement est le {{ evenement.get_date_evenement() }}
         </p>
-        <a class="action" href="{{ url_for('detail_event', id=evenement.get_id_evenement()) }}">
+        <a class="action" href="{{ url_for('detail_evenement', id_event=evenement.get_id_evenement()) }}">
             Tout savoir sur l'évènement
             <span aria-hidden="true">
                 →

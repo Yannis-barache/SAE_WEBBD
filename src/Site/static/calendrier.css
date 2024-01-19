@@ -10,6 +10,8 @@ body {
         }
 
         .calendar {
+            width: 100%;
+            padding: 2%;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
