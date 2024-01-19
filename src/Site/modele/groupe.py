@@ -121,4 +121,4 @@ class Groupe:
                             self.photo_groupe) + " reseaux_groupe = " + str(
                                 self.reseaux_groupe
                             ) + " liensVideosGroupe = " + str(
-                                self.liensVideosGroupe)
+                                self.liens_videos_groupes)

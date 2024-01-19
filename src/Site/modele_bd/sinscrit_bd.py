@@ -47,3 +47,36 @@ class SinscritBD:
         except Exception as e:
             print(e)
             return None
+
+    def insert_sinscrit(self, id_client, id_event):
+        try:
+            query = text('INSERT INTO SINSCRIT (idClient, idEvenement) VALUES ('+str(id_client)+','+str(id_event)+')')
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None
+
+    def delete_sinscrit(self, id_client, id_event):
+        try:
+            query = text('DELETE FROM SINSCRIT WHERE idClient ='+str(id_client)+' AND idEvenement ='+str(id_event))
+            print(query)
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+        except Exception as e:
+            print(e)
+            return None
+
+    def get_sinscrit_event_client(self, id_event, id_client):
+        try:
+            query = text('SELECT idClient, idEvenement FROM SINSCRIT WHERE idClient ='+str(id_client)+' AND idEvenement ='+str(id_event))
+            print(query)
+            result = self.__connexion.execute(query)
+            for id_client, id_even in result:
+                print(id_client, id_even)
+                return Sinscrit(id_client, id_even)
+        except Exception as e:
+            print(e)
+            return None
+
+
