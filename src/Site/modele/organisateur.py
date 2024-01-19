@@ -10,9 +10,9 @@ class Organisateur:
     Methods:
         __init__(self, id_organisateur: int, nom_organisateur: str, prenom_organisateur: str, mdp_organisateur: str, email_organisateur: str) : Constructeur de la classe Organisateur
         get_id(self) : Getter de l'id de l'organisateur
-        get_nom_organisateur(self) : Getter du nom de l'organisateur
-        get_prenom_organisateur(self) : Getter du prenom de l'organisateur
-        get_mdp_organisateur(self) : Getter du mot de passe de l'organisateur
+        get_nom(self) : Getter du nom de l'organisateur
+        get_prenom(self) : Getter du prenom de l'organisateur
+        get_mdp(self) : Getter du mot de passe de l'organisateur
         get_email_organisateur(self) : Getter de l'email de l'organisateur
         set_nom_organisateur(self, nom_organisateur: str) : Setter du nom de l'organisateur
         set_prenom_organisateur(self, prenom_organisateur: str) : Setter du prenom de l'organisateur
@@ -49,7 +49,7 @@ class Organisateur:
         """
         return self.id
 
-    def get_nom_organisateur(self):
+    def get_nom(self):
         """
         Getter du nom de l'organisateur
 
@@ -58,7 +58,7 @@ class Organisateur:
         """
         return self.nom_organisateur
 
-    def get_prenom_organisateur(self):
+    def get_prenom(self):
         """
         Getter du prenom de l'organisateur
 
@@ -67,7 +67,7 @@ class Organisateur:
         """
         return self.prenom_organisateur
 
-    def get_mdp_organisateur(self):
+    def get_mdp(self):
         """
         Getter du mot de passe de l'organisateur
 
@@ -76,7 +76,7 @@ class Organisateur:
         """
         return self.mdp_organisateur
 
-    def get_email_organisateur(self):
+    def get_email(self):
         """
         Getter de l'email de l'organisateur
 

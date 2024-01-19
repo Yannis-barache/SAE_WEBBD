@@ -93,6 +93,18 @@ class Evenement:
         """
         return self.id_lieu
 
+    def set_lieu(self, lieu):
+        self.id_lieu = lieu
+
+    def set_type(self, type):
+        self.id_type = type
+
+    def set_date(self, date):
+        self.date_evenement = date
+
+
+
+
     def __str__(self):
         """
         Méthode d'affichage de la classe Evenement

@@ -8,24 +8,34 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-6">
-            <form action="" method="post">
+            {% if messages %}
+        <div class="alert alert-danger">
+            {% for erreur in messages %}
+                <li class="alerte">{{ erreur }}</li>
+            {% endfor %}
+        </div>
+    {% endif %}
+            <form action="{{ url_for('contact') }}" method="post">
+                {{ form.hidden_tag() }}
                 <div class="mb-3">
-                    <label for="nom" class="form-label">Nom</label>
-                    <input type="text" class="form-control" id="nom" name="nom" placeholder="Votre nom">
+                    {{ form.nom.label(class="form-label") }}
+                    {{ form.nom(class="form-control",placeholder="Votre nom et votre prénom") }}
                 </div>
                 <div class="mb-3">
-                    <label for="prenom" class="form-label">Prénom</label>
-                    <input type="text" class="form-control" id="prenom" name="prenom" placeholder="Votre prénom">
+                    {{ form.email.label(class="form-label") }}
+                    {{ form.email(class="form-control",placeholder="Votre adresse email") }}
                 </div>
                 <div class="mb-3">
-                    <label for="email" class="form-label">Adresse email</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Votre adresse email">
+                    {{ form.sujet.label(class="form-label") }}
+                    {{ form.sujet(class="form-control",placeholder="Le sujet de votre message") }}
                 </div>
                 <div class="mb-3">
-                    <label for="message" class="form-label">Message</label>
-                    <textarea class="form-control" id="message" name="message" rows="3"></textarea>
+                    {{ form.message.label(class="form-label") }}
+                    {{ form.message(class="form-control",row=3,placeholder="Votre message") }}
                 </div>
-                <button type="submit" class="btn btn-primary">Envoyer</button>
+                <div class="mb-3">
+                    {{ form.submit(class="btn btn-primary") }}
+                </div>
             </form>
         </div>
         <div class="col-lg-6">

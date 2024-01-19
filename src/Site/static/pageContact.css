@@ -6,3 +6,12 @@
     background-color: orange;
     border-color: orange;
 }
+
+.btn:hover{
+    background-color: #ff8c00;
+    border-color: #ff8c00;
+}
+
+.alerte{
+    list-style: none;
+}

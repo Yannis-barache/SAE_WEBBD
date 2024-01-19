@@ -17,12 +17,12 @@
         </tr>
         {% for client in clients %}
         <tr>
-            <td>{{ client.get_nom_client() }}</td>
-            <td>{{ client.get_prenom_client() }}</td>
-            <td>{{ client.get_mdp_client() }}</td>
-            <td>{{ client.get_email_client() }}</td>
-            <td><a href="{{ url_for('modifier_client', id_client=client.get_id_client()) }}">Modifier</a></td>
-            <td><a href="{{ url_for('supprimer_client', id_client=client.get_id_client()) }}">Supprimer</a></td>
+            <td>{{ client.get_nom() }}</td>
+            <td>{{ client.get_prenom() }}</td>
+            <td>{{ client.get_mdp() }}</td>
+            <td>{{ client.get_email() }}</td>
+            <td><a href="{{ url_for('modifier_client', id_client=client.get_id()) }}">Modifier</a></td>
+            <td><a href="{{ url_for('supprimer_client', id_client=client.get_id()) }}">Supprimer</a></td>
         </tr>
         {% endfor %}
     </table>

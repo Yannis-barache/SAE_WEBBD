@@ -50,5 +50,18 @@ table a:hover {
     color: white;
 }
 
+table.event {
+    border-collapse: collapse;
+    width: 50%;
+    margin: 0 auto;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 1em;
+    color: #000000;
+    background-color: white;
+    border: 1px solid black;
+    overflow: auto;
+    text-align: center;
+}
+
 
 

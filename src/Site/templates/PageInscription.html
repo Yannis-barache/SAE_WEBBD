@@ -16,24 +16,29 @@
          <form method="post" action="{{ url_for('page_inscription') }}">
              {{ form.hidden_tag() }}
             <div class="user-box">
-                {{ form.nom.label }}
                 {{ form.nom }}
+                {{ form.nom.label }}
+
             </div>
             <div class="user-box">
-                {{ form.prenom.label }}
                 {{ form.prenom }}
+                {{ form.prenom.label }}
+
             </div>
            <div class="user-box">
-               {{ form.email.label }}
                {{ form.email }}
+               {{ form.email.label }}
+
            </div>
            <div class="user-box">
-                {{ form.mdp.label }}
-                {{ form.mdp }}
+               {{ form.mdp }}
+               {{ form.mdp.label }}
+
            </div>
            <div class="user-box">
-                 {{ form.confirm_mdp.label }}
-                 {{ form.confirm_mdp }}
+               {{ form.confirm_mdp }}
+               {{ form.confirm_mdp.label }}
+
            </div>
            <a href="">
              <span></span>
@@ -43,6 +48,6 @@
              {{ form.submit }}
            </a>
          </form>
-         <p>Vous avez un compte ? <a href="{{url_for('page_connexion')}}" class="a2">Login !</a></p>
+         <p>Vous avez un compte ? <a href="{{url_for('page_connexion')}}" class="a2">Connectez-vous!</a></p>
        </div>
 {% endblock %}
