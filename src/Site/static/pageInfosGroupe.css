@@ -1,3 +1,21 @@
+.milieu{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2em;
+}
+
+.milieu img {
+    width: 25%;
+    height: 25%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid white;
+    box-shadow: 0 0 0 5px #ff8c00;
+}
+
+
 .infos{
     display: flex;
     flex-direction: column;

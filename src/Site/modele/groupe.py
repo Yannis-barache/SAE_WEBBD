@@ -106,6 +106,15 @@ class Groupe:
         """
         return self.liens_videos_groupes
 
+    def set_style(self, id_style):
+        """
+        Setter du style du groupe
+
+        Args:
+            id_style (int): id du style du groupe
+        """
+        self.id_style = id_style
+
     def __str__(self):
         """
         Méthode d'affichage de la classe Groupe

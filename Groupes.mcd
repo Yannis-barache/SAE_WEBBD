@@ -1,50 +1,63 @@
 :
 :
 :
-ACHETE, 03 CLIENT, 11 BILLET
-BILLET : idBillet, nomBillet
-POUR, 11 BILLET, 0N DATE
 :
-:
-:
-:
-
 JOUE, 11 MEMBRE, 0N INSTRUMENT
-MEMBRE : idMembre, nomMembre, prenomMembre, idGroupe, instrumentMembre
-AIME, 0N CLIENT, 0N GROUPE
-CLIENT : idCLient, nomClient, prenomClient, emailClient
-S'INSCRIT, 0N CLIENT, 0N EVENEMENT
-DATE : id_date, dateEvenement
-:
-:
-:
-:
-
 INSTRUMENT : idInstrument, nomInstrument
+:
+:
+:
+
+BILLET : idBillet, nomBillet
+ACHETE, 03 CLIENT, 11 BILLET
+:
 FAIT PARTIE DE, 1N GROUPE, 11 MEMBRE
-GROUPE : idGroupe, nomGroupe, descriptionGroupe, photosGroupe, reseauxGroupe, liensVideoGroupe
-PARTICIPE, 0N GROUPE, 0N EVENEMENT : dateArriveeGroupe, heureArriveeGroupe, tempsDeMontage, tempsDeDemontage
-EVENEMENT : idEvenement, nomEvenement, heureEvenement
-SEFFECTUE, 11 EVENEMENT, 0N DATE
+MEMBRE : idMembre, nomMembre, prenomMembre, idGroupe, instrumentMembre
 :
 :
 :
 :
 
-:
+POUR, 11 BILLET, 0N DATE
+CLIENT : idCLient, nomClient, prenomClient, emailClient
+AIME, 0N CLIENT, 0N GROUPE
+GROUPE : idGroupe, nomGroupe, descriptionGroupe, photosGroupe, reseauxGroupe, liensVideoGroupe
 LOGER, 0N HEBERGEMENT, 0N GROUPE : dateDebutHebergement, dateFinHebergement
+HEBERGEMENT : idHebergement, nomHebergement, adresseHebergement, nbPlacesJour
+:
+:
+:
+
+DATE : id_date, dateEvenement
+S'INSCRIT, 0N CLIENT, 0N EVENEMENT
+PARTICIPE, 0N GROUPE, 0N EVENEMENT : dateArriveeGroupe, heureArriveeGroupe, tempsDeMontage, tempsDeDemontage
 AVOIR, 0N STYLE, 11 GROUPE
 :
-CIF, 0N TYPES, 11 EVENEMENT
+:
+:
+:
+:
+
+SEFFECTUE, 11 EVENEMENT, 0N DATE
+EVENEMENT : idEvenement, nomEvenement, heureEvenement, payant
 SE PASSE À, 0N LIEU, 11 EVENEMENT
+STYLE : idStyle, nomStyle
+RESSEMBLE, 0N STYLE, 0N STYLE
+:
+:
+:
+:
+
+:
+CIF, 0N TYPES, 11 EVENEMENT
 LIEU : idLieu, nomLieu, adresseLieu, capaciteLieu
 :
 :
 :
-
 :
-HEBERGEMENT : idHebergement, nomHebergement, adresseHebergement, nbPlacesJour
-STYLE : idStyle, nomStyle
+:
+ORGANISATEUR : idOrganisateur, nomOrganisateur, prenomOrganisateur, mdpOrganisateur, emailOrganisateur
+
 :
 TYPES : idType, nomType
 :
@@ -52,14 +65,5 @@ TYPES : idType, nomType
 :
 :
 :
-
 :
 :
-RESSEMBLE, 0N STYLE, 0N STYLE
-:
-:
-:
-:
-:
-:
-ORGANISATEUR : idOrganisateur, nomOrganisateur, prenomOrganisateur, mdpOrganisateur, emailOrganisateur

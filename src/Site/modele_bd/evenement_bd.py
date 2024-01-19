@@ -15,7 +15,7 @@ class EvenementBD:
 
     def get_all_evenement(self):
         try:
-            query = text('SELECT idEvenement, nomEvenement, dateEvenement, heureEvenement, idType, idLieu FROM EVENEMENT')
+            query = text('SELECT idEvenement, nomEvenement, id_date, heureEvenement, idType, idLieu FROM EVENEMENT')
             result = self.__connexion.execute(query)
             evenement = []
             for id_evenement, nom, date, heure, id_type, id_lieu in result:
@@ -27,7 +27,7 @@ class EvenementBD:
 
     def get_evenement_by_id(self, id_even):
         try:
-            query = text('SELECT idEvenement, nomEvenement, dateEvenement, heureEvenement, idType, idLieu FROM EVENEMENT WHERE idEvenement =' +
+            query = text('SELECT idEvenement, nomEvenement, id_date, heureEvenement, idType, idLieu FROM EVENEMENT WHERE idEvenement =' +
                          str(id_even))
             result = self.__connexion.execute(query)
             for id_evenement, nom, date, heure, id_type, id_lieu in result:

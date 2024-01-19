@@ -1,24 +1,60 @@
 {% extends "BaseSite.html" %}
+{% block styles %}
+    <link rel="stylesheet" href="../static/pageLeFestival.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='tableau.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='detail_evenement.css') }}">
+{% endblock %}
 
 {% block main %}
     <h1>{{ evenement.get_nom_evenement() }}</h1>
 
     <h2>Le line up</h2>
     <ul>
-        {% for group in groupes %}
-            <li>{{ group.get_nom_groupe() }}</li>
+          {% for groupe in groupes %}
+            <div class="card">
+                <div class="image"><img src="{{groupe.get_photo_groupe()}}" alt="image groupe"></div>
+                <div class="content">
+                    <a href="{{ url_for('groupe', id=groupe.get_id_groupe()) }}">
+                        <span class="title">
+                            {{ groupe.get_nom_groupe() }}
+                        </span>
+                    </a>
+                    <p class="desc">
+                        {{ groupe.get_description_groupe() }}
+                    </p>
+                    <a class="action" href="{{ url_for('groupe', id=groupe.get_id_groupe()) }}">
+                        Voir plus
+                        <span aria-hidden="true">
+                            →
+                        </span>
+                    </a>
+                </div>
+            </div>
         {% endfor %}
     </ul>
 
     <h2>Informations</h2>
-    <p>{{ lieu.get_nom_lieu() }}</p>
-    <p>Places disponibles {{ places }}</p>
-    <h2>Vous êtes intéressé ?</h2>
+    <table class="event">
+        <tr>
+            <th>Date</th>
+            <th>Heure</th>
+            <th>Lieu</th>
+            <th>Nombre de places</th>
+        </tr>
+        <tr>
+            <td>{{ date.get_date_evenement() }}</td>
+            <td>{{ evenement.get_heure_evenement() }}</td>
+            <td>C'est à {{ lieu.get_nom_lieu() }} à l'adresse {{ lieu.get_adresse_lieu() }}</td>
+            <td>Il y a {{ places }} places</td>
+        </tr>
+    </table>
     <p>Vous pouvez vous inscrire à l'événement en cliquant sur le bouton ci-dessous</p>
     {%  if inscrit == False %}
-        <button type="button" class="btn btn-primary" onclick="window.location.href='{{ url_for('inscription_event', id_event=evenement.get_id_evenement()) }}'">Je veux y aller!</button>
+        <button type="button"  onclick="window.location.href='{{ url_for('inscription_event', id_event=evenement.get_id_evenement()) }}'">Je veux y aller!</button>
+    {% elif inscrit == None %}
+        <p>Vous n'êtes pas un client!</p>
     {% else %}
-        <button type="button" class="btn btn-primary" onclick="window.location.href='{{ url_for('desinscription_event', id_event=evenement.get_id_evenement()) }}'">Je ne veux plus y aller!</button>
+        <button type="button"  onclick="window.location.href='{{ url_for('desinscription_event', id_event=evenement.get_id_evenement()) }}'">Je ne veux plus y aller!</button>
     {% endif %}
 
 

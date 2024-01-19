@@ -1,7 +1,7 @@
 from wtforms import validators
 from wtforms.validators import Email, EqualTo
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, SelectField, HiddenField
+from wtforms import StringField, PasswordField, SubmitField, SelectField, HiddenField, TextAreaField
 import os
 import sys
 
@@ -14,6 +14,7 @@ def connexion_form():
     class ConnexionForm(FlaskForm):
         email = StringField('Email', validators=[validators.DataRequired()])
         mdp = PasswordField('Mot de passe', validators=[validators.DataRequired()])
+        statut = SelectField('Statut', choices=[('1', 'Utilisateur'), ('2', 'Administrateur')])
         submit = SubmitField('Se connecter')
 
     return ConnexionForm()
@@ -65,3 +66,13 @@ def modification_groupe():
             self.lien_video.data = lien_video
 
     return ModificationGroupe()
+
+def contact_form():
+    class ContactForm(FlaskForm):
+        nom = StringField('Nom Prénom', validators=[validators.DataRequired()])
+        email = StringField('Email', validators=[validators.DataRequired(), Email()])
+        sujet = StringField('Sujet', validators=[validators.DataRequired()])
+        message = TextAreaField('Message', validators=[validators.DataRequired()])
+        submit = SubmitField('Envoyer')
+
+    return ContactForm()

@@ -9,17 +9,19 @@
 
 {% block main %}
 <h2><u>Infos du groupe</u></h2>
+    <div class="milieu">
 <aside>
     <img src="{{groupe.get_photo_groupe()}}" alt="image du groupe">
 </aside>
-<div class="infos">
-    <p><u>Nom du groupe</u> : {{groupe.get_nom_groupe()}}</p>
-    <p><u>Description du groupe</u> : {{groupe.get_description_groupe()}}</p>
-    <p><u>Style de musique</u> : {{style.get_nom_style()}}</p>
-    <p><u>Réseaux du groupe</u> : {{groupe.get_reseaux_groupe()}} </p>
-    <p><u>Liens vidéos du groupe</u> : <a
-            href="{{groupe.get_liens_videos_groupe()}}">{{groupe.get_liens_videos_groupe()}}</a></p>
-</div>
+        <div class="infos">
+            <p><u>Nom du groupe</u> : {{groupe.get_nom_groupe()}}</p>
+            <p><u>Description du groupe</u> : {{groupe.get_description_groupe()}}</p>
+            <p><u>Style de musique</u> : {{style.get_nom_style()}}</p>
+            <p><u>Réseaux du groupe</u> : {{groupe.get_reseaux_groupe()}} </p>
+            <p><u>Liens vidéos du groupe</u> : <a
+                    href="{{groupe.get_liens_videos_groupe()}}">{{groupe.get_liens_videos_groupe()}}</a></p>
+        </div>
+    </div>
 {% endblock %}
 {% block complement %}
 <section class="groupes-similaires">

@@ -23,7 +23,7 @@ CREATE TABLE GROUPE (
     nomGroupe VARCHAR(50) NOT NULL,
     descriptionGroupe VARCHAR(50) NOT NULL,
     idStyle int NOT NULL,
-    photosGroupe VARCHAR(50),
+    photosGroupe VARCHAR(1000),
     reseauxGroupe VARCHAR(50) NOT NULL,
     liensVideoGroupe VARCHAR(50) NOT NULL,
     PRIMARY KEY (idGroupe)
@@ -200,7 +200,7 @@ delimiter |
 CREATE OR REPLACE TRIGGER verifEvenement BEFORE INSERT ON EVENEMENT
 FOR EACH ROW
 BEGIN
-    IF (SELECT COUNT(*) FROM EVENEMENT WHERE idLieu = NEW.idLieu AND dateEvenement = NEW.dateEvenement AND heureEvenement = NEW.heureEvenement) >= 1 THEN
+    IF (SELECT COUNT(*) FROM EVENEMENT WHERE idLieu = NEW.idLieu AND id_date = NEW.id_date AND heureEvenement = NEW.heureEvenement) >= 1 THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Un événement se déroule déjà à cette date et à cette heure';
     END IF;
 END |

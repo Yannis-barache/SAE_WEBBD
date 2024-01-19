@@ -8,21 +8,21 @@
 {% endblock %}
 
 {% block main %}
-<h2>FESTIUT'O</h2>
-<p><u>Les évènements</u></p>
+<h2>Les évènements</h2>
 {% for evenement in evenements %}
 <div class="card">
-    <div class="image"></div>
+    <div class="image"><img src="{{ url_for('static', filename='images/event.jpg') }}" alt="image_evenement"></div>
+
     <div class="content">
-        <a href="{{ url_for('detail_event', id=evenement.get_id_evenement()) }}">
+        <a href="{{ url_for('detail_evenement', id_event=evenement.get_id_evenement()) }}">
             <span class="title">
                 {{ evenement.get_nom_evenement() }}
             </span>
         </a>
         <p class="desc">
-            La date de l'évènement est le {{ evenement.get_date_evenement() }}
+            La date de l'évènement est le {{ dates[loop.index] }}
         </p>
-        <a class="action" href="{{ url_for('detail_event', id=evenement.get_id_evenement()) }}">
+        <a class="action" href="{{ url_for('detail_evenement', id_event=evenement.get_id_evenement()) }}">
             Tout savoir sur l'évènement
             <span aria-hidden="true">
                 →
