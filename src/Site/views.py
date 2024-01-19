@@ -211,6 +211,8 @@ def admin():
 def groupes_admin():
     modele = ModeleAppli()
     groupes = modele.get_groupe_bd().get_all_groupes()
+    for groupe in groupes:
+        groupe.set_style(modele.get_style_bd().get_style_by_id(groupe.get_id_style()).get_nom_style())
     modele.close()
     return render_template(
         "organisateur/groupe/admin_groupe.html", groupes=groupes)
@@ -300,6 +302,11 @@ def ajouter_client():
 def evenements_admin():
     modele = ModeleAppli()
     evenements = modele.get_evenement_bd().get_all_evenement()
+    for evenement in evenements:
+        evenement.set_lieu(modele.get_lieu_bd().get_lieu_by_id(evenement.get_id_lieu()).get_nom_lieu())
+        evenement.set_date(modele.get_date_bd().get_date_by_id(evenement.get_date_evenement()).get_date_evenement())
+        evenement.set_type(modele.get_type_bd().get_type_by_id(evenement.get_id_type()).get_nom_type())
+
     modele.close()
     return render_template(
         "organisateur/evenements/admin_evenements.html", evenements=evenements)

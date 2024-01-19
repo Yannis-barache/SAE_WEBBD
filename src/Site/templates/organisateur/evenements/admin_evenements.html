@@ -18,7 +18,7 @@
         {% for evenement in evenements %}
         <tr>
             <td>{{ evenement.get_nom_evenement() }}</td>
-            <td>{{ evenement.date }}</td>
+            <td>{{ evenement.get_date_evenement() }}</td>
             <td>{{ evenement.get_heure_evenement() }}</td>
             <td>{{ evenement.get_id_type() }}</td>
             <td>{{ evenement.get_id_lieu() }}</td>
