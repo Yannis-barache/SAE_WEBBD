@@ -8,11 +8,11 @@ class Client:
 
     Methods:
         __init__(self, id_client: int, nom_client: str, prenom_client: str, mdp_client: str, email_client: str) : Constructeur de la classe Client
-        get_id_client(self) : Getter de l'id du client
-        get_nom_client(self) : Getter du nom du client
-        get_prenom_client(self) : Getter du prenom du client
-        get_mdp_client(self) : Getter du mot de passe du client
-        get_email_client(self) : Getter de l'email du client
+        get_id(self) : Getter de l'id du client
+        get_nom(self) : Getter du nom du client
+        get_prenom(self) : Getter du prenom du client
+        get_mdp(self) : Getter du mot de passe du client
+        get_email(self) : Getter de l'email du client
         __str__(self) : Méthode d'affichage de la classe Client
     """
 
@@ -34,7 +34,7 @@ class Client:
         self.mdp_client = mdp_client
         self.email_client = email_client
 
-    def get_id_client(self):
+    def get_id(self):
         """
         Getter de l'id du client
 
@@ -43,7 +43,7 @@ class Client:
         """
         return self.id_client
 
-    def get_nom_client(self):
+    def get_nom(self):
         """
         Getter du nom du client
 
@@ -52,7 +52,7 @@ class Client:
         """
         return self.nom_client
 
-    def get_prenom_client(self):
+    def get_prenom(self):
         """
         Getter du prenom du client
 
@@ -61,7 +61,7 @@ class Client:
         """
         return self.prenom_client
 
-    def get_mdp_client(self):
+    def get_mdp(self):
         """
         Getter du mot de passe du client
 
@@ -70,7 +70,7 @@ class Client:
         """
         return self.mdp_client
 
-    def get_email_client(self):
+    def get_email(self):
         """
         Getter de l'email du client
 

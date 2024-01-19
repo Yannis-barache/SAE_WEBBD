@@ -91,20 +91,32 @@ def page_connexion():
         inscription = True
     if request.method == 'POST':
         if not form.validate():
-
             for field, errors in form.errors.items():
                 if field != 'csrf_token':
                     messages.append(traduire_erreurs(errors[0]))
             return render_template('PageConnexion.html', form=form, error=messages)
         else:
             try:
-                resultat = modele.get_client_bd().get_client_by_email(request.form['email'])
-                if resultat is not None:
-                    if request.form['mdp'] == resultat.get_mdp_client():
-                        USER = resultat
-                        print("On redirige vers la page de succès ", USER)
-                        modele.close()
-                        return redirect(url_for('home'))
+                email = form.email.data
+                mdp = form.mdp.data
+                statut = form.statut.data
+                if int(statut) == 1:
+                    resultat = modele.get_client_bd().get_client_by_email(email)
+                    if resultat is not None:
+                        if mdp == resultat.get_mdp():
+                            USER = resultat
+                            modele.close()
+                            return redirect(url_for('home'))
+                        else:
+                            messages.append("Email ou mot de passe incorrect")
+                            modele.close()
+                            return render_template('PageConnexion.html', form=form, error=messages)
+                else:
+                    resultat = modele.get_organisateur_bd().get_organisateur_by_email(email)
+                    if resultat is not None and mdp == resultat.get_mdp():
+                            USER = resultat
+                            modele.close()
+                            return redirect(url_for('home'))
                     else:
                         messages.append("Email ou mot de passe incorrect")
                         modele.close()

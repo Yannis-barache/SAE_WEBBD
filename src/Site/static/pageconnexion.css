@@ -204,3 +204,7 @@ body {
     font-size: 20px;
     text-align: center;
   }
+
+  .user-box {
+    margin-bottom: 10px;
+  }

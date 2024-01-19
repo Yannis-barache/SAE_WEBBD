@@ -10,9 +10,9 @@
 
 {% block main %}
     <div class="profile">
-        <h2>Bonjour, {{ user.get_nom_client() }} {{ user.get_prenom_client() }}</h2>
-        <p><strong>Email:</strong> {{ user.get_email_client() }}</p>
-        <p><strong>Mot de passe:</strong> {{ user.get_mdp_client() }}</p>
+        <h2>Bonjour, {{ user.get_nom() }} {{ user.get_prenom() }}</h2>
+        <p><strong>Email:</strong> {{ user.get_email() }}</p>
+        <p><strong>Mot de passe:</strong> {{ user.get_mdp() }}</p>
     </div>
 
     <button class="deconnexion" onclick="window.location.href='{{ url_for('deconnexion') }}'">Déconnexion</button>
