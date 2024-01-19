@@ -25,6 +25,7 @@ from ressemble_bd import RessembleBD
 from sinscrit_bd import SinscritBD
 from style_bd import StyleBD
 from type_bd import TypeBD
+from date_bd import DateBD
 
 
 class ModeleAppli:
@@ -74,6 +75,7 @@ class ModeleAppli:
         self.__sinscrit_bd = SinscritBD(self.__connexion.get_connexion())
         self.__style_bd = StyleBD(self.__connexion.get_connexion())
         self.__type_bd = TypeBD(self.__connexion.get_connexion())
+        self.__date_bd = DateBD(self.__connexion.get_connexion())
 
     def get_aime_bd(self):
         """
@@ -218,6 +220,15 @@ class ModeleAppli:
             type_bd : La classe type_bd
         """
         return self.__type_bd
+    
+    def get_date_bd(self):
+        """
+        Récupère la classe date_bd
+
+        Returns:
+            date_bd : La classe date_bd
+        """
+        return self.__date_bd
 
     def close(self):
         self.__connexion.fermer_connexion()

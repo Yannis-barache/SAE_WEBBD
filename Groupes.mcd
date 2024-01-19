@@ -1,27 +1,65 @@
 :
-CIF, 0N TYPES, 11 EVENEMENT
-TYPES : idType, nomType
-LOGER, 0N HEBERGEMENT, 0N GROUPE : dateDebutHebergement, dateFinHebergement
-HEBERGEMENT : idHebergement, nomHebergement, adresseHebergement, nbPlacesJour
+:
+:
+ACHETE, 03 CLIENT, 11 BILLET
+BILLET : idBillet, nomBillet
+POUR, 11 BILLET, 0N DATE
+:
+:
+:
 :
 
-SE PASSE À, 0N LIEU, 11 EVENEMENT
-EVENEMENT : idEvenement, nomEvenement, dateEvenement, heureEvenement
-PARTICIPE, 0N GROUPE, 0N EVENEMENT : dateArriveeGroupe, heureArriveeGroupe, tempsDeMontage, tempsDeDemontage
-GROUPE : idGroupe, nomGroupe, descriptionGroupe, photosGroupe, reseauxGroupe, liensVideoGroupe
-FAIT PARTIE DE, 1N GROUPE, 11 MEMBRE
+JOUE, 11 MEMBRE, 0N INSTRUMENT
 MEMBRE : idMembre, nomMembre, prenomMembre, idGroupe, instrumentMembre
-
-LIEU : idLieu, nomLieu, adresseLieu, capaciteLieu
-S'INSCRIT, 0N CLIENT, 0N EVENEMENT
-CLIENT : idCLient, nomClient, prenomClient, emailClient
 AIME, 0N CLIENT, 0N GROUPE
+CLIENT : idCLient, nomClient, prenomClient, emailClient
+S'INSCRIT, 0N CLIENT, 0N EVENEMENT
+DATE : id_date, dateEvenement
+:
+:
+:
+:
+
+INSTRUMENT : idInstrument, nomInstrument
+FAIT PARTIE DE, 1N GROUPE, 11 MEMBRE
+GROUPE : idGroupe, nomGroupe, descriptionGroupe, photosGroupe, reseauxGroupe, liensVideoGroupe
+PARTICIPE, 0N GROUPE, 0N EVENEMENT : dateArriveeGroupe, heureArriveeGroupe, tempsDeMontage, tempsDeDemontage
+EVENEMENT : idEvenement, nomEvenement, heureEvenement
+SEFFECTUE, 11 EVENEMENT, 0N DATE
+:
+:
+:
+:
+
+:
+LOGER, 0N HEBERGEMENT, 0N GROUPE : dateDebutHebergement, dateFinHebergement
 AVOIR, 0N STYLE, 11 GROUPE
 :
+CIF, 0N TYPES, 11 EVENEMENT
+SE PASSE À, 0N LIEU, 11 EVENEMENT
+LIEU : idLieu, nomLieu, adresseLieu, capaciteLieu
+:
+:
+:
 
 :
-BILLET : idBillet, nomBillet
-ACHETE, 03 CLIENT, 11 BILLET
-:
+HEBERGEMENT : idHebergement, nomHebergement, adresseHebergement, nbPlacesJour
 STYLE : idStyle, nomStyle
 :
+TYPES : idType, nomType
+:
+:
+:
+:
+:
+
+:
+:
+RESSEMBLE, 0N STYLE, 0N STYLE
+:
+:
+:
+:
+:
+:
+ORGANISATEUR : idOrganisateur, nomOrganisateur, prenomOrganisateur, mdpOrganisateur, emailOrganisateur

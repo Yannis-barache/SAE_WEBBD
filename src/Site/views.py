@@ -19,11 +19,13 @@ mail = Mail(app)
 
 
 # Configuration de la connection à la base de données
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def home():
-    global USER
+    modele = ModeleAppli()
+    evenements = modele.get_evenement_bd().get_all_evenement()
+    modele.close()
     return render_template(
-        "PageAccueil.html", user=USER)
+        "PageAccueil.html", user=USER, evenements=evenements)
 
 @app.route('/festival')
 def festival():
@@ -312,4 +314,18 @@ def desinscription_event(id_event):
         modele.get_sinscrit_bd().delete_sinscrit(USER.get_id_client(), id_event)
         modele.close()
     return redirect(request.referrer)
+
+
+@app.route('/billetterie/')
+def billetterie():
+    modele = ModeleAppli()
+    dates = modele.get_date_bd().get_all_date()
+    modele.close()
+    return render_template("PageBilletterie.html", dates=dates, user=USER)
+
+@app.route('/mon-compte/')
+def mon_compte():
+    if USER is None:
+        return redirect(url_for('page_connexion'))
+    return render_template("PageMonCompte.html", user=USER)
 
