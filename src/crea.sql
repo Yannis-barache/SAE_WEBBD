@@ -13,7 +13,7 @@ CREATE TABLE MEMBRE (
     nomMembre VARCHAR(50) NOT NULL,
     prenomMembre VARCHAR(50) NOT NULL,
     idGroupe int NOT NULL,
-    instrumentMembre VARCHAR(50),    
+    idInstrument int NOT NULL,
     PRIMARY KEY (idMembre)
 );
 
@@ -23,7 +23,7 @@ CREATE TABLE GROUPE (
     nomGroupe VARCHAR(50) NOT NULL,
     descriptionGroupe VARCHAR(50) NOT NULL,
     idStyle int NOT NULL,
-    photosGroupe VARCHAR(50),
+    photosGroupe VARCHAR(1000),
     reseauxGroupe VARCHAR(50) NOT NULL,
     liensVideoGroupe VARCHAR(50) NOT NULL,
     PRIMARY KEY (idGroupe)
@@ -64,13 +64,19 @@ CREATE TABLE TYPES (
     PRIMARY KEY (idType)
 );
 
+CREATE TABLE DATE (
+    id_date int NOT NULL,
+    dateEvenement DATE NOT NULL,
+    PRIMARY KEY (id_date)
+);
+
 CREATE TABLE EVENEMENT (
     idEvenement int NOT NULL AUTO_INCREMENT,
     nomEvenement VARCHAR(50) NOT NULL,
-    dateEvenement DATE NOT NULL,
     heureEvenement TIME NOT NULL,
     idType int NOT NULL,
     idLieu int NOT NULL,
+    id_date int NOT NULL,
     PRIMARY KEY (idEvenement)
 );
 
@@ -89,11 +95,9 @@ CREATE TABLE LIEU(
 );
 
 CREATE TABLE BILLET(
-    idBillet int NOT NULL AUTO_INCREMENT,
-    nomBillet VARCHAR(50) NOT NULL,
-    prixBillet int NOT NULL,
+    idDate int NOT NULL,
   	idClient int NOT NULL,
-    PRIMARY KEY (idBillet)
+    PRIMARY KEY (idDate, idClient)
 );
 
 CREATE TABLE SINSCRIT(
@@ -114,6 +118,21 @@ CREATE TABLE AIME(
     PRIMARY KEY (idClient, idGroupe)
 );
 
+CREATE TABLE INSTRUMENT(
+    idInstrument int NOT NULL AUTO_INCREMENT,
+    nomInstrument VARCHAR(50) NOT NULL,
+    PRIMARY KEY (idInstrument)
+);
+
+CREATE TABLE ORGANISATEUR(
+    idOrganisateur int NOT NULL AUTO_INCREMENT,
+    nomOrganisateur VARCHAR(50) NOT NULL,
+    prenomOrganisateur VARCHAR(50) NOT NULL,
+    mdpOrganisateur VARCHAR(50) NOT NULL,
+    emailOrganisateur VARCHAR(50) NOT NULL,
+    PRIMARY KEY (idOrganisateur)
+);
+
 
 -- FOREIGN KEYS à ajouter
 ALTER TABLE MEMBRE ADD FOREIGN KEY (idGroupe) REFERENCES GROUPE(idGroupe);
@@ -132,6 +151,9 @@ ALTER TABLE SINSCRIT ADD FOREIGN KEY (idClient) REFERENCES CLIENT(idClient);
 ALTER TABLE SINSCRIT ADD FOREIGN KEY (idEvenement) REFERENCES EVENEMENT(idEvenement);
 ALTER TABLE AIME ADD FOREIGN KEY (idClient) REFERENCES CLIENT(idClient);
 ALTER TABLE AIME ADD FOREIGN KEY (idGroupe) REFERENCES GROUPE(idGroupe);
+ALTER TABLE MEMBRE ADD FOREIGN KEY (idInstrument) REFERENCES INSTRUMENT(idInstrument);
+ALTER TABLE EVENEMENT ADD FOREIGN KEY (id_date) REFERENCES DATE(id_date);
+ALTER TABLE BILLET ADD FOREIGN KEY (idDate) REFERENCES DATE(id_date);
 
 -- A changer dans le MCD : association loger --> ajouter une table date qui contient les dates et les durees
 -- revoir le systeme de billets
@@ -176,7 +198,7 @@ delimiter |
 CREATE OR REPLACE TRIGGER verifEvenement BEFORE INSERT ON EVENEMENT
 FOR EACH ROW
 BEGIN
-    IF (SELECT COUNT(*) FROM EVENEMENT WHERE idLieu = NEW.idLieu AND dateEvenement = NEW.dateEvenement AND heureEvenement = NEW.heureEvenement) >= 1 THEN
+    IF (SELECT COUNT(*) FROM EVENEMENT WHERE idLieu = NEW.idLieu AND id_date = NEW.id_date AND heureEvenement = NEW.heureEvenement) >= 1 THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Un événement se déroule déjà à cette date et à cette heure';
     END IF;
 END |
@@ -196,24 +218,6 @@ BEGIN
     END IF;
 END;|
 DELIMITER ;
-
--- VérifierDisponibilitéBillet : Vérifie la disponibilité des billets chaque fois qu’un utilisateur tente d’acheter un billet.
-delimiter |
-CREATE OR REPLACE TRIGGER VerifierDisponibiliteBillet
-BEFORE INSERT ON BILLET
-FOR EACH ROW
-BEGIN
-    DECLARE nbBillets INT;
-    SELECT COUNT(*) INTO nbBillets
-    FROM BILLET
-    WHERE idBillet = NEW.idBillet;
-    IF nbBillets > 0 THEN 
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Il n''y a plus de billets disponibles pour ce concert.';
-    END IF;
-END |
-delimiter ;
-
-
 
 -- VerifierProgrammation : Vérifie qu’il n’y a pas de conflits dans la programmation chaque fois qu’un nouveau concert est ajouté.
 DELIMITER |
@@ -359,6 +363,80 @@ BEGIN
 END |
 delimiter ;
 
+-- VérifieremailClient : Vérifie qu’il n’y a pas d’utilisateur déjà existant avec la même adresse mail.
+delimiter |
+CREATE OR REPLACE TRIGGER VerifieremailClient
+BEFORE INSERT ON CLIENT
+FOR EACH ROW
+BEGIN
+    DECLARE conflit INT;
+    SELECT COUNT(*) INTO conflit
+    FROM CLIENT
+    WHERE emailClient = NEW.emailClient;
+    IF conflit > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Un utilisateur existe déjà avec cette adresse mail.';
+    END IF;
+END |
+
+-- VérifieremailOrganisateur : Vérifie qu’il n’y a pas d’organisateur déjà existant avec la même adresse mail.
+delimiter |
+CREATE OR REPLACE TRIGGER VerifieremailOrganisateur
+BEFORE INSERT ON ORGANISATEUR
+FOR EACH ROW
+BEGIN
+    DECLARE conflit INT;
+    SELECT COUNT(*) INTO conflit
+    FROM ORGANISATEUR
+    WHERE emailOrganisateur = NEW.emailOrganisateur;
+    IF conflit > 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Un organisateur existe déjà avec cette adresse mail.';
+    END IF;
+END |
+delimiter ;
+
+-- SupprimerDependancesGroupe : Supprime toutes les lignes dont d'autres tables dépendent lorsqu'un groupe est supprimé.
+delimiter |
+CREATE OR REPLACE TRIGGER SupprimerDependancesGroupe
+BEFORE DELETE ON GROUPE
+FOR EACH ROW
+BEGIN
+    DELETE FROM MEMBRE WHERE idGroupe = OLD.idGroupe;
+    DELETE FROM AIME WHERE idGroupe = OLD.idGroupe;
+    DELETE FROM PARTICIPE WHERE idGroupe = OLD.idGroupe;
+    DELETE FROM LOGER WHERE idGroupe = OLD.idGroupe;
+END |
+delimiter ;
+
+-- SupprimerDependancesClients : Supprime toutes les lignes dont d'autres tables dépendent lorsqu'un utilisateur est supprimé.
+delimiter |
+CREATE OR REPLACE TRIGGER SupprimerDependancesClients
+BEFORE DELETE ON CLIENT
+FOR EACH ROW
+BEGIN
+    DELETE FROM AIME WHERE idClient = OLD.idClient;
+    DELETE FROM BILLET WHERE idClient = OLD.idClient;
+    DELETE FROM SINSCRIT WHERE idClient = OLD.idClient;
+END |
+
+-- SupprimerDependancesHebergement : Supprime toutes les lignes dont d'autres tables dépendent lorsqu'un hébergement est supprimé.
+delimiter |
+CREATE OR REPLACE TRIGGER SupprimerDependancesHebergement
+BEFORE DELETE ON HEBERGEMENT
+FOR EACH ROW
+BEGIN
+    DELETE FROM LOGER WHERE idHebergement = OLD.idHebergement;
+END |
+delimiter ;
+
+-- SupprimerDependancesEvenement : Supprime toutes les lignes dont d'autres tables dépendent lorsqu'un concert est supprimé.
+delimiter |
+CREATE OR REPLACE TRIGGER SupprimerDependancesEvenement
+BEFORE DELETE ON EVENEMENT
+FOR EACH ROW
+BEGIN
+    DELETE FROM PARTICIPE WHERE idEvenement = OLD.idEvenement;
+    DELETE FROM SINSCRIT WHERE idEvenement = OLD.idEvenement;
+END |
 -- Fonctions : -----------------------------------------------------------
 
 -- Une fonction pour afficher la programmation par jour, lieu et artiste en MySQL.
@@ -369,7 +447,7 @@ BEGIN
     IF type = 'jour' THEN
         SELECT nomEvenement INTO result
         FROM EVENEMENT
-        WHERE dateEvenement = id;
+        WHERE id_date = id;
     ELSEIF type = 'lieu' THEN
         SELECT nomEvenement INTO result
         FROM EVENEMENT
@@ -397,12 +475,12 @@ delimiter ;
 
 -- Une fonction pour gérer les groupes favoris des utilisateurs.
 delimiter |
-CREATE OR REPLACE FUNCTION ConsulterGroupesFavoris (idClient int) RETURNS VARCHAR(50)
+CREATE OR REPLACE FUNCTION ConsulterGroupesFavoris (idClientP int) RETURNS VARCHAR(50)
 BEGIN
     DECLARE result VARCHAR(50);
     SELECT nomGroupe INTO result
     FROM GROUPE
-    WHERE idGroupe = (SELECT idGroupe FROM AIME WHERE idClient = idClient);
+    WHERE idGroupe = (SELECT idGroupe FROM AIME WHERE idClient = idClientP);
     RETURN result;
 END |
 delimiter ;
@@ -436,22 +514,7 @@ delimiter |
 CREATE OR REPLACE PROCEDURE AjouterGroupe (nomGroupe VARCHAR(50), descriptionGroupe VARCHAR(50), idStyle int, photosGroupe VARCHAR(50), reseauxGroupe VARCHAR(50), liensVideoGroupe VARCHAR(50), nomMembre VARCHAR(50), prenomMembre VARCHAR(50), instrumentMembre VARCHAR(50))
 BEGIN
     INSERT INTO GROUPE (nomGroupe, descriptionGroupe, idStyle, photosGroupe, reseauxGroupe, liensVideoGroupe) VALUES (nomGroupe, descriptionGroupe, idStyle, photosGroupe, reseauxGroupe, liensVideoGroupe);
-    INSERT INTO MEMBRE (nomMembre, prenomMembre, instrumentMembre) VALUES (nomMembre, prenomMembre, instrumentMembre);
-END |
-delimiter ;
-
--- AjouterConcert : Ajoute un nouveau concert à la programmation du festival.
-delimiter |
-CREATE OR REPLACE PROCEDURE AjouterConcert (nomEvenement VARCHAR(50), dateEvenement DATE, heureEvenement TIME, idType int, idLieu int)
-BEGIN
-    INSERT INTO EVENEMENT (nomEvenement, dateEvenement, heureEvenement, idType, idLieu) VALUES (nomEvenement, dateEvenement, heureEvenement, idType, idLieu);
-END |
-delimiter ;
--- AcheterBillet : Permet à un spectateur d’acheter un billet pour le festival.
-delimiter |
-CREATE OR REPLACE PROCEDURE AcheterBillet (nomBillet VARCHAR(50), prixBillet int, idClient int)
-BEGIN
-    INSERT INTO BILLET (nomBillet, prixBillet, idClient) VALUES (nomBillet, prixBillet, idClient);
+    INSERT INTO MEMBRE (nomMembre, prenomMembre, idInstrument) VALUES (nomMembre, prenomMembre, instrumentMembre);
 END |
 delimiter ;
 -- InscrireSpectateur : Inscrire un spectateur à un concert spécifique.
@@ -579,5 +642,20 @@ delimiter |
 CREATE OR REPLACE PROCEDURE SupprimerFavoris (idClient int, idGroupe int)
 BEGIN
     DELETE FROM AIME WHERE idClient = idClient AND idGroupe = idGroupe;
+END |
+delimiter ;
+
+-- AcheteBilletJourManquant : Acheter un billet pour tous les jours manquants du festival.
+delimiter |
+CREATE OR REPLACE PROCEDURE AcheteBilletJourManquant (idClientP int)
+BEGIN
+    DECLARE i int;
+    SET i = 1;
+    WHILE i <= (SELECT COUNT(*) FROM DATE) DO
+        IF (SELECT COUNT(*) FROM BILLET WHERE idClient = idClientP AND idDate = i) = 0 THEN
+            INSERT INTO BILLET (idClient, idDate) VALUES (idClientP, i);
+        END IF;
+        SET i = i + 1;
+    END WHILE;
 END |
 delimiter ;

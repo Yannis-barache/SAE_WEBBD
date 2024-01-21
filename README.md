@@ -9,7 +9,12 @@
 
 ## Description du projet
 
-Cette SAE portera sur la création d'un site web pour un festival de musique. Le site sera accesible pour les utilisateurs et les administrateurs. Les utilisateurs pourront consulter les informations sur les artistes, les concerts, les scènes, les horaires, les prix, etc. Les administrateurs pourront ajouter, modifier et supprimer les informations sur les artistes, les concerts, les scènes, les horaires, les prix, etc. Le site sera developpé en utilisant le framework Flask et la base de données sera en MYSQL.
+Cette SAE portera sur la création d'un site web pour un festival de musique. Le site sera accesible pour 
+les utilisateurs et les administrateurs. Les utilisateurs pourront consulter les informations sur les artistes, 
+les concerts, les scènes, les horaires, les prix, etc. Les administrateurs pourront ajouter, modifier et supprimer
+les informations sur les artistes, les concerts, les scènes, les horaires, les prix, etc. Le site sera developpé 
+en utilisant le framework Flask et la base de données sera en MariaDB en distance ce qui peut poser 
+problème en étant à l'IUT car le proxy du réseau de l'IUT bloque les connexions à distance.
 
 
 
@@ -30,7 +35,19 @@ Soit il faut executer la commande suivante en se trouvant dans le repertoire ```
 flask run 
 ```
 
-Soit vous executer le fichier nommée ```lancement.sh``` une fois executé le fichier vous placera sur la page et il faudra simplement la rafraichir pour voir apparaître l'application
+Soit vous executer le fichier nommée ```lancement.sh``` une fois executé le fichier vous placera sur la page et il faudra simplement la rafraichir pour voir apparaître l'application.
+Soit vous executer les commandes suivantes :
+
+```bash
+source venv/bin/activate
+flask run 
+```
+Puis consulter l'url suivant
+
+```
+http://localhost:5000/
+
+```
 
 ## Commandes importantes pour l'utilisation de flask
 
@@ -49,37 +66,11 @@ virtualenv -p python3 venv
 source venv/bin/activate
 ```
 
-### Installer Flask
+### Installer les dépendances
 
 ```bash
-
-pip install flask
-
+pip install -r requirements.txt
 ```
-
-### Installer python-dotenv
-
-```bash
-
-pip install python-dotenv
-
-```
-
-### Exécution
-
-```bash
-
-FLASK_APP=app.py flask run
-
-```
-
-Puis consulter l'url suivant
-
-```
-http://localhost:5000/
-
-```
-
 
 ## Acceder à la base de données
 
@@ -89,25 +80,4 @@ mysql -h servinfo-maria -u barache -p
 
 ```
 
-
-## Liste des tâches à faire 
-
-
-- [x] Déterminer toutes les tables de la base de données
-- [ ] Déterminer toutes les fonctionnalités du site
-- [ ] Déterminer toutes les contraintes de la base de données
-- [x] Connecter l'application flask à la base de données
-- [x] Créer les tables de la base de données
-- [x] Créer les contraintes de la base de données
-- [ ] Coder les pages flask
-    - [ ] Page d'accueil
-    - [ ] Page de connexion
-    - [ ] Page d'inscription
-    - [ ] Page de déconnexion
-    - [ ] Page de profil
-    - [ ] Page de modification du profil
-    - [ ] Page de paiement des tickets
-    - [ ] Page de consultation des tickets
-    - [ ] Page de l'emploi du temps
-    - [ ] Page de consultation des artistes
 

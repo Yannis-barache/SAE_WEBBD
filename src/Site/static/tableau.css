@@ -1,0 +1,67 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0 auto;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 1em;
+    color: #000000;
+    background-color: white;
+    border: 1px solid black;
+    overflow: auto;
+    text-align: center;
+}
+
+th {
+    border: 1px solid black;
+    padding: 5px;
+    background-color: #000000;
+    color: white;
+}
+
+td {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+table tr:first-child {
+    background-color: #000000;
+    color: white;
+    font-weight: bold;
+}
+
+table a {
+    color: #000000;
+    text-decoration: none;
+    border : 1px solid black;
+    padding: 2%;
+    transition: 0.3s;
+}
+
+table a:hover {
+    background-color: #000000;
+    color: white;
+}
+
+table.event {
+    border-collapse: collapse;
+    width: 50%;
+    margin: 0 auto;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 1em;
+    color: #000000;
+    background-color: white;
+    border: 1px solid black;
+    overflow: auto;
+    text-align: center;
+}
+
+
+

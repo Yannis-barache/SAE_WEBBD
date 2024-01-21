@@ -1,0 +1,34 @@
+{% extends "BaseSite.html" %}
+{% block styles %}
+<link rel="stylesheet" href="../static/pageAccueil.css">
+{% endblock %}
+
+{% block title %}
+<title>Accueil</title>
+{% endblock %}
+
+{% block main %}
+<h2>Les évènements</h2>
+{% for evenement in evenements %}
+<div class="card">
+    <div class="image"><img src="{{ url_for('static', filename='images/event.jpg') }}" alt="image_evenement"></div>
+
+    <div class="content">
+        <a href="{{ url_for('detail_evenement', id_event=evenement.get_id_evenement()) }}">
+            <span class="title">
+                {{ evenement.get_nom_evenement() }}
+            </span>
+        </a>
+        <p class="desc">
+            La date de l'évènement est le {{ dates[loop.index] }}
+        </p>
+        <a class="action" href="{{ url_for('detail_evenement', id_event=evenement.get_id_evenement()) }}">
+            Tout savoir sur l'évènement
+            <span aria-hidden="true">
+                →
+            </span>
+        </a>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

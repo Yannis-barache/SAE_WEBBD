@@ -1,0 +1,33 @@
+{% extends "organisateur/base_organisateur.html" %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename = 'tableau.css')}}">
+{% endblock %}
+{% block body %}
+<h1>Les clients</h1>
+<div class="table">
+    <table>
+        <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Mot de passe</th>
+            <th>Adresse mail</th>
+            <th colspan="2">Action</th>
+
+        </tr>
+        {% for client in clients %}
+        <tr>
+            <td>{{ client.get_nom() }}</td>
+            <td>{{ client.get_prenom() }}</td>
+            <td>{{ client.get_mdp() }}</td>
+            <td>{{ client.get_email() }}</td>
+            <td><a href="{{ url_for('modifier_client', id_client=client.get_id()) }}">Modifier</a></td>
+            <td><a href="{{ url_for('supprimer_client', id_client=client.get_id()) }}">Supprimer</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+    <button class="btn btn-primary" onclick="window.location.href='{{ url_for('ajouter_client') }}'">Ajouter un client</button>
+
+{% endblock %}
+

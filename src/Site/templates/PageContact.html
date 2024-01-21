@@ -1,0 +1,80 @@
+{% extends "BaseSite.html" %}
+{% block styles %}
+    <link rel="stylesheet" href="../static/pageContact.css">
+{% endblock %}
+{% block main %}
+<h2>Nous contacter</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            {% if messages %}
+        <div class="alert alert-danger">
+            {% for erreur in messages %}
+                <li class="alerte">{{ erreur }}</li>
+            {% endfor %}
+        </div>
+    {% endif %}
+            <form action="{{ url_for('contact') }}" method="post">
+                {{ form.hidden_tag() }}
+                <div class="mb-3">
+                    {{ form.nom.label(class="form-label") }}
+                    {{ form.nom(class="form-control",placeholder="Votre nom et votre prénom") }}
+                </div>
+                <div class="mb-3">
+                    {{ form.email.label(class="form-label") }}
+                    {{ form.email(class="form-control",placeholder="Votre adresse email") }}
+                </div>
+                <div class="mb-3">
+                    {{ form.sujet.label(class="form-label") }}
+                    {{ form.sujet(class="form-control",placeholder="Le sujet de votre message") }}
+                </div>
+                <div class="mb-3">
+                    {{ form.message.label(class="form-label") }}
+                    {{ form.message(class="form-control",row=3,placeholder="Votre message") }}
+                </div>
+                <div class="mb-3">
+                    {{ form.submit(class="btn btn-primary") }}
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-6">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h3>Adresse</h3>
+                    <p>1 rue de la Paix</p>
+                    <p>75000 Paris</p>
+                </div>
+                <div class="col-lg-6">
+                    <h3>Téléphone</h3>
+                    <p>01 23 45 67 89</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <h3>Horaires</h3>
+                    <p>Du lundi au vendredi</p>
+                    <p>De 9h à 18h</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+{% endblock %}
+{% block scripts %}
+<script>
+    setTimeout(function() {
+        $('.flash-message').fadeOut('slow');
+    }, 10000); // <-- time in milliseconds, 10000 ms = 10 s
+</script>
+{% endblock %}
+```

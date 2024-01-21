@@ -1,0 +1,99 @@
+main {
+    background: #f8f9fa;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+form {
+    width: 100%;
+    max-width: 500px;
+    padding: 15px;
+    background: black;
+    color: white;
+    border-radius: 10px;
+    margin: 50px auto auto;
+}
+form .field{
+    margin-bottom: 1rem;
+    width: 100%;
+    height: auto;
+
+}
+
+form .field input{
+    width: 100%;
+    height: auto;
+    border-radius: 0.25rem;
+    border: 1px solid #ced4da;
+}
+form input[type="email"], form input[type="password"] {
+    direction: ltr;
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+form input[type="email"]:focus, form input[type="password"]:focus {
+    z-index: 3;
+}
+
+form input[type="email"]:focus ~ .form-floating, form input[type="password"]:focus ~ .form-floating {
+    padding-top: calc(0.375rem + 1px);
+    padding-bottom: calc(0.375rem + 1px);
+}
+
+form input[type="email"]:focus ~ .form-floating label, form input[type="password"]:focus ~ .form-floating label {
+    font-size: 0.8rem;
+    top: 0;
+}
+
+form .form-floating input, form .form-floating textarea {
+    height: auto;
+    padding: 1rem;
+    margin-bottom: 0;
+    border-radius: 0.25rem;
+    border: 1px solid #ced4da;
+}
+
+
+form .form-floating textarea {
+    height: auto;
+}
+
+form .btn {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 0.25rem;
+}
+
+form .control{
+    margin-bottom: 1rem;
+    width: 100%;
+    height: auto;
+}
+
+.alerte{
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 0.25rem;
+    background: #dc3545;
+    color: white;
+    text-align: center;
+}
+
+label, .alerte{
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 0.25rem;
+    color: white;
+    text-align: center;
+    margin-bottom: 5%;
+}
+
+/* Path: src/Site/static/form_admin.css */

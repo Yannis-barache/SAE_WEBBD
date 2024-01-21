@@ -1,0 +1,39 @@
+{% extends "organisateur/base_organisateur.html" %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename = 'tableau.css')}}">
+{% endblock %}
+{% block body %}
+<h1>Les groupes</h1>
+<div class="table">
+    <table>
+        <th>Nom du groupe</th>
+        <th>Description du groupe</th>
+        <th>Style du groupe</th>
+        <th>Les réseaux du groupe</th>
+        <th>Lien vidéo</th>
+        <th colspan="2">Action</th>
+
+        {% for groupe in groupes %}
+        <tr>
+            <td>{{ groupe.get_nom_groupe() }}</td>
+            <td>{{ groupe.get_description_groupe() }}</td>
+            <td>{{ groupe.get_id_style() }}</td>
+            <td>{{ groupe.get_reseaux_groupe() }}</td>
+            <td>
+                {% if groupe.get_liens_videos_groupe() %}
+                <a href="{{ groupe.get_liens_videos_groupe() }}">Lien vidéo</a>
+                {% else %}
+                <p>Pas de lien vidéo</p>
+                {% endif %}
+            </td>
+            <td><a href="{{ url_for('modifier_groupe', id_groupe=groupe.get_id_groupe()) }}">Modifier</a></td>
+            <td><a href="{{ url_for('supprimer_groupe', id_groupe=groupe.get_id_groupe()) }}">Supprimer</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+<div class="ajout">
+    <button onclick="window.location.href='{{ url_for('ajouter_groupe') }}'">Ajouter un groupe</button>
+</div>
+{% endblock %}

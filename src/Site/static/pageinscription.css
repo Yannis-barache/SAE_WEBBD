@@ -8,6 +8,8 @@ body {
     background-image: url("images/home1.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 .signin-box {
@@ -189,4 +191,10 @@ body {
     background: transparent;
     color: #aaa;
     border-radius: 5px;
+  }
+
+  .alerte {
+    color: red;
+    font-size: 20px;
+    text-align: center;
   }

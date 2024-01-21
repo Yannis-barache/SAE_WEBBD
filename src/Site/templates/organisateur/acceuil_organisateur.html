@@ -1,0 +1,14 @@
+{% extends "organisateur/base_organisateur.html" %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <h2>Bienvenue sur la partie de gestion du FESTIVAL.</h2>
+    <p>Vous pouvez gérer les données du festival en cliquant sur les liens ci-dessus.</p>
+    <div class="partie_centrale">
+    <button class="btn btn-primary" onclick="window.location.href = '{{ url_for('groupes_admin') }}';">Gestion des groupes</button>
+    <button class="btn btn-primary" onclick="window.location.href = '{{ url_for('clients_admin') }}';">Gestion des clients</button>
+    <button class="btn btn-primary" onclick="window.location.href = '{{ url_for('evenements_admin') }}';">Gestion des evenements</button>
+    </div>
+
+{% endblock %}

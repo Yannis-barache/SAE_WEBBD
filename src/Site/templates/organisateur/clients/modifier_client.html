@@ -1,0 +1,33 @@
+{% extends "organisateur/base_organisateur.html" %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='form_admin.css') }}">
+{% endblock %}
+{% block title %}Modification d'un client{% endblock %}
+
+
+{% block body %}
+    <h1>Modification du client </h1>
+    <form action="{{ url_for('modifier_client', id_client=client.get_id()) }}" method="post">
+        {{ form.hidden_tag() }}
+        {{ form.id }}
+        <div class="field">
+            {{ form.nom.label }} {{ form.nom(class="form-control")}}
+        </div>
+        <div class="field">
+            {{ form.prenom.label }} {{ form.prenom(class="form-control")}}
+        </div>
+        <div class="field">
+            {{ form.email.label }} {{ form.email(class="form-control")}}
+        </div>
+        <div class="field">
+            {{ form.mdp.label }} {{ form.mdp(class="form-control")}}
+        </div>
+        <div class="field">
+            {{ form.submit(class="btn btn-primary")}}
+        </div>
+
+        <button type="button" class="btn btn-primary" onclick="window.location.href='{{ url_for('clients_admin') }}'">Retour</button>
+    </form>
+{% endblock %}
+```
