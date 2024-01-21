@@ -59,10 +59,10 @@ class Evenement:
 
     def get_date_evenement(self):
         """
-        Getter de la date de l'evenement
+        Getter de l'id de la date de l'evenement
 
         Returns:
-            str: date de l'evenement
+            int: id de la date de l'evenement
         """
         return self.date_evenement
 

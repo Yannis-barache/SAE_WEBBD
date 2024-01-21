@@ -1,0 +1,18 @@
+{% extends "BaseSite.html" %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename = 'pagePlanningGroupe.css')}}">
+{% endblock %}
+
+{% block main %}
+<h1>Planning du groupe {{ groupe.get_nom_groupe() }}</h1>
+{% for el in evenements_et_lieux_dates %}
+<section class="evenement">
+    <h2>{{ el.evenement.get_nom_evenement() }}</h2>
+    <p>Lieu: {{ el.lieu.get_nom_lieu() }}</p>
+    <p>Date: {{ el.date.get_date_evenement() }}</p>
+
+    <button class="detail_evenement" onclick="window.location.href='{{ url_for('detail_evenement', id_event=el.evenement.get_id_evenement()) }}'">Voir détails</button>
+</section>
+{% endfor %}
+{% endblock %}
