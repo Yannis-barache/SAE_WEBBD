@@ -58,6 +58,9 @@ def groupe(id):
 def contact():
     from .form import contact_form
     form = contact_form()
+    if USER is not None:
+        form.nom.data = USER.get_prenom() + " " + USER.get_nom()
+        form.email.data = USER.get_email()
     messages = []
     if request.method == 'POST' and form.validate():
         name = form.nom.data
@@ -94,16 +97,21 @@ def page_connexion():
             for field, errors in form.errors.items():
                 if field != 'csrf_token':
                     messages.append(traduire_erreurs(errors[0]))
+            print(messages)
             return render_template('PageConnexion.html', form=form, error=messages)
         else:
             try:
+                print("Valide")
                 email = form.email.data
                 mdp = form.mdp.data
                 statut = form.statut.data
                 if int(statut) == 1:
+                    print("Client")
                     resultat = modele.get_client_bd().get_client_by_email(email)
                     if resultat is not None:
+                        print("Client trouvé")
                         if mdp == resultat.get_mdp():
+                            print("Mot de passe correct")
                             USER = resultat
                             modele.close()
                             return redirect(url_for('home'))
