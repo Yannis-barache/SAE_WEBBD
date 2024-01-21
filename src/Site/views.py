@@ -179,6 +179,18 @@ def deconnexion():
     USER = None
     return redirect(url_for('home'))
 
+@app.route('/planning/<id>', methods=['GET', 'POST'])
+def planning_groupe(id):
+    modele = ModeleAppli()
+    groupe = modele.get_groupe_bd().get_groupe_by_id(id)
+    evenements = modele.get_evenement_bd().get_all_evenement_by_id_groupe(id)
+    lieux = [modele.get_lieu_bd().get_lieu_by_id(evenement.get_id_lieu()) for evenement in evenements]
+    dates = [modele.get_date_bd().get_date_by_id(evenement.get_date_evenement()) for evenement in evenements]
+    evenements_et_lieux_dates = [{'evenement': e, 'lieu': l, 'date': d} for e, l, d in zip(evenements, lieux, dates)]
+    modele.close()
+    return render_template(
+        "PagePlanningGroupe.html", groupe=groupe, evenements_et_lieux_dates=evenements_et_lieux_dates, user=USER)
+
 
 @app.route('/calendrier')
 def calendrier():

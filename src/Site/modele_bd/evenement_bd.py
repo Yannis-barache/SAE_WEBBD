@@ -84,3 +84,16 @@ class EvenementBD:
         except Exception as e:
             print(e)
             return False
+          
+    def get_all_evenement_by_id_groupe(self, id_groupe):
+        try:
+            query = text('SELECT idEvenement, nomEvenement, id_date, heureEvenement, idType, idLieu FROM EVENEMENT WHERE idEvenement IN (SELECT idEvenement FROM PARTICIPE WHERE idGroupe = ' +
+                         str(id_groupe) + ')')
+            result = self.__connexion.execute(query)
+            evenement = []
+            for id_evenement, nom, date, heure, id_type, id_lieu in result:
+                evenement.append(Evenement(id_evenement, nom, date, heure, id_type, id_lieu))
+            return evenement
+        except Exception as e:
+            print(e)
+            return None

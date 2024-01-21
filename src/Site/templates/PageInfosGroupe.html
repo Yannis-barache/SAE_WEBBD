@@ -50,6 +50,6 @@
 </section>
 <section class="planning">
     <h2>Planning</h2>
-    <button>Voir planning</button>
+    <button onclick="window.location.href='{{ url_for('planning_groupe', id=groupe.get_id_groupe()) }}'">Voir planning</button>
 </section>
 {% endblock %}
