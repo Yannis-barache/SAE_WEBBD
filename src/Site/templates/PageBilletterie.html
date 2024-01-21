@@ -9,6 +9,17 @@
 {% endblock %}
 
 {% block main %}
+<h1>Billetterie</h1>
+<p>
+    Vous pouvez acheter vos billets pour le festival ici.
+</p>
+<p>
+    Les billets sont nominatifs, vous devez donc renseigner le nom et le prénom de chaque personne qui assistera au festival.
+</p>
+<p>
+    Les billets sont à imprimer et à présenter à l'entrée du festival.
+</p>
+    <h2>1 journée = 25€, pack complet = 60€</h2>
 {% for date in dates %}
 <div class="card">
     <div class="image"></div>
@@ -16,12 +27,26 @@
             <span class="title">
                 Billet pour le {{ date.get_date_evenement() }} 
             </span>
-        <a class="action" href="">
+        {% if loop.index ==1 and have_billet1 == True %}
+        <div class="desc">
+            Vous avez déjà un billet pour cette journée
+        </div>
+        {% elif loop.index ==2 and have_billet2 == True %}
+        <div class="desc">
+            Vous avez déjà un billet pour cette journée
+        </div>
+        {% elif loop.index ==3 and have_billet3 == True %}
+        <div class="desc">
+            Vous avez déjà un billet pour cette journée
+        </div>
+        {% else %}
+        <a class="action" href="{{ url_for('achat_billet', type=loop.index)}}">
             Acheter
             <span aria-hidden="true">
                 →
             </span>
         </a>
+        {% endif %}
     </div>
 </div>
 {% endfor %}
@@ -31,15 +56,22 @@
             <span class="title">
                 Billet pour les 3 jours
             </span>
+
         <div class="desc">
             Un pack de 3 billets pour les 3 jours du festival
         </div>
+        {% if have_all == True %}
+        <div class="desc">
+            Vous avez déjà un billet pour chaque journée
+        </div>
+        {% else %}
         <a class="action" href="">
             Acheter
             <span aria-hidden="true">
                 →
             </span>
         </a>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

@@ -95,11 +95,9 @@ CREATE TABLE LIEU(
 );
 
 CREATE TABLE BILLET(
-    idBillet int NOT NULL AUTO_INCREMENT,
-    nomBillet VARCHAR(50) NOT NULL,
-    prixBillet int NOT NULL,
+    idDate int NOT NULL,
   	idClient int NOT NULL,
-    PRIMARY KEY (idBillet)
+    PRIMARY KEY (idDate, idClient)
 );
 
 CREATE TABLE SINSCRIT(
@@ -155,7 +153,7 @@ ALTER TABLE AIME ADD FOREIGN KEY (idClient) REFERENCES CLIENT(idClient);
 ALTER TABLE AIME ADD FOREIGN KEY (idGroupe) REFERENCES GROUPE(idGroupe);
 ALTER TABLE MEMBRE ADD FOREIGN KEY (idInstrument) REFERENCES INSTRUMENT(idInstrument);
 ALTER TABLE EVENEMENT ADD FOREIGN KEY (id_date) REFERENCES DATE(id_date);
-ALTER TABLE EVENEMENT ADD FOREIGN KEY (id_date) REFERENCES DATE(id_date);
+ALTER TABLE BILLET ADD FOREIGN KEY (idDate) REFERENCES DATE(id_date);
 
 -- A changer dans le MCD : association loger --> ajouter une table date qui contient les dates et les durees
 -- revoir le systeme de billets
@@ -220,24 +218,6 @@ BEGIN
     END IF;
 END;|
 DELIMITER ;
-
--- VérifierDisponibilitéBillet : Vérifie la disponibilité des billets chaque fois qu’un utilisateur tente d’acheter un billet.
-delimiter |
-CREATE OR REPLACE TRIGGER VerifierDisponibiliteBillet
-BEFORE INSERT ON BILLET
-FOR EACH ROW
-BEGIN
-    DECLARE nbBillets INT;
-    SELECT COUNT(*) INTO nbBillets
-    FROM BILLET
-    WHERE idBillet = NEW.idBillet;
-    IF nbBillets > 0 THEN 
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Il n''y a plus de billets disponibles pour ce concert.';
-    END IF;
-END |
-delimiter ;
-
-
 
 -- VerifierProgrammation : Vérifie qu’il n’y a pas de conflits dans la programmation chaque fois qu’un nouveau concert est ajouté.
 DELIMITER |
@@ -467,7 +447,7 @@ BEGIN
     IF type = 'jour' THEN
         SELECT nomEvenement INTO result
         FROM EVENEMENT
-        WHERE dateEvenement = id;
+        WHERE id_date = id;
     ELSEIF type = 'lieu' THEN
         SELECT nomEvenement INTO result
         FROM EVENEMENT
@@ -495,12 +475,12 @@ delimiter ;
 
 -- Une fonction pour gérer les groupes favoris des utilisateurs.
 delimiter |
-CREATE OR REPLACE FUNCTION ConsulterGroupesFavoris (idClient int) RETURNS VARCHAR(50)
+CREATE OR REPLACE FUNCTION ConsulterGroupesFavoris (idClientP int) RETURNS VARCHAR(50)
 BEGIN
     DECLARE result VARCHAR(50);
     SELECT nomGroupe INTO result
     FROM GROUPE
-    WHERE idGroupe = (SELECT idGroupe FROM AIME WHERE idClient = idClient);
+    WHERE idGroupe = (SELECT idGroupe FROM AIME WHERE idClient = idClientP);
     RETURN result;
 END |
 delimiter ;
@@ -535,21 +515,6 @@ CREATE OR REPLACE PROCEDURE AjouterGroupe (nomGroupe VARCHAR(50), descriptionGro
 BEGIN
     INSERT INTO GROUPE (nomGroupe, descriptionGroupe, idStyle, photosGroupe, reseauxGroupe, liensVideoGroupe) VALUES (nomGroupe, descriptionGroupe, idStyle, photosGroupe, reseauxGroupe, liensVideoGroupe);
     INSERT INTO MEMBRE (nomMembre, prenomMembre, idInstrument) VALUES (nomMembre, prenomMembre, instrumentMembre);
-END |
-delimiter ;
-
--- AjouterConcert : Ajoute un nouveau concert à la programmation du festival.
-delimiter |
-CREATE OR REPLACE PROCEDURE AjouterConcert (nomEvenement VARCHAR(50), dateEvenement DATE, heureEvenement TIME, idType int, idLieu int)
-BEGIN
-    INSERT INTO EVENEMENT (nomEvenement, dateEvenement, heureEvenement, idType, idLieu) VALUES (nomEvenement, dateEvenement, heureEvenement, idType, idLieu);
-END |
-delimiter ;
--- AcheterBillet : Permet à un spectateur d’acheter un billet pour le festival.
-delimiter |
-CREATE OR REPLACE PROCEDURE AcheterBillet (nomBillet VARCHAR(50), prixBillet int, idClient int)
-BEGIN
-    INSERT INTO BILLET (nomBillet, prixBillet, idClient) VALUES (nomBillet, prixBillet, idClient);
 END |
 delimiter ;
 -- InscrireSpectateur : Inscrire un spectateur à un concert spécifique.
@@ -677,5 +642,20 @@ delimiter |
 CREATE OR REPLACE PROCEDURE SupprimerFavoris (idClient int, idGroupe int)
 BEGIN
     DELETE FROM AIME WHERE idClient = idClient AND idGroupe = idGroupe;
+END |
+delimiter ;
+
+-- AcheteBilletJourManquant : Acheter un billet pour tous les jours manquants du festival.
+delimiter |
+CREATE OR REPLACE PROCEDURE AcheteBilletJourManquant (idClientP int)
+BEGIN
+    DECLARE i int;
+    SET i = 1;
+    WHILE i <= (SELECT COUNT(*) FROM DATE) DO
+        IF (SELECT COUNT(*) FROM BILLET WHERE idClient = idClientP AND idDate = i) = 0 THEN
+            INSERT INTO BILLET (idClient, idDate) VALUES (idClientP, i);
+        END IF;
+        SET i = i + 1;
+    END WHILE;
 END |
 delimiter ;
