@@ -34,14 +34,14 @@ def inscription_form():
     return InscriptionForm()
 
 
-def modification_groupe():
-    class ModificationGroupe(FlaskForm):
+def modification_add_groupe():
+    class ModificationAddGroupe(FlaskForm):
         modele = ModeleAppli()
         id = HiddenField('id')
         nom = StringField('Nom', validators=[validators.DataRequired()])
         description = StringField('Description', validators=[validators.DataRequired()])
         style = SelectField('Style', choices=[(style.get_id_style(), style.get_nom_style()) for style in
-                                              modele.get_style_bd().get_all_style()])
+                                              modele.get_style_bd().get_all_style()],default=1)
         lien_photo = StringField('Lien vers une photo')
         lien_video = StringField('Lien vers une video')
         submit = SubmitField('Modifier')
@@ -57,7 +57,7 @@ def modification_groupe():
             self.description.data = description
 
         def set_style(self, style):
-            self.style.data = style
+            self.style.default = style
 
         def set_lien_photo(self, lien_photo):
             self.lien_photo.data = lien_photo
@@ -65,7 +65,7 @@ def modification_groupe():
         def set_lien_video(self, lien_video):
             self.lien_video.data = lien_video
 
-    return ModificationGroupe()
+    return ModificationAddGroupe()
 
 def contact_form():
     class ContactForm(FlaskForm):

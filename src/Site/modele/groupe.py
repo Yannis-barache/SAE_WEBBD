@@ -87,7 +87,6 @@ class Groupe:
 
         return self.photo_groupe
 
-
     def get_reseaux_groupe(self):
         """
         Getter des réseaux du groupe
@@ -124,10 +123,10 @@ class Groupe:
         """
         return "Groupe : id_groupe = " + str(
             self.id_groupe) + " nom_groupe = " + str(
-                self.nom_groupe) + " description_groupe = " + str(
-                    self.description_groupe) + " id_style = " + str(
-                        self.id_style) + " photo_groupe = " + str(
-                            self.photo_groupe) + " reseaux_groupe = " + str(
-                                self.reseaux_groupe
-                            ) + " liensVideosGroupe = " + str(
-                                self.liens_videos_groupes)
+            self.nom_groupe) + " description_groupe = " + str(
+            self.description_groupe) + " id_style = " + str(
+            self.id_style) + " photo_groupe = " + str(
+            self.photo_groupe) + " reseaux_groupe = " + str(
+            self.reseaux_groupe
+        ) + " liensVideosGroupe = " + str(
+            self.liens_videos_groupes)

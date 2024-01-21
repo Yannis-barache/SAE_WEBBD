@@ -220,21 +220,23 @@ def groupes_admin():
 
 @app.route('/admin/modifier_groupe/<id_groupe>', methods=['GET', 'POST'])
 def modifier_groupe(id_groupe):
-    from .form import modification_groupe
-    form = modification_groupe()
+    from .form import modification_add_groupe
+    form = modification_add_groupe()
     modele = ModeleAppli()
     groupe = modele.get_groupe_bd().get_groupe_by_id(id_groupe)
-    print(groupe)
     form.set_nom(groupe.get_nom_groupe())
+    form.set_description(groupe.get_description_groupe())
+    form.set_lien_photo(groupe.get_photo_groupe())
+    form.set_lien_video(groupe.get_liens_videos_groupe())
+    form.set_style(groupe.get_id_style())
     messages = []
     if request.method == 'POST':
         if not form.validate():
-            print("Form is not valid")
             for field, errors in form.errors.items():
                 if field != 'csrf_token':
                     messages.append(traduire_erreurs(errors[0]))
             print(messages)
-            return render_template('organisateur/groupe/modifier_groupe.html', form=form, errors=messages)
+            return render_template('organisateur/groupe/modifier_groupe.html', form=form, errors=messages,groupe=groupe)
         nom = request.form['nom']
         description = request.form['description']
         style = request.form['style']
@@ -245,7 +247,7 @@ def modifier_groupe(id_groupe):
         return redirect(url_for('groupes_admin'))
     modele.close()
     return render_template(
-        "organisateur/groupe/modifier_groupe.html", groupe=groupe, form=modification_groupe())
+        "organisateur/groupe/modifier_groupe.html", groupe=groupe, form=form, errors=messages)
 
 
 @app.route('/admin/supprimer_groupe/<id_groupe>', methods=['GET', 'POST'])
@@ -285,14 +287,7 @@ def supprimer_client(id_client):
 @app.route('/admin/ajouter_client', methods=['GET', 'POST'])
 def ajouter_client():
     modele = ModeleAppli()
-    if request.method == 'POST':
-        nom = request.form['nom']
-        prenom = request.form['prenom']
-        email = request.form['email']
-        mdp = request.form['mdp']
-        modele.get_client_bd().insert_client(nom, prenom, mdp, email)
-        modele.close()
-        return redirect(url_for('clients'))
+
     modele.close()
     return render_template(
         "organisateur/clients/ajouter_client.html")
