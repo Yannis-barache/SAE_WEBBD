@@ -1,0 +1,48 @@
+{% extends "BaseSite.html" %}
+
+{% block styles %}
+    <link  href="../static/MonCompte.css" rel="stylesheet">
+{% endblock %}
+
+{% block title %}
+    <title>Programmer une journée</title>
+{% endblock %}
+
+{% block main %}
+    <div class="profile">
+        <h2>Bonjour, {{ user.get_nom_groupe() }}</h2>
+    </div>
+
+
+    <form class="form">
+        <p class="message"> Programmer vote passage au festival. </p>
+            <div class="flex">
+            <label>
+                <input required="" placeholder="" type="text" class="input">
+                <span>Nom du groupe</span>
+            </label>
+    
+            <label>
+                <input required="" placeholder="" type="text" class="input">
+                <span>Lastname</span>
+            </label>
+        </div>  
+                
+        <label>
+            <input required="" placeholder="" type="email" class="input">
+            <span>Email</span>
+        </label> 
+            
+        <label>
+            <input required="" placeholder="" type="password" class="input">
+            <span>Password</span>
+        </label>
+        <label>
+            <input required="" placeholder="" type="password" class="input">
+            <span>Confirm password</span>
+        </label>
+        <button class="prog">PROGRAMMER</button>
+   
+    </form>
+
+{% endblock %}
