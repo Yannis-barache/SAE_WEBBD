@@ -94,11 +94,10 @@ mysql -h servinfo-maria -u barache -p
 
 - [ ] Gestions des erreurs SQL
 - [ ] Gestion des blobs
-- [ ] Module admin fini
+- [x] Module admin fini
 - [ ] Planning général à générer 
-- [ ] Préremplir automatiquement le formulaire de contact (si connecté)
+- [x] Préremplir automatiquement le formulaire de contact (si connecté)
 - [ ] Billeterie à finir
 - [ ] Verif du billet pour s'inscrire si l'evenement est payant
 - [ ] Espace groupe
-- [ ] Css à finir
 

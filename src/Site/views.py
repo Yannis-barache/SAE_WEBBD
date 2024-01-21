@@ -179,6 +179,7 @@ def deconnexion():
     USER = None
     return redirect(url_for('home'))
 
+
 @app.route('/planning/<id>', methods=['GET', 'POST'])
 def planning_groupe(id):
     modele = ModeleAppli()
@@ -349,7 +350,7 @@ def modifier_client(id_client):
         return redirect(url_for('clients_admin'))
     modele.close()
     return render_template(
-        "organisateur/clients/modifier_client.html", client=client,form=form, errors=messages)
+        "organisateur/clients/modifier_client.html", client=client, form=form, errors=messages)
 
 
 @app.route('/admin/supprimer_client/<id_client>', methods=['GET', 'POST'])
@@ -381,8 +382,6 @@ def ajouter_client():
                     messages.append(traduire_erreurs(errors[0]))
             print(messages)
             return render_template('organisateur/clients/ajouter_client.html', form=form, errors=messages)
-
-
 
     modele.close()
     return render_template(
@@ -435,7 +434,7 @@ def modifier_evenement(id_evenement):
     modele.close()
 
     return render_template(
-        "organisateur/evenements/modifier_evenement.html", evenement=evenement,form=form, errors=messages)
+        "organisateur/evenements/modifier_evenement.html", evenement=evenement, form=form, errors=messages)
 
 
 @app.route('/admin/ajouter_evenement', methods=['GET', 'POST'])
@@ -463,7 +462,6 @@ def ajouter_evenement():
     modele.close()
     return render_template(
         "organisateur/evenements/ajouter_evenement.html", form=form, errors=messages)
-
 
 
 @app.route('/admin/supprimer_evenement/<id_evenement>', methods=['GET', 'POST'])
@@ -530,8 +528,26 @@ def desinscription_event(id_event):
 def billetterie():
     modele = ModeleAppli()
     dates = modele.get_date_bd().get_all_date()
+    have_billet1 = False
+    have_billet2 = False
+    have_billet3 = False
+    if USER is not None:
+        billets = modele.get_billet_bd().get_billet_by_id_client(USER.get_id())
+        for billet in billets:
+            if billet.get_id_date() == 1:
+                have_billet1 = True
+            elif billet.get_id_date() == 2:
+                have_billet2 = True
+            elif billet.get_id_date() == 3:
+                have_billet3 = True
+
+    have_all = have_billet1 and have_billet2 and have_billet3
+
+
+
+
     modele.close()
-    return render_template("PageBilletterie.html", dates=dates, user=USER)
+    return render_template("PageBilletterie.html", dates=dates, user=USER, have_billet1=have_billet1, have_billet2=have_billet2, have_billet3=have_billet3, have_all=have_all)
 
 
 @app.route('/mon-compte/')
@@ -539,3 +555,20 @@ def mon_compte():
     if USER is None:
         return redirect(url_for('page_connexion'))
     return render_template("PageMonCompte.html", user=USER)
+
+
+@app.route('/achat_billet/<type>')
+def achat_billet(type):
+    if USER is None:
+        return redirect(url_for('page_connexion'))
+    modele = ModeleAppli()
+    if int(type) == 1:
+        modele.get_billet_bd().ajouter_billet(1, USER.get_id())
+    elif int(type) == 2:
+        modele.get_billet_bd().ajouter_billet(2, USER.get_id())
+    elif int(type) == 3:
+        modele.get_billet_bd().ajouter_billet(3, USER.get_id())
+    else:
+        modele.get_billet_bd().billet_manquant(USER.get_id())
+    modele.close()
+    return redirect(request.referrer)

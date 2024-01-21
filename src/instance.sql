@@ -169,11 +169,11 @@ INSERT INTO LOGER (idHebergement, idGroupe, dateDebutHebergement, dateFinHeberge
 (6, 6, '2021-09-10', '2021-09-11');
 
 
-insert into BILLET (idBillet, nomBillet, prixBillet, idclient) VALUES
-(1,'Jour1', 2, 1),
-(2,'Jour2', 2, 1),
-(3,'Jour3', 2, 1),
-(4,'Jour2', 2, 2);
+insert into BILLET (idDate, idclient) VALUES
+(1,1),
+(2, 1),
+(3, 1),
+(2, 2);
 
 
 
