@@ -44,13 +44,13 @@ INSERT INTO LIEU (idLieu,nomLieu,adresseLieu,capaciteLieu) VALUES
 (10, 'Scène Marron', '10 rue de la scène marron', 10000);
 
 INSERT INTO DATE(id_date, dateEvenement) VALUES
-        (1,'2024-03-22'),
+        (1,'2024-03-22'),19:00:00
         (2,'2024-03-23'),
         (3,'2024-03-24');
 
 
 INSERT INTO EVENEMENT (idEvenement, nomEvenement, id_date, heureEvenement, idType, idLieu) VALUES
-(1, 'Concert de Queen', 1, '19:00:00', 1, 1),
+(1, 'Concert de Queen', 1, '', 1, 1),
 (2, 'Concert de Daft Punk', 1, '20:00:00', 1, 8),
 (3, 'Concert de Nirvana', 2, '20:00:00', 1, 9),
 (4, 'Concert de The Beatles', 2, '20:00:00', 1, 2),

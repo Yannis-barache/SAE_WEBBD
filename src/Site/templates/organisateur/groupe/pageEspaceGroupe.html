@@ -16,31 +16,29 @@
 
 
     <form class="form">
+        <div class="image"><img src="{{groupe.get_photo_groupe()}}" alt="image groupe"></div>
         <p class="message"> Programmer vote passage au festival. </p>
             <div class="flex">
             <label>
-                <input required="" placeholder="" type="text" class="input">
+                <input required="" placeholder="" type="password" class="input" value={{ groupe.get_nom-groupe() }}>
                 <span>Nom du groupe</span>
             </label>
     
             <label>
                 <input required="" placeholder="" type="text" class="input">
-                <span>Lastname</span>
+                <span>titre</span>
             </label>
         </div>  
                 
         <label>
-            <input required="" placeholder="" type="email" class="input">
-            <span>Email</span>
+            <input required="" placeholder="" type="date" class="input" value="exemple : 19:00:00">
+            <span>Date</span>
         </label> 
             
         <label>
             <input required="" placeholder="" type="password" class="input">
-            <span>Password</span>
-        </label>
-        <label>
-            <input required="" placeholder="" type="password" class="input">
-            <span>Confirm password</span>
+            <input required="" placeholder="" type="heure" class="input" value="">
+            <span>Heure</span>
         </label>
         <button class="prog">PROGRAMMER</button>
    
