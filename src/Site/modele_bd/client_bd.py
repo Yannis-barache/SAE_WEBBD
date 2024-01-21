@@ -68,7 +68,6 @@ class ClientBD:
             query_insert = text(
                 f"INSERT INTO CLIENT (idClient, nomClient, prenomClient, mdpClient, emailClient) VALUE ({id_max}"
                 f", '{nom}', '{prenom}', '{mdp}', '{email}')")
-            print(query_insert)
 
             self.__connexion.execute(query_insert)
             self.__connexion.commit()
@@ -95,7 +94,7 @@ class ClientBD:
                 "UPDATE CLIENT SET nomClient = '" + nom + "', prenomClient = '" + prenom + "', mdpClient = '" + mdp + "', emailClient = '" + email + "' WHERE idClient = " + str(
                     id_client))
             self.__connexion.execute(query)
-
+            self.__connexion.commit()
             return True
         except Exception as e:
             print(e)

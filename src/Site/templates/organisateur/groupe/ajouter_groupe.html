@@ -3,12 +3,12 @@
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='form_admin.css') }}">
 {% endblock %}
-{% block title %}Modification de groupe{% endblock %}
+{% block title %}Ajout d'un groupe{% endblock %}
 
 
 {% block body %}
-    <h1>Modification de groupe</h1>
-    <form action="{{ url_for('modifier_groupe', id_groupe=groupe.get_id_groupe()) }}" method="post">
+    <h1>Ajout d'un groupe</h1>
+    <form action="{{ url_for('ajouter_groupe') }}" method="post">
 
         {{ form.hidden_tag() }}
         {{ form.id }}
@@ -32,6 +32,9 @@
             {{ form.lien_video.label }}
             {{ form.lien_video }}
         </div>
+        <div class="field">
+            {{ form.reseaux.label }}
+            {{ form.reseaux }}
         <div class="field">
             <div class="control">
                 {{ form.submit }}

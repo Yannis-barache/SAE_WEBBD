@@ -1,0 +1,41 @@
+{% extends "organisateur/base_organisateur.html" %}
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='form_admin.css') }}">
+{% endblock %}
+{% block title %}Ajout d'un evenement{% endblock %}
+
+
+{% block body %}
+    <h1>Ajout d'un evenement</h1>
+    <form action="{{ url_for('ajouter_evenement') }}" method="post">
+        {{ form.hidden_tag() }}
+        {{ form.id }}
+        <div class="field">
+            {{ form.nom.label }}
+            {{ form.nom(size=20) }}
+        </div>
+        <div class="field">
+            {{ form.heure.label }}<br>
+            {{ form.heure }}
+        </div>
+        <div class="field">
+            {{ form.date.label }}<br>
+            {{ form.date }}
+        </div>
+        <div class="field">
+            {{ form.lieu.label }}<br>
+            {{ form.lieu }}
+        </div>
+        <div class="field">
+            {{ form.type.label }}<br>
+            {{ form.type }}
+        </div>
+        <div class="field">
+            {{ form.submit(class="btn btn-primary")}}
+        </div>
+
+        <button type="button" class="btn btn-primary" onclick="window.location.href='{{ url_for('clients_admin') }}'">Retour</button>
+    </form>
+{% endblock %}
+```

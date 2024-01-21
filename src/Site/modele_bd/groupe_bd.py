@@ -56,9 +56,16 @@ class GroupeBD:
             print(e)
             return False
 
-    def ajout_groupe(self, nom_groupe, description_groupe, id_style, photos_groupe, reseaux_groupe, liens_video_groupe):
+    def ajout_groupe(self,nom_groupe, description_groupe, id_style, photos_groupe, reseaux_groupe, liens_video_groupe):
         try:
-            query = text('INSERT INTO GROUPE (nomGroupe, descriptionGroupe, idStyle, photosGroupe, reseauxGroupe, liensVideoGroupe) VALUES (\'' + nom_groupe + '\', \'' + description_groupe + '\', ' + str(id_style) + ', \'' + photos_groupe + '\', \'' + reseaux_groupe + '\', \'' + liens_video_groupe + '\')')
+            # On recupère un l'id max pour l'ajout
+            query = text('SELECT MAX(idGroupe) FROM GROUPE')
+            result = self.__connexion.execute(query)
+            for id_groupe in result:
+                id_groupe = id_groupe[0] + 1
+
+
+            query = text('INSERT INTO GROUPE VALUES (' + str(id_groupe) + ', \'' + nom_groupe + '\', \'' + description_groupe + '\', ' + str(id_style) + ', \'' + photos_groupe + '\', \'' + reseaux_groupe + '\', \'' + liens_video_groupe + '\')')
             self.__connexion.execute(query)
             self.__connexion.commit()
             return True
@@ -77,5 +84,15 @@ class GroupeBD:
         except Exception as e:
             print(e)
             return None
+
+    def update_groupe(self, id_groupe, nom_groupe, description_groupe, id_style, photos_groupe, liens_video_groupe):
+        try:
+            query = text('UPDATE GROUPE SET nomGroupe = \'' + nom_groupe + '\', descriptionGroupe = \'' + description_groupe + '\', idStyle = ' + str(id_style) + ', photosGroupe = \'' + photos_groupe + '\', liensVideoGroupe = \'' + liens_video_groupe + '\' WHERE idGroupe = ' + str(id_groupe))
+            self.__connexion.execute(query)
+            self.__connexion.commit()
+            return True
+        except Exception as e:
+            print(e)
+            return False
     
 
