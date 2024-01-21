@@ -23,7 +23,7 @@ mail = Mail(app)
 def home():
     modele = ModeleAppli()
     evenements = modele.get_evenement_bd().get_all_evenement()
-    dates =[]
+    dates = []
     for evenement in evenements:
         dates.append(modele.get_date_bd().get_date_by_id(evenement.get_date_evenement()).get_date_evenement())
     modele.close()
@@ -114,9 +114,9 @@ def page_connexion():
                 else:
                     resultat = modele.get_organisateur_bd().get_organisateur_by_email(email)
                     if resultat is not None and mdp == resultat.get_mdp():
-                            USER = resultat
-                            modele.close()
-                            return redirect(url_for('home'))
+                        USER = resultat
+                        modele.close()
+                        return redirect(url_for('home'))
                     else:
                         messages.append("Email ou mot de passe incorrect")
                         modele.close()
@@ -198,7 +198,7 @@ def calendrier():
 
     modele.close()
     return render_template(
-        "calendrier.html",events1=events1, events2=events2, events3=events3, user=USER)
+        "calendrier.html", events1=events1, events2=events2, events3=events3, user=USER)
 
 
 @app.route('/admin')
@@ -236,7 +236,8 @@ def modifier_groupe(id_groupe):
                 if field != 'csrf_token':
                     messages.append(traduire_erreurs(errors[0]))
             print(messages)
-            return render_template('organisateur/groupe/modifier_groupe.html', form=form, errors=messages,groupe=groupe)
+            return render_template('organisateur/groupe/modifier_groupe.html', form=form, errors=messages,
+                                   groupe=groupe)
         nom = request.form['nom']
         description = request.form['description']
         style = request.form['style']
@@ -248,6 +249,38 @@ def modifier_groupe(id_groupe):
     modele.close()
     return render_template(
         "organisateur/groupe/modifier_groupe.html", groupe=groupe, form=form, errors=messages)
+
+
+@app.route('/admin/ajouter_groupe', methods=['GET', 'POST'])
+def ajouter_groupe():
+    from .form import modification_add_groupe
+    form = modification_add_groupe()
+    messages = []
+    if request.method == 'POST':
+        if not form.validate():
+            for field, errors in form.errors.items():
+                if field != 'csrf_token':
+                    messages.append(traduire_erreurs(errors[0]))
+            print(messages)
+            return render_template('organisateur/groupe/ajouter_groupe.html', form=form, errors=messages)
+        nom = request.form['nom']
+        description = request.form['description']
+        style = request.form['style']
+        lien_photo = request.form['lien_photo']
+        lien_video = request.form['lien_video']
+        reseaux = request.form['reseaux']
+        if lien_photo == '':
+            lien_photo = None
+        if lien_video == '':
+            lien_video = None
+        if reseaux == '':
+            reseaux = 'Aucun réseau social'
+        modele = ModeleAppli()
+        modele.get_groupe_bd().ajout_groupe(nom, description, style, lien_photo, reseaux, lien_video)
+        modele.close()
+        return redirect(url_for('groupes_admin'))
+    return render_template(
+        "organisateur/groupe/ajouter_groupe.html", form=form, errors=messages)
 
 
 @app.route('/admin/supprimer_groupe/<id_groupe>', methods=['GET', 'POST'])
@@ -269,11 +302,33 @@ def clients_admin():
 
 @app.route('/admin/modifier_client/<id_client>/', methods=['GET', 'POST'])
 def modifier_client(id_client):
+    from .form import modification_add_client
+    form = modification_add_client()
     modele = ModeleAppli()
     client = modele.get_client_bd().get_client_by_id(id_client)
+    form.set_nom(client.get_nom())
+    form.set_prenom(client.get_prenom())
+    form.set_email(client.get_email())
+    form.set_mdp(client.get_mdp())
+    messages = []
+    if request.method == 'POST':
+        if not form.validate():
+            for field, errors in form.errors.items():
+                if field != 'csrf_token':
+                    messages.append(traduire_erreurs(errors[0]))
+            print(messages)
+            return render_template('organisateur/clients/modifier_client.html', form=form, errors=messages,
+                                   client=client)
+        nom = request.form['nom']
+        prenom = request.form['prenom']
+        email = request.form['email']
+        mdp = request.form['mdp']
+        modele.get_client_bd().update_client(id_client, nom, prenom, mdp, email)
+        modele.close()
+        return redirect(url_for('clients_admin'))
     modele.close()
     return render_template(
-        "organisateur/clients/modifier_client.html", client=client)
+        "organisateur/clients/modifier_client.html", client=client,form=form, errors=messages)
 
 
 @app.route('/admin/supprimer_client/<id_client>', methods=['GET', 'POST'])
@@ -286,11 +341,31 @@ def supprimer_client(id_client):
 
 @app.route('/admin/ajouter_client', methods=['GET', 'POST'])
 def ajouter_client():
+    from .form import modification_add_client
     modele = ModeleAppli()
+    form = modification_add_client()
+    messages = []
+    if request.method == 'POST':
+        if form.validate():
+            nom = request.form['nom']
+            prenom = request.form['prenom']
+            email = request.form['email']
+            mdp = request.form['mdp']
+            modele.get_client_bd().insert_client(nom, prenom, mdp, email)
+            modele.close()
+            return redirect(url_for('clients_admin'))
+        else:
+            for field, errors in form.errors.items():
+                if field != 'csrf_token':
+                    messages.append(traduire_erreurs(errors[0]))
+            print(messages)
+            return render_template('organisateur/clients/ajouter_client.html', form=form, errors=messages)
+
+
 
     modele.close()
     return render_template(
-        "organisateur/clients/ajouter_client.html")
+        "organisateur/clients/ajouter_client.html", form=form, errors=messages)
 
 
 @app.route('/admin/evenements')
@@ -309,11 +384,65 @@ def evenements_admin():
 
 @app.route('/admin/modifier_evenement/<id_evenement>', methods=['GET', 'POST'])
 def modifier_evenement(id_evenement):
+    from .form import modification_add_event
     modele = ModeleAppli()
     evenement = modele.get_evenement_bd().get_evenement_by_id(id_evenement)
+    form = modification_add_event()
+    form.set_nom(evenement.get_nom_evenement())
+    form.set_date(evenement.get_date_evenement())
+    form.set_heure(evenement.get_heure_evenement())
+    form.set_type(evenement.get_id_type())
+    form.set_lieu(evenement.get_id_lieu())
+    messages = []
+    if request.method == 'POST':
+        if form.validate():
+            nom = request.form['nom']
+            date = request.form['date']
+            heure = request.form['heure']
+            type = request.form['type']
+            lieu = request.form['lieu']
+            modele.get_evenement_bd().update_evenement(id_evenement, nom, date, heure, type, lieu)
+            modele.close()
+            return redirect(url_for('evenements_admin'))
+        else:
+            for field, errors in form.errors.items():
+                if field != 'csrf_token':
+                    messages.append(traduire_erreurs(errors[0]))
+            print(messages)
+            return render_template('organisateur/evenements/modifier_evenement.html', form=form, errors=messages,
+                                   evenement=evenement)
+    modele.close()
+
+    return render_template(
+        "organisateur/evenements/modifier_evenement.html", evenement=evenement,form=form, errors=messages)
+
+
+@app.route('/admin/ajouter_evenement', methods=['GET', 'POST'])
+def ajouter_evenement():
+    from .form import modification_add_event
+    modele = ModeleAppli()
+    form = modification_add_event()
+    messages = []
+    if request.method == 'POST':
+        if form.validate():
+            nom = request.form['nom']
+            date = request.form['date']
+            heure = request.form['heure']
+            type = request.form['type']
+            lieu = request.form['lieu']
+            modele.get_evenement_bd().ajout_evenement(nom, heure, date, type, lieu)
+            modele.close()
+            return redirect(url_for('evenements_admin'))
+        else:
+            for field, errors in form.errors.items():
+                if field != 'csrf_token':
+                    messages.append(traduire_erreurs(errors[0]))
+            print(messages)
+            return render_template('organisateur/evenements/ajouter_evenement.html', form=form, errors=messages)
     modele.close()
     return render_template(
-        "organisateur/evenements/modifier_evenement.html", evenement=evenement)
+        "organisateur/evenements/ajouter_evenement.html", form=form, errors=messages)
+
 
 
 @app.route('/admin/supprimer_evenement/<id_evenement>', methods=['GET', 'POST'])
@@ -349,7 +478,7 @@ def detail_evenement(id_event):
 
     return render_template(
         "detail_evenement.html", evenement=evenement, user=USER, lieu=lieu, groupes=groupes, inscrit=inscrit,
-        places=places,date=date)
+        places=places, date=date)
 
 
 @app.route('/inscription_event/<id_event>')

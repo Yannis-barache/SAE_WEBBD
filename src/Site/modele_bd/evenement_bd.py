@@ -61,3 +61,26 @@ class EvenementBD:
         except Exception as e:
             print(e)
             return False
+
+    def ajout_evenement(self, nom: str, heure: str, date: str, id_type: int, id_lieu: int):
+        try:
+            query_max_id = text("SELECT max(idClient) FROM CLIENT")
+            result_max_id = self.__connexion.execute(query_max_id)
+            id_max = result_max_id.fetchone()[0]
+
+            if id_max is None:
+                id_max = 1
+            else:
+                id_max = int(id_max) + 1
+
+            query_insert = text(
+                f"INSERT INTO EVENEMENT (idEvenement, nomEvenement, id_date, heureEvenement, idType, idLieu) VALUE ({id_max}"
+                f", '{nom}', {date}, '{heure}', {id_type}, {id_lieu})")
+
+            self.__connexion.execute(query_insert)
+            self.__connexion.commit()
+
+            return True
+        except Exception as e:
+            print(e)
+            return False

@@ -3,16 +3,16 @@
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='form_admin.css') }}">
 {% endblock %}
-{% block title %}Modification d'un client{% endblock %}
+{% block title %}Ajout d'un evenement{% endblock %}
 
 
 {% block body %}
-    <h1>Modification d'un evenement </h1>
-    <form action="{{ url_for('modifier_evenement', id_evenement=evenement.get_id_evenement()) }}" method="post">
+    <h1>Ajout d'un evenement</h1>
+    <form action="{{ url_for('ajouter_evenement') }}" method="post">
         {{ form.hidden_tag() }}
         {{ form.id }}
         <div class="field">
-            {{ form.nom.label }}<br>
+            {{ form.nom.label }}
             {{ form.nom(size=20) }}
         </div>
         <div class="field">
