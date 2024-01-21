@@ -106,12 +106,9 @@ def page_connexion():
                 mdp = form.mdp.data
                 statut = form.statut.data
                 if int(statut) == 1:
-                    print("Client")
                     resultat = modele.get_client_bd().get_client_by_email(email)
                     if resultat is not None:
-                        print("Client trouvé")
                         if mdp == resultat.get_mdp():
-                            print("Mot de passe correct")
                             USER = resultat
                             modele.close()
                             return redirect(url_for('home'))
@@ -119,6 +116,10 @@ def page_connexion():
                             messages.append("Email ou mot de passe incorrect")
                             modele.close()
                             return render_template('PageConnexion.html', form=form, error=messages)
+                    else:
+                        messages.append("Email ou mot de passe incorrect")
+                        modele.close()
+                        return render_template('PageConnexion.html', form=form, error=messages)
                 else:
                     resultat = modele.get_organisateur_bd().get_organisateur_by_email(email)
                     if resultat is not None and mdp == resultat.get_mdp():
